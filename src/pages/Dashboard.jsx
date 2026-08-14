@@ -13,8 +13,16 @@ export default function Dashboard() {
   const [activeTypes, setActiveTypes] = useState([])
   // The facility whose detail card is open, or null when nothing is open.
   const [selected, setSelected] = useState(null)
-  // Events the resident has said yes to.
-  const [joinedIds, setJoinedIds] = useState([])
+  // Where the resident stands on each event, keyed by event id:
+  // 'going' = signed up, 'attended' = turned up and the points were credited.
+  // An event missing from here is one they have not signed up for.
+  // Seeded so the demo shows all three states at once: one past event already
+  // credited (its points are part of the starting balance below), and one past
+  // event still waiting to be confirmed.
+  const [eventStatus, setEventStatus] = useState({
+    'canal-cleanup': 'attended',
+    'ewaste-jul': 'going',
+  })
   // Points live here for now. When the other two screens need them too, move
   // this into a React context so all three screens share one number.
   const [points, setPoints] = useState(USER.points)
@@ -35,10 +43,26 @@ export default function Dashboard() {
     )
   }
 
+  // Signing up costs and earns nothing — the points come later, on attendance.
   function joinEvent(event) {
-    if (joinedIds.includes(event.id)) return
-    setJoinedIds((current) => [...current, event.id])
-    setPoints((current) => current + event.pointsForJoining)
+    setEventStatus((current) => ({ ...current, [event.id]: 'going' }))
+  }
+
+  // Cancelling just drops the sign-up. No points to take back, because none
+  // were given out at sign-up time.
+  function cancelEvent(event) {
+    setEventStatus((current) => {
+      const next = { ...current }
+      delete next[event.id]
+      return next
+    })
+  }
+
+  // This is the only place event points are awarded.
+  function confirmAttendance(event) {
+    if (eventStatus[event.id] === 'attended') return
+    setEventStatus((current) => ({ ...current, [event.id]: 'attended' }))
+    setPoints((current) => current + event.pointsForAttending)
   }
 
   return (
@@ -124,7 +148,12 @@ export default function Dashboard() {
         )}
       </section>
 
-      <EventList joinedIds={joinedIds} onJoin={joinEvent} />
+      <EventList
+        statuses={eventStatus}
+        onJoin={joinEvent}
+        onCancel={cancelEvent}
+        onConfirm={confirmAttendance}
+      />
 
       <FacilitySheet
         facility={selected}

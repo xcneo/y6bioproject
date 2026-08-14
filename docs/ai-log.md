@@ -19,3 +19,9 @@ appends a one-line summary of each task it completes.
   points counter, and the neighbourhood sustainability score ranking six estates.
   Added a three-tab bottom nav with the Share and Impact screens as placeholders.
   Chose one estate in depth over a Singapore-wide map — see the note in `facilities.js`.
+- 2026-08-14 — Changed how event points work. Points are now credited only when
+  attendance is confirmed, not when you sign up, so volunteering can be cancelled
+  with nothing to claw back and nobody can farm points from events they skip.
+  Events now move through sign-up → attended, and `events.js` gained past events
+  so the attendance step is visible in the demo. Renamed `pointsForJoining` to
+  `pointsForAttending`. Also changed the demo resident's name to Henrison.

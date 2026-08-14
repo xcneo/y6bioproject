@@ -2,7 +2,7 @@
 // the app just assumes this is who you are.
 
 export const USER = {
-  name: 'Wei Ming',
+  name: 'Henrison',
   block: 'Blk 442 Clementi Ave 3',
   estate: 'Clementi',
   points: 1240,
