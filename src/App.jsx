@@ -1,122 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import Placeholder from './pages/Placeholder'
 
-function App() {
-  const [count, setCount] = useState(0)
+// The three screens, listed once and reused for both the routes and the tab bar
+// so the two can never drift apart.
+const TABS = [
+  { path: '/', label: 'Neighbourhood', icon: '🗺️' },
+  { path: '/share', label: 'Share', icon: '🤝' },
+  { path: '/impact', label: 'Impact', icon: '📊' },
+]
 
+function TabBar() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+    <nav className="fixed inset-x-0 bottom-0 z-20 mx-auto flex max-w-md border-t border-stone-200 bg-white/95 backdrop-blur">
+      {TABS.map((tab) => (
+        <NavLink
+          key={tab.path}
+          to={tab.path}
+          end={tab.path === '/'}
+          className={({ isActive }) =>
+            `flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition ${
+              isActive ? 'text-emerald-700' : 'text-stone-400'
+            }`
+          }
         >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+          <span className="text-lg" aria-hidden="true">
+            {tab.icon}
+          </span>
+          {tab.label}
+        </NavLink>
+      ))}
+    </nav>
   )
 }
 
-export default App
+export default function App() {
+  return (
+    <BrowserRouter>
+      {/* max-w-md keeps it phone-shaped even when opened on a laptop */}
+      <div className="mx-auto min-h-screen max-w-md bg-stone-50 pb-20">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route
+            path="/share"
+            element={
+              <Placeholder
+                title="Sharing Platform"
+                description="Borrow, give away, swap and rent with neighbours — including the Expiring Soon Shelf for food."
+              />
+            }
+          />
+          <Route
+            path="/impact"
+            element={
+              <Placeholder
+                title="Impact Calculator"
+                description="See the CO₂, water, waste and money you save by changing a habit."
+              />
+            }
+          />
+        </Routes>
+        <TabBar />
+      </div>
+    </BrowserRouter>
+  )
+}

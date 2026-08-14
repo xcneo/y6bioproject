@@ -51,33 +51,38 @@ No test runner is configured, and there are no tests. Don't write tests against 
 framework that isn't installed — if a change needs verifying, verify it by running
 `npm run dev` and looking at the screen.
 
-## Stack — intended vs. actually installed
+## Stack
 
-Intended (what the sections below are written against):
+All of these are installed and working:
 
 - Vite + React (JavaScript, not TypeScript)
-- Tailwind CSS
-- react-router-dom for the three main screens
+- **Tailwind CSS v4** — styling is class names in the JSX
+- **react-router-dom v7** — installed, but no routes are set up yet
 - No state management library. `useState` / `useContext` only.
 
-**Actually installed right now: only `react`, `react-dom`, `vite`, and eslint.**
-Tailwind and react-router-dom are *not* in `package.json` — do not write `className`
-soup or `<Route>` assuming they work. Styling today is plain CSS in `src/index.css`
-and `src/App.css`.
+Tailwind v4 is wired up differently from the v3 setup most tutorials show. There is
+**no `tailwind.config.js` and no `postcss.config.js`**, and that is correct — don't add
+them or follow a guide that tells you to. The whole setup is two lines:
 
-When a task first needs one of them, install it as an explicit step and say so, rather
-than silently adding a dependency. Tailwind v4 wires in via `@tailwindcss/vite` plus a
-single `@import "tailwindcss"` in the CSS — there is no `tailwind.config.js` unless you
-need one.
+- `vite.config.js` loads the `@tailwindcss/vite` plugin
+- `src/index.css` contains `@import 'tailwindcss';`
+
+Customising theme values (brand colours, fonts) is done with a `@theme { }` block in
+`src/index.css`, not in a config file.
 
 ## Current state of the repo
 
-`src/App.jsx` is still the **stock Vite starter page** (logos, counter button, links to
-Vite docs) and `README.md` is still the stock Vite template text. Neither describes this
-project. The first feature session should replace App.jsx outright.
+`src/App.jsx` is a near-empty placeholder — a heading and one line of text, styled with
+Tailwind to prove the setup works. It holds no Eco SG features yet. The first feature
+session should replace its contents.
+
+`README.md` is still the stock Vite template text and does not describe this project.
 
 Directories the sections below refer to **do not exist yet** — create them when first
-needed: `src/data/` (mock JSON + `factors.js`), `docs/ai-log.md`.
+needed: `src/data/` (mock JSON + `factors.js`).
+
+Leftover starter files that are no longer used and can be deleted whenever convenient:
+`src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`.
 
 `src/assets/hero.png` and `public/icons.svg` belong to the starter template, not to Eco SG.
 
@@ -147,3 +152,6 @@ put a `TODO_SOURCE` marker and tell the team to look it up.
 - **21 Sept 2026** — final report (3500–4000 words), team presentation, prototype demo.
 
 Prioritise getting something screenshot-able and tappable over completeness.
+
+The team is new to the terminal and to React. Explain what a command
+does before running it, in plain language. Avoid jargon or define it.
