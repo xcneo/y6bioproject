@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Eco SG — Project Context
 
 ## What this is
@@ -34,12 +38,48 @@ This is a **prototype for a class demo**, not a production app. Hard constraints
 If a request would need a server, a real map API key, or user accounts — say so and
 propose the fake-data version instead.
 
-## Stack
+## Commands
+
+```
+npm run dev       # Vite dev server with HMR
+npm run build     # production build to dist/
+npm run preview   # serve the built dist/ locally
+npm run lint      # eslint over the repo
+```
+
+No test runner is configured, and there are no tests. Don't write tests against a
+framework that isn't installed — if a change needs verifying, verify it by running
+`npm run dev` and looking at the screen.
+
+## Stack — intended vs. actually installed
+
+Intended (what the sections below are written against):
 
 - Vite + React (JavaScript, not TypeScript)
 - Tailwind CSS
 - react-router-dom for the three main screens
 - No state management library. `useState` / `useContext` only.
+
+**Actually installed right now: only `react`, `react-dom`, `vite`, and eslint.**
+Tailwind and react-router-dom are *not* in `package.json` — do not write `className`
+soup or `<Route>` assuming they work. Styling today is plain CSS in `src/index.css`
+and `src/App.css`.
+
+When a task first needs one of them, install it as an explicit step and say so, rather
+than silently adding a dependency. Tailwind v4 wires in via `@tailwindcss/vite` plus a
+single `@import "tailwindcss"` in the CSS — there is no `tailwind.config.js` unless you
+need one.
+
+## Current state of the repo
+
+`src/App.jsx` is still the **stock Vite starter page** (logos, counter button, links to
+Vite docs) and `README.md` is still the stock Vite template text. Neither describes this
+project. The first feature session should replace App.jsx outright.
+
+Directories the sections below refer to **do not exist yet** — create them when first
+needed: `src/data/` (mock JSON + `factors.js`), `docs/ai-log.md`.
+
+`src/assets/hero.png` and `public/icons.svg` belong to the starter template, not to Eco SG.
 
 ## The three features
 
