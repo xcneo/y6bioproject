@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { pointsForCompleting } from '../data/listingTypes'
+import { PEOPLE } from '../data/residents'
+import { pairKey, taperedPoints, taperNote } from '../lib/pairing'
 import { useSession } from '../context/SessionContext'
 import { useSharing } from '../context/SharingContext'
 import CategoryChips from '../components/CategoryChips'
@@ -9,8 +11,16 @@ import NewListingSheet from '../components/NewListingSheet'
 
 export default function Share() {
   const { resident, points, earnPoints } = useSession()
-  const { listings, foodItems, claims, claimItem, cancelClaim, settleClaim, addListing } =
-    useSharing()
+  const {
+    listings,
+    foodItems,
+    claims,
+    pairCounts,
+    claimItem,
+    cancelClaim,
+    settleClaim,
+    addListing,
+  } = useSharing()
 
   // Screen-only state. Anything that has to survive switching phones or tabs
   // lives in the providers instead.
@@ -27,6 +37,26 @@ export default function Share() {
   // things you see first.
   const shelf = [...foodItems].sort((a, b) => a.daysLeft - b.daysLeft)
 
+  // Everything the current phone needs to know about one exchange: who the
+  // other person is, how many times this pair has already traded, and what the
+  // points are worth after the taper in lib/pairing.js.
+  //
+  // The partner is only known when the app can name both sides. When a listing
+  // is collected by one of the mock-data neighbours there is nobody to count
+  // against, so no taper applies — a real app always knows both parties.
+  function exchangeFor(item) {
+    const isOwner = item.ownerId === resident.id
+    const partner = isOwner ? (claims[item.id]?.by ?? null) : item.ownerId
+    const prior = partner ? (pairCounts[pairKey(resident.id, partner)] ?? 0) : 0
+
+    return {
+      isOwner,
+      partner,
+      effectivePoints: partner ? taperedPoints(item.points, prior) : item.points,
+      note: partner ? taperNote(prior, PEOPLE[partner].name) : null,
+    }
+  }
+
   function request(item) {
     claimItem(item.id, resident.id)
   }
@@ -40,10 +70,10 @@ export default function Share() {
   function completeListing(listing, confirmedBy) {
     if (claims[listing.id]?.step === 'done') return
 
-    const isOwner = listing.ownerId === confirmedBy
-    const reward = pointsForCompleting(listing, isOwner)
+    const { isOwner, partner, effectivePoints } = exchangeFor(listing)
+    const reward = pointsForCompleting(listing, isOwner, effectivePoints)
 
-    settleClaim(listing.id, confirmedBy, reward)
+    settleClaim(listing.id, confirmedBy, reward, partner)
     earnPoints(reward, confirmedBy)
   }
 
@@ -52,8 +82,10 @@ export default function Share() {
   function collectFood(item, confirmedBy) {
     if (claims[item.id]?.step === 'done') return
 
-    settleClaim(item.id, confirmedBy, item.points)
-    earnPoints(item.points, confirmedBy)
+    const { partner, effectivePoints } = exchangeFor(item)
+
+    settleClaim(item.id, confirmedBy, effectivePoints, partner)
+    earnPoints(effectivePoints, confirmedBy)
   }
 
   function createListing(kind, item) {
@@ -110,17 +142,23 @@ export default function Share() {
             line up with the rest of the page. */}
         <div className="-mx-4 overflow-x-auto px-4 pb-2">
           <ul className="flex w-max items-start gap-3">
-            {shelf.map((item) => (
-              <ShelfCard
-                key={item.id}
-                item={item}
-                claim={claims[item.id]}
-                viewerId={resident.id}
-                onClaim={request}
-                onCancel={cancel}
-                onCollected={collectFood}
-              />
-            ))}
+            {shelf.map((item) => {
+              const exchange = exchangeFor(item)
+
+              return (
+                <ShelfCard
+                  key={item.id}
+                  item={item}
+                  claim={claims[item.id]}
+                  viewerId={resident.id}
+                  effectivePoints={exchange.effectivePoints}
+                  taperNote={exchange.note}
+                  onClaim={request}
+                  onCancel={cancel}
+                  onCollected={collectFood}
+                />
+              )
+            })}
           </ul>
         </div>
       </section>
@@ -142,17 +180,23 @@ export default function Share() {
         />
 
         <ul className="mt-3 space-y-3">
-          {visible.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              claim={claims[listing.id]}
-              viewerId={resident.id}
-              onRequest={request}
-              onCancel={cancel}
-              onComplete={completeListing}
-            />
-          ))}
+          {visible.map((listing) => {
+            const exchange = exchangeFor(listing)
+
+            return (
+              <ListingCard
+                key={listing.id}
+                listing={listing}
+                claim={claims[listing.id]}
+                viewerId={resident.id}
+                effectivePoints={exchange.effectivePoints}
+                taperNote={exchange.note}
+                onRequest={request}
+                onCancel={cancel}
+                onComplete={completeListing}
+              />
+            )
+          })}
         </ul>
 
         {visible.length === 0 && (

@@ -16,7 +16,7 @@ import { useState } from 'react'
 // grey, labelled as a demo crutch. Better to show the seam than to hide it and
 // have someone assume the demo proves more than it does.
 
-export function EnterHandoverCode({ expected, prompt, reward, showHint, onConfirm }) {
+export function EnterHandoverCode({ expected, prompt, reward, note, showHint, onConfirm }) {
   const [entered, setEntered] = useState('')
   const [wrong, setWrong] = useState(false)
 
@@ -68,6 +68,14 @@ export function EnterHandoverCode({ expected, prompt, reward, showHint, onConfir
           ? `You earn ${reward} points when the code matches.`
           : 'Confirms the handover. No points for this one.'}
       </p>
+
+      {/* Why the number is smaller than the listing advertises. A reduced
+          figure with no explanation just looks like a bug. */}
+      {note && (
+        <p className="mt-1 rounded-lg bg-amber-50 px-2 py-1.5 text-center text-[11px] text-amber-900">
+          {note}
+        </p>
+      )}
 
       {/* Only needed when the other side is a name in the mock data. Once a
           real person on the other phone is holding the code, go and look. */}

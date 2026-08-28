@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LISTINGS } from '../data/listings'
 import { FOOD_ITEMS } from '../data/foodShelf'
 import { makeHandoverCode } from '../lib/handover'
+import { pairKey } from '../lib/pairing'
 import { SharingContext } from './SharingContext'
 
 // Holds the board, the shelf, and one claim per item.
@@ -20,10 +21,18 @@ import { SharingContext } from './SharingContext'
 // version of the same finished exchange: "you earned 25 points" on one, and
 // "Henrison earned 25 points" on the other.
 
+// How many exchanges each pair has already completed, keyed by pairKey().
+// Seeded with one between the two switchable residents so the taper is reachable
+// in a demo without doing three handovers on stage first.
+const SEEDED_PAIRS = {
+  [pairKey('henrison', 'mrlim')]: 1,
+}
+
 export default function SharingProvider({ children }) {
   const [listings, setListings] = useState(LISTINGS)
   const [foodItems, setFoodItems] = useState(FOOD_ITEMS)
   const [claims, setClaims] = useState({})
+  const [pairCounts, setPairCounts] = useState(SEEDED_PAIRS)
 
   // Asking for something promises nothing and pays nothing, so it is free to
   // cancel. The code is minted here, at the moment of asking, and belongs to
@@ -47,7 +56,10 @@ export default function SharingProvider({ children }) {
   // Called once a handover code has been checked. Works whether or not there
   // was a live claim: an item can also be collected by one of the neighbours
   // who only exists as a name in the mock data.
-  function settleClaim(itemId, creditedTo, creditedPoints) {
+  //
+  // partnerId is the other person in the exchange, when the app knows who that
+  // is. Recording the pair is what makes the taper in lib/pairing.js work.
+  function settleClaim(itemId, creditedTo, creditedPoints, partnerId) {
     setClaims((current) => ({
       ...current,
       [itemId]: {
@@ -57,6 +69,13 @@ export default function SharingProvider({ children }) {
         creditedPoints,
       },
     }))
+
+    if (!partnerId) return
+
+    setPairCounts((current) => {
+      const key = pairKey(creditedTo, partnerId)
+      return { ...current, [key]: (current[key] ?? 0) + 1 }
+    })
   }
 
   function addListing(kind, item) {
@@ -71,6 +90,7 @@ export default function SharingProvider({ children }) {
     listings,
     foodItems,
     claims,
+    pairCounts,
     claimItem,
     cancelClaim,
     settleClaim,

@@ -25,6 +25,8 @@ export default function ListingCard({
   listing,
   claim,
   viewerId,
+  effectivePoints,
+  taperNote,
   onRequest,
   onCancel,
   onComplete,
@@ -32,7 +34,10 @@ export default function ListingCard({
   const type = LISTING_TYPES[listing.category]
   const owner = PEOPLE[listing.ownerId]
   const isOwner = listing.ownerId === viewerId
-  const reward = pointsForCompleting(listing, isOwner)
+  // effectivePoints is the listing's points after the repeat-exchange taper in
+  // lib/pairing.js. Everything the card quotes uses it, so the number you are
+  // promised before tapping is the number you get.
+  const reward = pointsForCompleting(listing, isOwner, effectivePoints)
   // A repair is the one listing finished by the person who did NOT post it, so
   // it is the one case where the helper enters the poster's code.
   const isRepair = listing.category === 'repair'
@@ -99,6 +104,7 @@ export default function ListingCard({
               expected={expectedCode}
               prompt="When they collect it, ask them to read out their code."
               reward={reward}
+              note={taperNote}
               // Once a real person on the other phone is holding the code,
               // printing it here would give the game away — and it is no longer
               // needed, because you can go and look at their screen.
@@ -149,6 +155,7 @@ export default function ListingCard({
               expected={listing.handoverCode}
               prompt={`Once it is fixed, ask ${owner.name} to read out their code.`}
               reward={reward}
+              note={taperNote}
               showHint
               onConfirm={() => onComplete(listing, viewerId)}
             />
@@ -168,35 +175,49 @@ export default function ListingCard({
       {done && (
         <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-800">
           {isRepair ? '✓ Fixed' : '✓ Handed over'}
-          {claim.creditedPoints > 0 &&
-            (claim.creditedTo === viewerId
+          {claim.creditedPoints > 0
+            ? claim.creditedTo === viewerId
               ? ` — you earned ${claim.creditedPoints} points`
-              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`)}
+              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`
+            : ' — no points this time'}
         </p>
       )}
 
       {/* Footnote only where nothing above has already stated the reward. */}
       {!claim && !showsCodeBox && (
-        <p className="mt-2 text-center text-xs text-stone-500">
-          {rewardNote(listing, isOwner, owner.name)}
-        </p>
+        <>
+          <p className="mt-2 text-center text-xs text-stone-500">
+            {rewardNote(listing, isOwner, owner.name, effectivePoints)}
+          </p>
+          {taperNote && (
+            <p className="mt-1 rounded-lg bg-amber-50 px-2 py-1.5 text-center text-[11px] text-amber-900">
+              {taperNote}
+            </p>
+          )}
+        </>
       )}
     </li>
   )
 }
 
-function rewardNote(listing, isOwner, ownerName) {
+function rewardNote(listing, isOwner, ownerName, points) {
   if (listing.category === 'rent') {
     return 'No points — you are already being paid for this'
   }
 
+  if (points === 0) {
+    // The taper has run all the way down. Say what still happens, not just what
+    // does not — the exchange is the point, the points are the incentive.
+    return 'No points left, but the exchange still goes ahead'
+  }
+
   if (listing.category === 'repair') {
     return isOwner
-      ? `Whoever fixes this earns ${listing.points} points`
-      : `Earn ${listing.points} points once it is fixed`
+      ? `Whoever fixes this earns ${points} points`
+      : `Earn ${points} points once it is fixed`
   }
 
   return isOwner
-    ? `Earn ${listing.points} points once it is collected`
-    : `${ownerName} earns ${listing.points} points when you collect it`
+    ? `Earn ${points} points once it is collected`
+    : `${ownerName} earns ${points} points when you collect it`
 }

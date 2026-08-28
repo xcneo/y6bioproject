@@ -49,3 +49,10 @@ appends a one-line summary of each task it completes.
   survives switching tabs mid-demo. Also fixed two things this surfaced: walk
   times of "0 min" on another resident's listing, and recipes for expired food
   being shown to neighbours who are not the ones holding it.
+- 2026-08-28 — Added diminishing returns on repeat exchanges between the same two
+  people: full, full, half, quarter, then nothing. Closes the collusion hole the
+  handover code cannot, since two people who agree to cheat really do meet.
+  Deliberately caps the points and never the sharing — the exchange always goes
+  ahead, and the card says so when the rate hits zero. Pair keys are
+  order-independent so alternating direction does not dodge the taper. Explained
+  in `src/lib/pairing.js`, including why the app must not try to detect families.

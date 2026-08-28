@@ -84,6 +84,13 @@ phone you are on and keeps a points balance per resident; `SharingProvider`
 holds the sharing board itself. Both sit outside the router so state survives
 moving between tabs mid-demo.
 
+Repeat exchanges between the same two people earn less each time (`src/lib/pairing.js`):
+full, full, half, quarter, then nothing. This closes the collusion hole the handover
+code cannot — two people who agree to cheat really do meet. The rule that keeps it
+safe: **cap the points, never the sharing.** Nothing ever blocks an exchange. Do not
+add rules about who people are (families, friends, same address); a phone cannot tell
+a colluding pair from a generous one, and trying would mean profiling.
+
 **There are two residents, not one** — Henrison and Mr Lim, switched with the
 dark bar at the top of the screen. Two real phones would need a server, which
 this project rules out, so one device shows two points of view instead. This is

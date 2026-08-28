@@ -31,7 +31,16 @@ const PHOTO_NOTE = {
   item: '📷 Photo of the item — judge freshness yourself',
 }
 
-export default function ShelfCard({ item, claim, viewerId, onClaim, onCancel, onCollected }) {
+export default function ShelfCard({
+  item,
+  claim,
+  viewerId,
+  effectivePoints,
+  taperNote,
+  onClaim,
+  onCancel,
+  onCollected,
+}) {
   const owner = PEOPLE[item.ownerId]
   const isOwner = item.ownerId === viewerId
   const expired = item.daysLeft < 0
@@ -100,7 +109,8 @@ export default function ShelfCard({ item, claim, viewerId, onClaim, onCancel, on
             <EnterHandoverCode
               expected={expectedCode}
               prompt="When they take it, ask them to read out their code."
-              reward={item.points}
+              reward={effectivePoints}
+              note={taperNote}
               showHint={!claimedByOther}
               onConfirm={() => onCollected(item, viewerId)}
             />
@@ -155,10 +165,11 @@ export default function ShelfCard({ item, claim, viewerId, onClaim, onCancel, on
       {done && (
         <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
           ✓ Collected
-          {claim.creditedPoints > 0 &&
-            (claim.creditedTo === viewerId
+          {claim.creditedPoints > 0
+            ? claim.creditedTo === viewerId
               ? ` — you earned ${claim.creditedPoints} points`
-              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`)}
+              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`
+            : ' — no points this time'}
         </p>
       )}
 
@@ -166,7 +177,9 @@ export default function ShelfCard({ item, claim, viewerId, onClaim, onCancel, on
       {!claim && !expired && !(isOwner && requestCount > 0) && (
         <p className="mt-2 text-center text-xs text-stone-500">
           {isOwner
-            ? `Earn ${item.points} points once it is collected`
+            ? effectivePoints > 0
+              ? `Earn ${effectivePoints} points once it is collected`
+              : 'No points left, but the food still gets eaten'
             : `Collect it from ${item.address}`}
         </p>
       )}
