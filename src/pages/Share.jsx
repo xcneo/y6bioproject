@@ -1,36 +1,19 @@
 import { useState } from 'react'
-import { LISTINGS } from '../data/listings'
-import { FOOD_ITEMS } from '../data/foodShelf'
 import { pointsForCompleting } from '../data/listingTypes'
-import { USER } from '../data/user'
-import { usePoints } from '../context/PointsContext'
-import { makeHandoverCode } from '../lib/handover'
+import { useSession } from '../context/SessionContext'
+import { useSharing } from '../context/SharingContext'
 import CategoryChips from '../components/CategoryChips'
 import ListingCard from '../components/ListingCard'
 import ShelfCard from '../components/ShelfCard'
 import NewListingSheet from '../components/NewListingSheet'
 
 export default function Share() {
-  const { points, earnPoints } = usePoints()
+  const { resident, points, earnPoints } = useSession()
+  const { listings, foodItems, claims, claimItem, cancelClaim, settleClaim, addListing } =
+    useSharing()
 
-  // The mock data is only the starting point — anything posted during the demo
-  // gets added to these, which is why they are state and not used directly.
-  const [listings, setListings] = useState(LISTINGS)
-  const [foodItems, setFoodItems] = useState(FOOD_ITEMS)
-
-  // Where the resident stands on each listing, keyed by id:
-  //   'requested' = asked for it, or offered to help, and can still cancel
-  //   'done'      = it actually changed hands
-  // One map covers both the board and the food shelf, because ids are unique
-  // across both files and the two go through the same steps.
-  const [statuses, setStatuses] = useState({})
-
-  // Your own handover code for each thing you have asked for, keyed by id.
-  // You read it out when you turn up; the person giving it to you types it in
-  // and that is what credits them. One code per handover rather than one per
-  // person, so a code someone overhears is no use to them anywhere else.
-  const [myCodes, setMyCodes] = useState({})
-
+  // Screen-only state. Anything that has to survive switching phones or tabs
+  // lives in the providers instead.
   const [activeCategories, setActiveCategories] = useState([])
   const [sheetOpen, setSheetOpen] = useState(false)
   const [notice, setNotice] = useState(null)
@@ -44,77 +27,55 @@ export default function Share() {
   // things you see first.
   const shelf = [...foodItems].sort((a, b) => a.daysLeft - b.daysLeft)
 
-  function setStatus(id, value) {
-    setStatuses((current) => ({ ...current, [id]: value }))
-  }
-
-  function clearStatus(id) {
-    setStatuses((current) => {
-      const next = { ...current }
-      delete next[id]
-      return next
-    })
-  }
-
-  // Asking for something promises nothing and pays nothing — same as signing up
-  // for an event on the dashboard. That is why cancelling is free.
   function request(item) {
-    setStatus(item.id, 'requested')
-    setMyCodes((current) =>
-      current[item.id] ? current : { ...current, [item.id]: makeHandoverCode() },
-    )
+    claimItem(item.id, resident.id)
   }
 
   function cancel(item) {
-    clearStatus(item.id)
+    cancelClaim(item.id)
   }
 
-  // The only place board points are awarded.
-  function completeListing(listing) {
-    if (statuses[listing.id] === 'done') return
+  // The only place board points are awarded. confirmedBy is whoever typed the
+  // handover code in, which is also whoever gets paid.
+  function completeListing(listing, confirmedBy) {
+    if (claims[listing.id]?.step === 'done') return
 
-    const isOwner = listing.owner === 'You'
-    setStatus(listing.id, 'done')
-    earnPoints(pointsForCompleting(listing, isOwner))
+    const isOwner = listing.ownerId === confirmedBy
+    const reward = pointsForCompleting(listing, isOwner)
+
+    settleClaim(listing.id, confirmedBy, reward)
+    earnPoints(reward, confirmedBy)
   }
 
-  // Food is always completed by the person who posted it, confirming a neighbour
-  // came and took it, so the points always go to them.
-  function collectFood(item) {
-    if (statuses[item.id] === 'done') return
+  // Food is always confirmed by the person who posted it, so the points always
+  // go to them.
+  function collectFood(item, confirmedBy) {
+    if (claims[item.id]?.step === 'done') return
 
-    setStatus(item.id, 'done')
-    earnPoints(item.points)
+    settleClaim(item.id, confirmedBy, item.points)
+    earnPoints(item.points, confirmedBy)
   }
 
   function createListing(kind, item) {
-    if (kind === 'food') {
-      setFoodItems((current) => [item, ...current])
-      setNotice(
-        `“${item.title}” is on the shelf. Once a neighbour claims it and reads you their code, ${item.points} points are yours.`,
-      )
-    } else {
-      setListings((current) => [item, ...current])
-      setNotice(
-        item.points > 0
-          ? `“${item.title}” is posted. ${item.points} points once someone collects it and reads you their code.`
-          : `“${item.title}” is posted.`,
-      )
-    }
-
+    addListing(kind, item)
+    setNotice(
+      item.points > 0
+        ? `“${item.title}” is posted. ${item.points} points once someone collects it and reads you their code.`
+        : `“${item.title}” is posted.`,
+    )
     setSheetOpen(false)
   }
 
   return (
     <div className="space-y-5 p-4">
       <header>
-        <p className="text-sm text-stone-500">{USER.block}</p>
+        <p className="text-sm text-stone-500">{resident.block}</p>
         <h1 className="text-2xl font-bold tracking-tight text-stone-900">Share</h1>
         <div className="mt-2 flex items-center gap-2">
           <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-900">
             ⭐ {points.toLocaleString()} points
           </span>
-          <span className="text-xs text-stone-500">Same balance as the map screen</span>
+          <span className="text-xs text-stone-500">{resident.name}&rsquo;s balance</span>
         </div>
       </header>
 
@@ -153,8 +114,8 @@ export default function Share() {
               <ShelfCard
                 key={item.id}
                 item={item}
-                status={statuses[item.id]}
-                myCode={myCodes[item.id]}
+                claim={claims[item.id]}
+                viewerId={resident.id}
                 onClaim={request}
                 onCancel={cancel}
                 onCollected={collectFood}
@@ -185,8 +146,8 @@ export default function Share() {
             <ListingCard
               key={listing.id}
               listing={listing}
-              status={statuses[listing.id]}
-              myCode={myCodes[listing.id]}
+              claim={claims[listing.id]}
+              viewerId={resident.id}
               onRequest={request}
               onCancel={cancel}
               onComplete={completeListing}

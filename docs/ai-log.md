@@ -40,3 +40,12 @@ appends a one-line summary of each task it completes.
   type in the other person's four digits, and the option only appears once a
   neighbour has actually asked for the item. Written up honestly in
   `src/lib/handover.js`, including what it still does not stop.
+- 2026-08-28 — Added a demo phone switcher so the handover can actually be shown
+  rather than just described. Two real phones would need a server, so one device
+  now carries two points of view: Henrison and Mr Lim, each with their own points
+  balance and their own view of the same board. Ownership changed from the string
+  `'You'` to an `ownerId` compared against whoever's phone you are on, which is
+  what made two sides possible at all. Sharing state moved into a provider so it
+  survives switching tabs mid-demo. Also fixed two things this surfaced: walk
+  times of "0 min" on another resident's listing, and recipes for expired food
+  being shown to neighbours who are not the ones holding it.

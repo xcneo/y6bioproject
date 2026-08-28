@@ -1,42 +1,54 @@
 import { LISTING_TYPES, pointsForCompleting } from '../data/listingTypes'
+import { PEOPLE, walkMinutesFor } from '../data/residents'
 import { EnterHandoverCode, ShowHandoverCode } from './HandoverCode'
 
 // One card on the sharing board.
 //
-// A listing you are involved in moves through the same three steps as an event
-// on the dashboard:
+// Every card is drawn from the point of view of whoever's phone you are on
+// (viewerId). The same listing looks completely different to the person who
+// posted it and the person collecting it — that is the whole point of the
+// switcher, and it is why ownership is an id comparison rather than a card
+// that says "You".
+//
+// The exchange goes:
 //   (nothing)   -> nobody has acted on it
-//   'requested' -> you asked for it, or offered to help, and can still cancel
-//   'done'      -> the item actually changed hands, and points are credited
+//   'requested' -> somebody asked, and can still cancel
+//   'done'      -> it changed hands, confirmed by a handover code
 //
-// Points land only at the last step, for the same reason as events: posting
-// something is a promise, not a good deed.
-//
-// And the last step is not a button you can tap on your own. Whoever is being
-// credited has to enter the other person's four-digit handover code, so the
-// points can only be claimed for a meeting that really happened. Two gates,
-// because they stop different things:
+// Points land only at the last step, and only for whoever typed in the other
+// person's code. Two gates, stopping two different things:
 //   - "somebody asked for it" stops points being claimed on a listing nobody
 //     ever wanted, which is the cheapest fraud there is
 //   - the code stops them being claimed without actually meeting
 
 export default function ListingCard({
   listing,
-  status,
-  myCode,
+  claim,
+  viewerId,
   onRequest,
   onCancel,
   onComplete,
 }) {
   const type = LISTING_TYPES[listing.category]
-  const isOwner = listing.owner === 'You'
+  const owner = PEOPLE[listing.ownerId]
+  const isOwner = listing.ownerId === viewerId
   const reward = pointsForCompleting(listing, isOwner)
   // A repair is the one listing finished by the person who did NOT post it, so
   // it is the one case where the helper enters the poster's code.
   const isRepair = listing.category === 'repair'
-  // When the code box is on screen it already says what the points are, so the
-  // footnote at the bottom would just repeat it.
-  const showsCodeBox = isOwner && !status && listing.requests > 0 && reward > 0
+
+  const done = claim?.step === 'done'
+  const claimedByMe = claim?.step === 'requested' && claim.by === viewerId
+  const claimedByOther = claim?.step === 'requested' && claim.by !== viewerId
+
+  // Requests seeded in the mock data, plus a live one made during the demo.
+  const requestCount = listing.requests + (claimedByOther ? 1 : 0)
+
+  // When a real person on the other phone is collecting, the code to expect is
+  // theirs. Otherwise the counterparty is a name in the mock data, and the
+  // seeded code stands in for them.
+  const expectedCode = claimedByOther ? claim.code : listing.handoverCode
+  const showsCodeBox = isOwner && !done && requestCount > 0 && reward > 0
 
   return (
     <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -49,7 +61,7 @@ export default function ListingCard({
           </span>
           <h3 className="mt-1.5 font-semibold text-stone-900">{listing.title}</h3>
           <p className="text-sm text-stone-500">
-            {isOwner ? 'Posted by you' : listing.owner} &middot; {listing.address}
+            {isOwner ? 'Posted by you' : owner.name} &middot; {listing.address}
           </p>
         </div>
 
@@ -63,34 +75,41 @@ export default function ListingCard({
       <p className="mt-2 text-sm text-stone-700">{listing.detail}</p>
 
       {!isOwner && (
-        <p className="mt-1 text-xs text-stone-400">🚶 About {listing.walkMinutes} min walk</p>
+        <p className="mt-1 text-xs text-stone-400">
+          🚶 About {walkMinutesFor(listing, viewerId)} min walk
+        </p>
       )}
 
       {/* ---- Your own post: wait for interest, then confirm with their code ---- */}
-      {isOwner && status !== 'done' && (
+      {isOwner && !done && (
         <>
           <p className="mt-3 text-sm text-stone-600">
-            {listing.requests > 0
-              ? `${listing.requests} neighbour${listing.requests === 1 ? '' : 's'} asked for this`
+            {requestCount > 0
+              ? `${requestCount} neighbour${requestCount === 1 ? '' : 's'} asked for this`
               : 'No requests yet'}
+            {claimedByOther && ` — ${PEOPLE[claim.by].name} is collecting it`}
           </p>
 
-          {listing.requests === 0 ? (
+          {requestCount === 0 ? (
             <p className="mt-2 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
               Nothing to confirm yet — the code comes from whoever collects it.
             </p>
           ) : reward > 0 ? (
             <EnterHandoverCode
-              expected={listing.handoverCode}
+              expected={expectedCode}
               prompt="When they collect it, ask them to read out their code."
               reward={reward}
-              onConfirm={() => onComplete(listing)}
+              // Once a real person on the other phone is holding the code,
+              // printing it here would give the game away — and it is no longer
+              // needed, because you can go and look at their screen.
+              showHint={!claimedByOther}
+              onConfirm={() => onComplete(listing, viewerId)}
             />
           ) : (
             // Renting pays no points, so there is nothing for a code to protect.
             <button
               type="button"
-              onClick={() => onComplete(listing)}
+              onClick={() => onComplete(listing, viewerId)}
               className="mt-2 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
             >
               Mark as collected
@@ -100,7 +119,7 @@ export default function ListingCard({
       )}
 
       {/* ---- Someone else's post ---- */}
-      {!isOwner && !status && (
+      {!isOwner && !claim && (
         <button
           type="button"
           onClick={() => onRequest(listing)}
@@ -110,7 +129,7 @@ export default function ListingCard({
         </button>
       )}
 
-      {!isOwner && status === 'requested' && (
+      {!isOwner && claimedByMe && (
         <>
           <div className="mt-3 flex items-center gap-2">
             <span className="flex-1 rounded-xl bg-emerald-50 py-2.5 text-center text-sm font-semibold text-emerald-800">
@@ -128,34 +147,45 @@ export default function ListingCard({
           {isRepair ? (
             <EnterHandoverCode
               expected={listing.handoverCode}
-              prompt={`Once it is fixed, ask ${listing.owner} to read out their code.`}
+              prompt={`Once it is fixed, ask ${owner.name} to read out their code.`}
               reward={reward}
-              onConfirm={() => onComplete(listing)}
+              showHint
+              onConfirm={() => onComplete(listing, viewerId)}
             />
           ) : (
-            <ShowHandoverCode code={myCode} owner={listing.owner} />
+            <ShowHandoverCode code={claim.code} owner={owner.name} />
           )}
         </>
       )}
 
-      {status === 'done' && (
+      {/* Someone else got there first — visible on the third person's phone. */}
+      {!isOwner && claimedByOther && (
+        <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-sm text-stone-600">
+          {PEOPLE[claim.by].name} has claimed this
+        </p>
+      )}
+
+      {done && (
         <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-800">
           {isRepair ? '✓ Fixed' : '✓ Handed over'}
-          {reward > 0 && ` — you earned ${reward} points`}
+          {claim.creditedPoints > 0 &&
+            (claim.creditedTo === viewerId
+              ? ` — you earned ${claim.creditedPoints} points`
+              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`)}
         </p>
       )}
 
       {/* Footnote only where nothing above has already stated the reward. */}
-      {!status && !showsCodeBox && (
+      {!claim && !showsCodeBox && (
         <p className="mt-2 text-center text-xs text-stone-500">
-          {rewardNote(listing, isOwner)}
+          {rewardNote(listing, isOwner, owner.name)}
         </p>
       )}
     </li>
   )
 }
 
-function rewardNote(listing, isOwner) {
+function rewardNote(listing, isOwner, ownerName) {
   if (listing.category === 'rent') {
     return 'No points — you are already being paid for this'
   }
@@ -168,5 +198,5 @@ function rewardNote(listing, isOwner) {
 
   return isOwner
     ? `Earn ${listing.points} points once it is collected`
-    : `${listing.owner} earns ${listing.points} points when you collect it`
+    : `${ownerName} earns ${listing.points} points when you collect it`
 }

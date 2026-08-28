@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
-import PointsProvider from './context/PointsProvider'
+import SessionProvider from './context/SessionProvider'
+import SharingProvider from './context/SharingProvider'
+import PhoneSwitcher from './components/PhoneSwitcher'
 import Dashboard from './pages/Dashboard'
 import Share from './pages/Share'
 import Placeholder from './pages/Placeholder'
@@ -38,28 +40,33 @@ function TabBar() {
 
 export default function App() {
   return (
-    // PointsProvider wraps everything so the map screen and the share screen
-    // read and change the same points balance.
-    <PointsProvider>
-      <BrowserRouter>
-        {/* max-w-md keeps it phone-shaped even when opened on a laptop */}
-        <div className="mx-auto min-h-screen max-w-md bg-stone-50 pb-20">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/share" element={<Share />} />
-            <Route
-              path="/impact"
-              element={
-                <Placeholder
-                  title="Impact Calculator"
-                  description="See the CO₂, water, waste and money you save by changing a habit."
-                />
-              }
-            />
-          </Routes>
-          <TabBar />
-        </div>
-      </BrowserRouter>
-    </PointsProvider>
+    // SessionProvider knows which phone you are on and what that person's
+    // balance is. SharingProvider holds the board itself — one board, seen from
+    // whichever side you are standing on. Both sit outside the router so that
+    // moving between tabs does not throw the state away mid-demo.
+    <SessionProvider>
+      <SharingProvider>
+        <BrowserRouter>
+          {/* max-w-md keeps it phone-shaped even when opened on a laptop */}
+          <div className="mx-auto min-h-screen max-w-md bg-stone-50 pb-20">
+            <PhoneSwitcher />
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/share" element={<Share />} />
+              <Route
+                path="/impact"
+                element={
+                  <Placeholder
+                    title="Impact Calculator"
+                    description="See the CO₂, water, waste and money you save by changing a habit."
+                  />
+                }
+              />
+            </Routes>
+            <TabBar />
+          </div>
+        </BrowserRouter>
+      </SharingProvider>
+    </SessionProvider>
   )
 }
