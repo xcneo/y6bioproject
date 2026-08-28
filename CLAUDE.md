@@ -79,9 +79,29 @@ Built so far:
 - **Feature 2, Sharing Platform** — `src/pages/Share.jsx`.
 - **Feature 3, Impact Calculator** — not started. Still `src/pages/Placeholder.jsx`.
 
-The points balance lives in `src/context/` so every screen shows one number.
+`src/context/` holds two providers. `SessionProvider` knows which resident's
+phone you are on and keeps a points balance per resident; `SharingProvider`
+holds the sharing board itself. Both sit outside the router so state survives
+moving between tabs mid-demo.
+
+Repeat exchanges between the same two people earn less each time (`src/lib/pairing.js`):
+full, full, half, quarter, then nothing. This closes the collusion hole the handover
+code cannot — two people who agree to cheat really do meet. The rule that keeps it
+safe: **cap the points, never the sharing.** Nothing ever blocks an exchange. Do not
+add rules about who people are (families, friends, same address); a phone cannot tell
+a colluding pair from a generous one, and trying would mean profiling.
+
+**There are two residents, not one** — Henrison and Mr Lim, switched with the
+dark bar at the top of the screen. Two real phones would need a server, which
+this project rules out, so one device shows two points of view instead. This is
+what makes the handover code demonstrable rather than merely described.
+Ownership is therefore `ownerId` compared against the current resident; never
+reintroduce a literal `'You'`.
 Points are only ever awarded when something is actually completed — attendance
-confirmed, item handed over — never for signing up or posting. Keep that rule.
+confirmed, item handed over — never for signing up or posting. On the sharing
+screen a completion that pays points also needs the other person's four-digit
+handover code, so nobody can pay themselves for a meeting that never happened.
+Keep both rules.
 
 `src/data/` exists and holds the mock data. `factors.js` does **not** exist yet — it is
 feature 3's job, and it is where every sourced conversion figure must go.

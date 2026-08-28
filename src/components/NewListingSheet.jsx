@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { LISTING_TYPES, POSTABLE_CATEGORIES } from '../data/listingTypes'
-import { USER } from '../data/user'
+import { useSession } from '../context/SessionContext'
+import { makeHandoverCode } from '../lib/handover'
 
 // The "post something" form, sliding up from the bottom like FacilitySheet.
 //
@@ -25,6 +26,8 @@ const EXPIRY_OPTIONS = [
 ]
 
 export default function NewListingSheet({ onCreate, onClose }) {
+  // Whatever you post is posted as whoever's phone you are currently on.
+  const { resident } = useSession()
   const [category, setCategory] = useState('giveaway')
   const [title, setTitle] = useState('')
   const [detail, setDetail] = useState('')
@@ -51,8 +54,8 @@ export default function NewListingSheet({ onCreate, onClose }) {
         title: title.trim(),
         detail: detail.trim() || 'No extra details given.',
         quantity: quantity.trim() || 'Not stated',
-        owner: 'You',
-        address: USER.block,
+        ownerId: resident.id,
+        address: resident.block,
         walkMinutes: 0,
         bestBefore: expiry.text,
         daysLeft: expiry.daysLeft,
@@ -61,6 +64,8 @@ export default function NewListingSheet({ onCreate, onClose }) {
         // suggestions still fire. Left empty here — see recipes.js.
         tags: [],
         points: LISTING_TYPES.food.defaultPoints,
+        requests: 0,
+        handoverCode: makeHandoverCode(),
       })
     } else {
       onCreate('board', {
@@ -68,11 +73,12 @@ export default function NewListingSheet({ onCreate, onClose }) {
         category,
         title: title.trim(),
         detail: detail.trim() || 'No extra details given.',
-        owner: 'You',
-        address: USER.block,
+        ownerId: resident.id,
+        address: resident.block,
         walkMinutes: 0,
         points: LISTING_TYPES[category].defaultPoints,
         requests: 0,
+        handoverCode: makeHandoverCode(),
         ...(category === 'rent' ? { price: Number(price) || 0 } : {}),
       })
     }

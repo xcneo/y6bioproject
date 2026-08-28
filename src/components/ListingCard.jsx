@@ -1,21 +1,59 @@
 import { LISTING_TYPES, pointsForCompleting } from '../data/listingTypes'
+import { PEOPLE, walkMinutesFor } from '../data/residents'
+import { EnterHandoverCode, ShowHandoverCode } from './HandoverCode'
 
 // One card on the sharing board.
 //
-// A listing you are involved in moves through the same three steps as an event
-// on the dashboard:
-//   (nothing)   -> nobody has acted on it
-//   'requested' -> you asked for it, or offered to help, and can still cancel
-//   'done'      -> the item actually changed hands, and points are credited
+// Every card is drawn from the point of view of whoever's phone you are on
+// (viewerId). The same listing looks completely different to the person who
+// posted it and the person collecting it — that is the whole point of the
+// switcher, and it is why ownership is an id comparison rather than a card
+// that says "You".
 //
-// Points land only at the last step, for the same reason as events: posting
-// something is a promise, not a good deed. If listing an item paid out
-// immediately you could farm points by posting junk nobody ever collects.
+// The exchange goes:
+//   (nothing)   -> nobody has acted on it
+//   'requested' -> somebody asked, and can still cancel
+//   'done'      -> it changed hands, confirmed by a handover code
+//
+// Points land only at the last step, and only for whoever typed in the other
+// person's code. Two gates, stopping two different things:
+//   - "somebody asked for it" stops points being claimed on a listing nobody
+//     ever wanted, which is the cheapest fraud there is
+//   - the code stops them being claimed without actually meeting
 
-export default function ListingCard({ listing, status, onRequest, onCancel, onComplete }) {
+export default function ListingCard({
+  listing,
+  claim,
+  viewerId,
+  effectivePoints,
+  taperNote,
+  onRequest,
+  onCancel,
+  onComplete,
+}) {
   const type = LISTING_TYPES[listing.category]
-  const isOwner = listing.owner === 'You'
-  const reward = pointsForCompleting(listing, isOwner)
+  const owner = PEOPLE[listing.ownerId]
+  const isOwner = listing.ownerId === viewerId
+  // effectivePoints is the listing's points after the repeat-exchange taper in
+  // lib/pairing.js. Everything the card quotes uses it, so the number you are
+  // promised before tapping is the number you get.
+  const reward = pointsForCompleting(listing, isOwner, effectivePoints)
+  // A repair is the one listing finished by the person who did NOT post it, so
+  // it is the one case where the helper enters the poster's code.
+  const isRepair = listing.category === 'repair'
+
+  const done = claim?.step === 'done'
+  const claimedByMe = claim?.step === 'requested' && claim.by === viewerId
+  const claimedByOther = claim?.step === 'requested' && claim.by !== viewerId
+
+  // Requests seeded in the mock data, plus a live one made during the demo.
+  const requestCount = listing.requests + (claimedByOther ? 1 : 0)
+
+  // When a real person on the other phone is collecting, the code to expect is
+  // theirs. Otherwise the counterparty is a name in the mock data, and the
+  // seeded code stands in for them.
+  const expectedCode = claimedByOther ? claim.code : listing.handoverCode
+  const showsCodeBox = isOwner && !done && requestCount > 0 && reward > 0
 
   return (
     <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -28,7 +66,7 @@ export default function ListingCard({ listing, status, onRequest, onCancel, onCo
           </span>
           <h3 className="mt-1.5 font-semibold text-stone-900">{listing.title}</h3>
           <p className="text-sm text-stone-500">
-            {isOwner ? 'Posted by you' : listing.owner} &middot; {listing.address}
+            {isOwner ? 'Posted by you' : owner.name} &middot; {listing.address}
           </p>
         </div>
 
@@ -42,29 +80,52 @@ export default function ListingCard({ listing, status, onRequest, onCancel, onCo
       <p className="mt-2 text-sm text-stone-700">{listing.detail}</p>
 
       {!isOwner && (
-        <p className="mt-1 text-xs text-stone-400">🚶 About {listing.walkMinutes} min walk</p>
+        <p className="mt-1 text-xs text-stone-400">
+          🚶 About {walkMinutesFor(listing, viewerId)} min walk
+        </p>
       )}
 
-      {/* ---- Your own post: watch the interest, then confirm the handover ---- */}
-      {isOwner && status !== 'done' && (
+      {/* ---- Your own post: wait for interest, then confirm with their code ---- */}
+      {isOwner && !done && (
         <>
           <p className="mt-3 text-sm text-stone-600">
-            {listing.requests > 0
-              ? `${listing.requests} neighbour${listing.requests === 1 ? '' : 's'} asked for this`
+            {requestCount > 0
+              ? `${requestCount} neighbour${requestCount === 1 ? '' : 's'} asked for this`
               : 'No requests yet'}
+            {claimedByOther && ` — ${PEOPLE[claim.by].name} is collecting it`}
           </p>
-          <button
-            type="button"
-            onClick={() => onComplete(listing)}
-            className="mt-2 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
-          >
-            {listing.category === 'repair' ? 'Mark as fixed' : 'Mark as collected'}
-          </button>
+
+          {requestCount === 0 ? (
+            <p className="mt-2 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
+              Nothing to confirm yet — the code comes from whoever collects it.
+            </p>
+          ) : reward > 0 ? (
+            <EnterHandoverCode
+              expected={expectedCode}
+              prompt="When they collect it, ask them to read out their code."
+              reward={reward}
+              note={taperNote}
+              // Once a real person on the other phone is holding the code,
+              // printing it here would give the game away — and it is no longer
+              // needed, because you can go and look at their screen.
+              showHint={!claimedByOther}
+              onConfirm={() => onComplete(listing, viewerId)}
+            />
+          ) : (
+            // Renting pays no points, so there is nothing for a code to protect.
+            <button
+              type="button"
+              onClick={() => onComplete(listing, viewerId)}
+              className="mt-2 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
+            >
+              Mark as collected
+            </button>
+          )}
         </>
       )}
 
       {/* ---- Someone else's post ---- */}
-      {!isOwner && !status && (
+      {!isOwner && !claim && (
         <button
           type="button"
           onClick={() => onRequest(listing)}
@@ -74,62 +135,89 @@ export default function ListingCard({ listing, status, onRequest, onCancel, onCo
         </button>
       )}
 
-      {!isOwner && status === 'requested' && (
-        <div className="mt-3 flex items-center gap-2">
-          <span className="flex-1 rounded-xl bg-emerald-50 py-2.5 text-center text-sm font-semibold text-emerald-800">
-            {listing.category === 'repair' ? '✓ You offered to help' : '✓ Request sent'}
-          </span>
-          <button
-            type="button"
-            onClick={() => onCancel(listing)}
-            className="rounded-xl border border-stone-300 px-4 py-2.5 text-sm font-medium text-stone-600"
-          >
-            Cancel
-          </button>
-        </div>
+      {!isOwner && claimedByMe && (
+        <>
+          <div className="mt-3 flex items-center gap-2">
+            <span className="flex-1 rounded-xl bg-emerald-50 py-2.5 text-center text-sm font-semibold text-emerald-800">
+              {isRepair ? '✓ You offered to help' : '✓ Request sent'}
+            </span>
+            <button
+              type="button"
+              onClick={() => onCancel(listing)}
+              className="rounded-xl border border-stone-300 px-4 py-2.5 text-sm font-medium text-stone-600"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {isRepair ? (
+            <EnterHandoverCode
+              expected={listing.handoverCode}
+              prompt={`Once it is fixed, ask ${owner.name} to read out their code.`}
+              reward={reward}
+              note={taperNote}
+              showHint
+              onConfirm={() => onComplete(listing, viewerId)}
+            />
+          ) : (
+            <ShowHandoverCode code={claim.code} owner={owner.name} />
+          )}
+        </>
       )}
 
-      {/* Only a repair is finished by the helper, so this is the one case where
-          the person who did not post the listing gets the completion button. */}
-      {!isOwner && status === 'requested' && listing.category === 'repair' && (
-        <button
-          type="button"
-          onClick={() => onComplete(listing)}
-          className="mt-2 w-full rounded-xl border border-emerald-600 py-2.5 text-sm font-semibold text-emerald-700"
-        >
-          Mark as fixed
-        </button>
+      {/* Someone else got there first — visible on the third person's phone. */}
+      {!isOwner && claimedByOther && (
+        <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-sm text-stone-600">
+          {PEOPLE[claim.by].name} has claimed this
+        </p>
       )}
 
-      {status === 'done' && (
+      {done && (
         <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2.5 text-sm font-medium text-emerald-800">
-          {listing.category === 'repair' ? '✓ Fixed' : '✓ Handed over'}
-          {reward > 0 && ` — you earned ${reward} points`}
+          {isRepair ? '✓ Fixed' : '✓ Handed over'}
+          {claim.creditedPoints > 0
+            ? claim.creditedTo === viewerId
+              ? ` — you earned ${claim.creditedPoints} points`
+              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`
+            : ' — no points this time'}
         </p>
       )}
 
-      {/* The footnote explains who the points are for, before you tap anything. */}
-      {status !== 'done' && (
-        <p className="mt-2 text-center text-xs text-stone-500">
-          {rewardNote(listing, isOwner)}
-        </p>
+      {/* Footnote only where nothing above has already stated the reward. */}
+      {!claim && !showsCodeBox && (
+        <>
+          <p className="mt-2 text-center text-xs text-stone-500">
+            {rewardNote(listing, isOwner, owner.name, effectivePoints)}
+          </p>
+          {taperNote && (
+            <p className="mt-1 rounded-lg bg-amber-50 px-2 py-1.5 text-center text-[11px] text-amber-900">
+              {taperNote}
+            </p>
+          )}
+        </>
       )}
     </li>
   )
 }
 
-function rewardNote(listing, isOwner) {
+function rewardNote(listing, isOwner, ownerName, points) {
   if (listing.category === 'rent') {
     return 'No points — you are already being paid for this'
   }
 
+  if (points === 0) {
+    // The taper has run all the way down. Say what still happens, not just what
+    // does not — the exchange is the point, the points are the incentive.
+    return 'No points left, but the exchange still goes ahead'
+  }
+
   if (listing.category === 'repair') {
     return isOwner
-      ? `Whoever fixes this earns ${listing.points} points`
-      : `Earn ${listing.points} points once it is fixed`
+      ? `Whoever fixes this earns ${points} points`
+      : `Earn ${points} points once it is fixed`
   }
 
   return isOwner
-    ? `Earn ${listing.points} points once it is collected`
-    : `${listing.owner} earns ${listing.points} points when you collect it`
+    ? `Earn ${points} points once it is collected`
+    : `${ownerName} earns ${points} points when you collect it`
 }

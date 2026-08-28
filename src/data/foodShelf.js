@@ -17,15 +17,22 @@
 //             neighbours judge freshness for themselves
 //
 // tags feed the recipe suggestions in recipes.js, for food nobody claimed in time.
+//
+// ownerId is a key from residents.js, so whether an item is "yours" depends on
+// which phone you are looking at.
+//
+// requests and handoverCode work exactly as they do in listings.js: somebody
+// has to have asked for it, and they have to read you their four digits, before
+// the points are yours.
 
 export const FOOD_ITEMS = [
-  // ---- Yours, already past its date and unclaimed: this is what triggers the recipes ----
+  // ---- Henrison's, already past its date and unclaimed: this triggers the recipes ----
   {
     id: 'carrots-celery',
     title: 'Half a bag of carrots and celery',
     detail: 'Bought for a soup I never made. Slightly bendy but fine once cooked.',
     quantity: 'About 6 carrots, 4 celery sticks',
-    owner: 'You',
+    ownerId: 'henrison',
     address: 'Blk 442 Clementi Ave 3',
     walkMinutes: 0,
     bestBefore: 'Thu 27 Aug',
@@ -33,14 +40,16 @@ export const FOOD_ITEMS = [
     photo: 'item',
     tags: ['carrot', 'celery'],
     points: 30,
+    requests: 0,
+    handoverCode: '5514',
   },
-  // ---- Yours, still claimable: lets the demo show points landing on collection ----
+  // ---- Henrison's, still claimable: switch to Mr Lim's phone and claim it ----
   {
     id: 'bananas',
     title: 'Five ripe bananas',
     detail: 'Very ripe — good for baking or a shake. Going soft fast in this weather.',
     quantity: '5 bananas',
-    owner: 'You',
+    ownerId: 'henrison',
     address: 'Blk 442 Clementi Ave 3',
     walkMinutes: 0,
     bestBefore: 'Sat 29 Aug',
@@ -48,6 +57,8 @@ export const FOOD_ITEMS = [
     photo: 'item',
     tags: ['banana'],
     points: 30,
+    requests: 2,
+    handoverCode: '3948',
   },
 
   // ---- Neighbours ----
@@ -56,7 +67,7 @@ export const FOOD_ITEMS = [
     title: 'Half a loaf of wholemeal bread',
     detail: 'Opened yesterday, kept sealed. Still soft.',
     quantity: 'About 8 slices',
-    owner: 'Kumar',
+    ownerId: 'kumar',
     address: 'Blk 445 Clementi Ave 3',
     walkMinutes: 3,
     bestBefore: 'Sat 29 Aug',
@@ -70,7 +81,7 @@ export const FOOD_ITEMS = [
     title: 'Unopened 1L fresh milk',
     detail: 'Bought two by mistake. Been in the fridge the whole time.',
     quantity: '1 litre',
-    owner: 'Aisyah',
+    ownerId: 'aisyah',
     address: 'Blk 445 Clementi Ave 3',
     walkMinutes: 3,
     bestBefore: 'Sun 30 Aug',
@@ -84,7 +95,7 @@ export const FOOD_ITEMS = [
     title: 'Box of cherry tomatoes',
     detail: 'From the community garden plot. More than we can eat.',
     quantity: 'About 300g',
-    owner: 'Nurul',
+    ownerId: 'nurul',
     address: 'Blk 448 Clementi Ave 3',
     walkMinutes: 4,
     bestBefore: 'Sun 30 Aug',
@@ -98,7 +109,7 @@ export const FOOD_ITEMS = [
     title: 'Six eggs',
     detail: 'Going away on Monday and they will not keep. Carton has the date on it.',
     quantity: '6 eggs',
-    owner: 'Wei Ling',
+    ownerId: 'weiling',
     address: 'Blk 352 Clementi Ave 2',
     walkMinutes: 7,
     bestBefore: 'Mon 31 Aug',

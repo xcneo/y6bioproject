@@ -1,4 +1,6 @@
 import { recipesFor } from '../data/recipes'
+import { PEOPLE } from '../data/residents'
+import { EnterHandoverCode, ShowHandoverCode } from './HandoverCode'
 
 // One item on the Expiring Soon Shelf.
 //
@@ -13,6 +15,9 @@ import { recipesFor } from '../data/recipes'
 // 2. When an item reaches its date with nobody claiming it, the card stops
 //    advertising it and switches to recipes instead. Giving it away has failed,
 //    so the app's job changes from finding a taker to stopping it being binned.
+//
+// Like ListingCard, everything here is drawn from the point of view of whichever
+// phone you are on.
 
 function freshness(daysLeft) {
   if (daysLeft < 0) return { text: 'Past its date', style: 'bg-stone-200 text-stone-700' }
@@ -26,11 +31,30 @@ const PHOTO_NOTE = {
   item: '📷 Photo of the item — judge freshness yourself',
 }
 
-export default function ShelfCard({ item, status, onClaim, onCancel, onCollected }) {
-  const isOwner = item.owner === 'You'
+export default function ShelfCard({
+  item,
+  claim,
+  viewerId,
+  effectivePoints,
+  taperNote,
+  onClaim,
+  onCancel,
+  onCollected,
+}) {
+  const owner = PEOPLE[item.ownerId]
+  const isOwner = item.ownerId === viewerId
   const expired = item.daysLeft < 0
   const tag = freshness(item.daysLeft)
-  const recipes = expired && status !== 'done' ? recipesFor(item.tags) : []
+
+  const done = claim?.step === 'done'
+  const claimedByMe = claim?.step === 'requested' && claim.by === viewerId
+  const claimedByOther = claim?.step === 'requested' && claim.by !== viewerId
+
+  const requestCount = (item.requests ?? 0) + (claimedByOther ? 1 : 0)
+  const expectedCode = claimedByOther ? claim.code : item.handoverCode
+  // Recipes are for whoever is standing in front of the fridge. A neighbour
+  // scrolling past someone else's expired carrots cannot cook them.
+  const recipes = expired && !done && isOwner ? recipesFor(item.tags) : []
 
   return (
     <li className="w-64 shrink-0 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -44,7 +68,7 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
       </div>
 
       <p className="mt-1 text-sm text-stone-500">
-        {isOwner ? 'Posted by you' : item.owner} &middot; {item.quantity}
+        {isOwner ? 'Posted by you' : owner.name} &middot; {item.quantity}
       </p>
       <p className="mt-2 text-sm text-stone-700">{item.detail}</p>
 
@@ -71,19 +95,40 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
         </div>
       )}
 
-      {/* ---- Your own food: confirm the neighbour actually picked it up ---- */}
-      {isOwner && status !== 'done' && !expired && (
-        <button
-          type="button"
-          onClick={() => onCollected(item)}
-          className="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
-        >
-          Mark as collected
-        </button>
+      {/* ---- Your own food: whoever takes it reads you their code ---- */}
+      {isOwner &&
+        !done &&
+        !expired &&
+        (requestCount > 0 ? (
+          <>
+            {claimedByOther && (
+              <p className="mt-3 text-sm text-stone-600">
+                {PEOPLE[claim.by].name} is collecting it
+              </p>
+            )}
+            <EnterHandoverCode
+              expected={expectedCode}
+              prompt="When they take it, ask them to read out their code."
+              reward={effectivePoints}
+              note={taperNote}
+              showHint={!claimedByOther}
+              onConfirm={() => onCollected(item, viewerId)}
+            />
+          </>
+        ) : (
+          <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
+            Nobody has claimed this yet.
+          </p>
+        ))}
+
+      {!isOwner && expired && (
+        <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2 text-center text-xs text-stone-500">
+          Past its date — {owner.name} has been sent some recipes for it.
+        </p>
       )}
 
       {/* ---- A neighbour's food ---- */}
-      {!isOwner && !status && !expired && (
+      {!isOwner && !claim && !expired && (
         <button
           type="button"
           onClick={() => onClaim(item)}
@@ -93,31 +138,48 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
         </button>
       )}
 
-      {!isOwner && status === 'requested' && (
-        <div className="mt-3 flex items-center gap-2">
-          <span className="flex-1 rounded-xl bg-emerald-50 py-2 text-center text-sm font-semibold text-emerald-800">
-            ✓ Claimed
-          </span>
-          <button
-            type="button"
-            onClick={() => onCancel(item)}
-            className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600"
-          >
-            Cancel
-          </button>
-        </div>
+      {!isOwner && claimedByMe && (
+        <>
+          <div className="mt-3 flex items-center gap-2">
+            <span className="flex-1 rounded-xl bg-emerald-50 py-2 text-center text-sm font-semibold text-emerald-800">
+              ✓ Claimed
+            </span>
+            <button
+              type="button"
+              onClick={() => onCancel(item)}
+              className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600"
+            >
+              Cancel
+            </button>
+          </div>
+          <ShowHandoverCode code={claim.code} owner={owner.name} />
+        </>
       )}
 
-      {status === 'done' && (
-        <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
-          ✓ Collected{isOwner && ` — you earned ${item.points} points`}
+      {!isOwner && claimedByOther && (
+        <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2 text-center text-sm text-stone-600">
+          {PEOPLE[claim.by].name} has claimed this
         </p>
       )}
 
-      {status !== 'done' && !expired && (
+      {done && (
+        <p className="mt-3 rounded-xl bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-800">
+          ✓ Collected
+          {claim.creditedPoints > 0
+            ? claim.creditedTo === viewerId
+              ? ` — you earned ${claim.creditedPoints} points`
+              : ` — ${PEOPLE[claim.creditedTo].name} earned ${claim.creditedPoints} points`
+            : ' — no points this time'}
+        </p>
+      )}
+
+      {/* Skipped when the code box is up, which already states the points. */}
+      {!claim && !expired && !(isOwner && requestCount > 0) && (
         <p className="mt-2 text-center text-xs text-stone-500">
           {isOwner
-            ? `Earn ${item.points} points once it is collected`
+            ? effectivePoints > 0
+              ? `Earn ${effectivePoints} points once it is collected`
+              : 'No points left, but the food still gets eaten'
             : `Collect it from ${item.address}`}
         </p>
       )}

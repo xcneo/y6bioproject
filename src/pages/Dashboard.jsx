@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { FACILITIES } from '../data/facilities'
 import { FACILITY_TYPES } from '../data/facilityTypes'
-import { USER } from '../data/user'
-import { usePoints } from '../context/PointsContext'
+import { useSession } from '../context/SessionContext'
 import MapView from '../components/MapView'
 import FilterChips from '../components/FilterChips'
 import FacilitySheet from '../components/FacilitySheet'
@@ -10,23 +9,36 @@ import ScoreCard from '../components/ScoreCard'
 import EventList from '../components/EventList'
 
 export default function Dashboard() {
+  // Who you are and what you have both come from the session, so this screen
+  // and the Share screen always agree. See src/context/SessionContext.js.
+  const { resident, points, earnPoints } = useSession()
+
   // Which facility types the chips are filtering by. Empty list means "show all".
   const [activeTypes, setActiveTypes] = useState([])
   // The facility whose detail card is open, or null when nothing is open.
   const [selected, setSelected] = useState(null)
-  // Where the resident stands on each event, keyed by event id:
+
+  // Where each resident stands on each event, keyed by event id:
   // 'going' = signed up, 'attended' = turned up and the points were credited.
-  // An event missing from here is one they have not signed up for.
-  // Seeded so the demo shows all three states at once: one past event already
-  // credited (its points are part of the starting balance below), and one past
-  // event still waiting to be confirmed.
-  const [eventStatus, setEventStatus] = useState({
-    'canal-cleanup': 'attended',
-    'ewaste-jul': 'going',
+  // An event missing from the map is one they have not signed up for.
+  //
+  // Kept per resident so switching phones does not show you someone else's
+  // sign-ups. Henrison's is seeded so the demo shows all three states at once:
+  // one past event already credited, and one still waiting to be confirmed.
+  const [eventsByResident, setEventsByResident] = useState({
+    henrison: { 'canal-cleanup': 'attended', 'ewaste-jul': 'going' },
+    mrlim: {},
   })
-  // The points balance is shared with the Share screen, so it lives in a
-  // context rather than in this file. See src/context/PointsContext.js.
-  const { points, earnPoints } = usePoints()
+
+  const myEvents = eventsByResident[resident.id] ?? {}
+
+  // Applies a change to just the current resident's sign-ups.
+  function updateEvents(change) {
+    setEventsByResident((current) => ({
+      ...current,
+      [resident.id]: change(current[resident.id] ?? {}),
+    }))
+  }
 
   const visible =
     activeTypes.length === 0
@@ -46,14 +58,14 @@ export default function Dashboard() {
 
   // Signing up costs and earns nothing — the points come later, on attendance.
   function joinEvent(event) {
-    setEventStatus((current) => ({ ...current, [event.id]: 'going' }))
+    updateEvents((mine) => ({ ...mine, [event.id]: 'going' }))
   }
 
   // Cancelling just drops the sign-up. No points to take back, because none
   // were given out at sign-up time.
   function cancelEvent(event) {
-    setEventStatus((current) => {
-      const next = { ...current }
+    updateEvents((mine) => {
+      const next = { ...mine }
       delete next[event.id]
       return next
     })
@@ -61,17 +73,17 @@ export default function Dashboard() {
 
   // This is the only place event points are awarded.
   function confirmAttendance(event) {
-    if (eventStatus[event.id] === 'attended') return
-    setEventStatus((current) => ({ ...current, [event.id]: 'attended' }))
+    if (myEvents[event.id] === 'attended') return
+    updateEvents((mine) => ({ ...mine, [event.id]: 'attended' }))
     earnPoints(event.pointsForAttending)
   }
 
   return (
     <div className="space-y-5 p-4">
       <header>
-        <p className="text-sm text-stone-500">Good morning, {USER.name}</p>
+        <p className="text-sm text-stone-500">Good morning, {resident.name}</p>
         <h1 className="text-2xl font-bold tracking-tight text-stone-900">
-          {USER.estate}
+          {resident.estate}
         </h1>
         <div className="mt-2 flex items-center gap-2">
           <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-semibold text-amber-900">
@@ -81,11 +93,11 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <ScoreCard estate={USER.estate} />
+      <ScoreCard estate={resident.estate} />
 
       <section>
         <h2 className="mb-2 text-sm font-semibold text-stone-900">
-          Green facilities near {USER.block}
+          Green facilities near {resident.block}
         </h2>
         <FilterChips
           activeTypes={activeTypes}
@@ -150,7 +162,7 @@ export default function Dashboard() {
       </section>
 
       <EventList
-        statuses={eventStatus}
+        statuses={myEvents}
         onJoin={joinEvent}
         onCancel={cancelEvent}
         onConfirm={confirmAttendance}

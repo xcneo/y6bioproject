@@ -34,3 +34,25 @@ appends a one-line summary of each task it completes.
   Dashboard.jsx into a shared React context so both screens show one number.
   Points are awarded on completed handover, never on posting — same rule as
   events, for the same anti-farming reason.
+- 2026-08-28 — Replaced the self-tapped "Mark as collected" button with handover
+  codes, after the team spotted that whoever was being given points was also the
+  one tapping the button that gave them out. Whoever is being credited now has to
+  type in the other person's four digits, and the option only appears once a
+  neighbour has actually asked for the item. Written up honestly in
+  `src/lib/handover.js`, including what it still does not stop.
+- 2026-08-28 — Added a demo phone switcher so the handover can actually be shown
+  rather than just described. Two real phones would need a server, so one device
+  now carries two points of view: Henrison and Mr Lim, each with their own points
+  balance and their own view of the same board. Ownership changed from the string
+  `'You'` to an `ownerId` compared against whoever's phone you are on, which is
+  what made two sides possible at all. Sharing state moved into a provider so it
+  survives switching tabs mid-demo. Also fixed two things this surfaced: walk
+  times of "0 min" on another resident's listing, and recipes for expired food
+  being shown to neighbours who are not the ones holding it.
+- 2026-08-28 — Added diminishing returns on repeat exchanges between the same two
+  people: full, full, half, quarter, then nothing. Closes the collusion hole the
+  handover code cannot, since two people who agree to cheat really do meet.
+  Deliberately caps the points and never the sharing — the exchange always goes
+  ahead, and the card says so when the rate hits zero. Pair keys are
+  order-independent so alternating direction does not dodge the taper. Explained
+  in `src/lib/pairing.js`, including why the app must not try to detect families.

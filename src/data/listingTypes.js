@@ -70,14 +70,16 @@ export const LISTING_TYPES = {
 // The rule above, written once so the card and the screen can never disagree
 // about who gets paid. isOwner means "the person completing this is the one who
 // posted it".
-export function pointsForCompleting(listing, isOwner) {
+// points defaults to the listing's own figure, but the caller can pass a
+// reduced one — see the repeat-exchange taper in src/lib/pairing.js.
+export function pointsForCompleting(listing, isOwner, points = listing.points) {
   if (listing.category === 'repair') {
     // The neighbour who turned up with a screwdriver earns them, not the person
     // whose kettle was broken.
-    return isOwner ? 0 : listing.points
+    return isOwner ? 0 : points
   }
 
-  return isOwner ? listing.points : 0
+  return isOwner ? points : 0
 }
 
 // Food is posted through the same form but shows up in the Expiring Soon Shelf
