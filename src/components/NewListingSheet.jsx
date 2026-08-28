@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { LISTING_TYPES, POSTABLE_CATEGORIES } from '../data/listingTypes'
 import { USER } from '../data/user'
+import { makeHandoverCode } from '../lib/handover'
 
 // The "post something" form, sliding up from the bottom like FacilitySheet.
 //
@@ -61,6 +62,8 @@ export default function NewListingSheet({ onCreate, onClose }) {
         // suggestions still fire. Left empty here — see recipes.js.
         tags: [],
         points: LISTING_TYPES.food.defaultPoints,
+        requests: 0,
+        handoverCode: makeHandoverCode(),
       })
     } else {
       onCreate('board', {
@@ -73,6 +76,7 @@ export default function NewListingSheet({ onCreate, onClose }) {
         walkMinutes: 0,
         points: LISTING_TYPES[category].defaultPoints,
         requests: 0,
+        handoverCode: makeHandoverCode(),
         ...(category === 'rent' ? { price: Number(price) || 0 } : {}),
       })
     }

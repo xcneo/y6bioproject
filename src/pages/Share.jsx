@@ -4,6 +4,7 @@ import { FOOD_ITEMS } from '../data/foodShelf'
 import { pointsForCompleting } from '../data/listingTypes'
 import { USER } from '../data/user'
 import { usePoints } from '../context/PointsContext'
+import { makeHandoverCode } from '../lib/handover'
 import CategoryChips from '../components/CategoryChips'
 import ListingCard from '../components/ListingCard'
 import ShelfCard from '../components/ShelfCard'
@@ -23,6 +24,12 @@ export default function Share() {
   // One map covers both the board and the food shelf, because ids are unique
   // across both files and the two go through the same steps.
   const [statuses, setStatuses] = useState({})
+
+  // Your own handover code for each thing you have asked for, keyed by id.
+  // You read it out when you turn up; the person giving it to you types it in
+  // and that is what credits them. One code per handover rather than one per
+  // person, so a code someone overhears is no use to them anywhere else.
+  const [myCodes, setMyCodes] = useState({})
 
   const [activeCategories, setActiveCategories] = useState([])
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -53,6 +60,9 @@ export default function Share() {
   // for an event on the dashboard. That is why cancelling is free.
   function request(item) {
     setStatus(item.id, 'requested')
+    setMyCodes((current) =>
+      current[item.id] ? current : { ...current, [item.id]: makeHandoverCode() },
+    )
   }
 
   function cancel(item) {
@@ -80,12 +90,14 @@ export default function Share() {
   function createListing(kind, item) {
     if (kind === 'food') {
       setFoodItems((current) => [item, ...current])
-      setNotice(`“${item.title}” is on the shelf. You get ${item.points} points when someone collects it.`)
+      setNotice(
+        `“${item.title}” is on the shelf. Once a neighbour claims it and reads you their code, ${item.points} points are yours.`,
+      )
     } else {
       setListings((current) => [item, ...current])
       setNotice(
         item.points > 0
-          ? `“${item.title}” is posted. You get ${item.points} points when it is collected.`
+          ? `“${item.title}” is posted. ${item.points} points once someone collects it and reads you their code.`
           : `“${item.title}” is posted.`,
       )
     }
@@ -142,6 +154,7 @@ export default function Share() {
                 key={item.id}
                 item={item}
                 status={statuses[item.id]}
+                myCode={myCodes[item.id]}
                 onClaim={request}
                 onCancel={cancel}
                 onCollected={collectFood}
@@ -173,6 +186,7 @@ export default function Share() {
               key={listing.id}
               listing={listing}
               status={statuses[listing.id]}
+              myCode={myCodes[listing.id]}
               onRequest={request}
               onCancel={cancel}
               onComplete={completeListing}

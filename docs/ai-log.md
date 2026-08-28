@@ -34,3 +34,9 @@ appends a one-line summary of each task it completes.
   Dashboard.jsx into a shared React context so both screens show one number.
   Points are awarded on completed handover, never on posting — same rule as
   events, for the same anti-farming reason.
+- 2026-08-28 — Replaced the self-tapped "Mark as collected" button with handover
+  codes, after the team spotted that whoever was being given points was also the
+  one tapping the button that gave them out. Whoever is being credited now has to
+  type in the other person's four digits, and the option only appears once a
+  neighbour has actually asked for the item. Written up honestly in
+  `src/lib/handover.js`, including what it still does not stop.

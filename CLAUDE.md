@@ -81,7 +81,10 @@ Built so far:
 
 The points balance lives in `src/context/` so every screen shows one number.
 Points are only ever awarded when something is actually completed — attendance
-confirmed, item handed over — never for signing up or posting. Keep that rule.
+confirmed, item handed over — never for signing up or posting. On the sharing
+screen a completion that pays points also needs the other person's four-digit
+handover code, so nobody can pay themselves for a meeting that never happened.
+Keep both rules.
 
 `src/data/` exists and holds the mock data. `factors.js` does **not** exist yet — it is
 feature 3's job, and it is where every sourced conversion figure must go.

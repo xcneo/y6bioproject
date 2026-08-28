@@ -17,6 +17,10 @@
 //             neighbours judge freshness for themselves
 //
 // tags feed the recipe suggestions in recipes.js, for food nobody claimed in time.
+//
+// requests and handoverCode only appear on your own items, and work exactly as
+// they do in listings.js: somebody has to have asked for it, and they have to
+// read you their four digits, before the points are yours.
 
 export const FOOD_ITEMS = [
   // ---- Yours, already past its date and unclaimed: this is what triggers the recipes ----
@@ -33,6 +37,8 @@ export const FOOD_ITEMS = [
     photo: 'item',
     tags: ['carrot', 'celery'],
     points: 30,
+    requests: 0,
+    handoverCode: '5514',
   },
   // ---- Yours, still claimable: lets the demo show points landing on collection ----
   {
@@ -48,6 +54,8 @@ export const FOOD_ITEMS = [
     photo: 'item',
     tags: ['banana'],
     points: 30,
+    requests: 2,
+    handoverCode: '3948',
   },
 
   // ---- Neighbours ----

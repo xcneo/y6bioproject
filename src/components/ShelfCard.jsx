@@ -1,4 +1,5 @@
 import { recipesFor } from '../data/recipes'
+import { EnterHandoverCode, ShowHandoverCode } from './HandoverCode'
 
 // One item on the Expiring Soon Shelf.
 //
@@ -26,7 +27,7 @@ const PHOTO_NOTE = {
   item: '📷 Photo of the item — judge freshness yourself',
 }
 
-export default function ShelfCard({ item, status, onClaim, onCancel, onCollected }) {
+export default function ShelfCard({ item, status, myCode, onClaim, onCancel, onCollected }) {
   const isOwner = item.owner === 'You'
   const expired = item.daysLeft < 0
   const tag = freshness(item.daysLeft)
@@ -71,15 +72,20 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
         </div>
       )}
 
-      {/* ---- Your own food: confirm the neighbour actually picked it up ---- */}
+      {/* ---- Your own food: the neighbour who takes it reads you their code ---- */}
       {isOwner && status !== 'done' && !expired && (
-        <button
-          type="button"
-          onClick={() => onCollected(item)}
-          className="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
-        >
-          Mark as collected
-        </button>
+        item.requests > 0 ? (
+          <EnterHandoverCode
+            expected={item.handoverCode}
+            prompt="When they take it, ask them to read out their code."
+            reward={item.points}
+            onConfirm={() => onCollected(item)}
+          />
+        ) : (
+          <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
+            Nobody has claimed this yet.
+          </p>
+        )
       )}
 
       {/* ---- A neighbour's food ---- */}
@@ -94,18 +100,21 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
       )}
 
       {!isOwner && status === 'requested' && (
-        <div className="mt-3 flex items-center gap-2">
-          <span className="flex-1 rounded-xl bg-emerald-50 py-2 text-center text-sm font-semibold text-emerald-800">
-            ✓ Claimed
-          </span>
-          <button
-            type="button"
-            onClick={() => onCancel(item)}
-            className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600"
-          >
-            Cancel
-          </button>
-        </div>
+        <>
+          <div className="mt-3 flex items-center gap-2">
+            <span className="flex-1 rounded-xl bg-emerald-50 py-2 text-center text-sm font-semibold text-emerald-800">
+              ✓ Claimed
+            </span>
+            <button
+              type="button"
+              onClick={() => onCancel(item)}
+              className="rounded-xl border border-stone-300 px-3 py-2 text-sm font-medium text-stone-600"
+            >
+              Cancel
+            </button>
+          </div>
+          <ShowHandoverCode code={myCode} owner={item.owner} />
+        </>
       )}
 
       {status === 'done' && (
@@ -114,7 +123,8 @@ export default function ShelfCard({ item, status, onClaim, onCancel, onCollected
         </p>
       )}
 
-      {status !== 'done' && !expired && (
+      {/* Skipped when the code box is up, which already states the points. */}
+      {status !== 'done' && !expired && !(isOwner && item.requests > 0) && (
         <p className="mt-2 text-center text-xs text-stone-500">
           {isOwner
             ? `Earn ${item.points} points once it is collected`

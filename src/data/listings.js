@@ -14,6 +14,11 @@
 //   requests    how many neighbours have already asked. Only shown on your own
 //               posts, so you can see there is interest before you commit.
 //   price       rent only, in SGD
+//   handoverCode  the four digits the OTHER person reads out when you meet.
+//               Only on listings where completing them pays someone points —
+//               your own posts, and repair requests (the helper is credited
+//               there, so the code belongs to whoever asked for the repair).
+//               See src/lib/handover.js.
 
 export const LISTINGS = [
   // ---- Your own posts, so the "hand it over and collect the points" step is demoable ----
@@ -28,6 +33,7 @@ export const LISTINGS = [
     walkMinutes: 0,
     points: 25,
     requests: 3,
+    handoverCode: '4821',
   },
   {
     id: 'steam-iron',
@@ -39,6 +45,7 @@ export const LISTINGS = [
     walkMinutes: 0,
     points: 15,
     requests: 1,
+    handoverCode: '7305',
   },
 
   // ---- Neighbours' posts ----
@@ -146,6 +153,7 @@ export const LISTINGS = [
     walkMinutes: 9,
     points: 40,
     requests: 0,
+    handoverCode: '6142',
   },
   {
     id: 'bike-brakes',
@@ -158,6 +166,7 @@ export const LISTINGS = [
     walkMinutes: 7,
     points: 40,
     requests: 0,
+    handoverCode: '9370',
   },
   {
     id: 'school-shoes',
@@ -169,5 +178,6 @@ export const LISTINGS = [
     walkMinutes: 4,
     points: 40,
     requests: 0,
+    handoverCode: '2856',
   },
 ]
