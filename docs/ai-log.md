@@ -25,3 +25,12 @@ appends a one-line summary of each task it completes.
   Events now move through sign-up → attended, and `events.js` gained past events
   so the attendance step is visible in the demo. Renamed `pointsForJoining` to
   `pointsForAttending`. Also changed the demo resident's name to Henrison.
+- 2026-08-28 — Built the Sharing Platform (feature 2). A board for borrowing,
+  giving away, swapping, renting and repair requests, plus the Expiring Soon
+  Shelf: food sorted by how close it is to its date, with recipe suggestions
+  appearing on anything that reached its date unclaimed. The "list something"
+  form refuses to post food without a photo, and records whether it was a photo
+  of the printed date or of the item itself. Moved the points balance out of
+  Dashboard.jsx into a shared React context so both screens show one number.
+  Points are awarded on completed handover, never on posting — same rule as
+  events, for the same anti-farming reason.

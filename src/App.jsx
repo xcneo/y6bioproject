@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import PointsProvider from './context/PointsProvider'
 import Dashboard from './pages/Dashboard'
+import Share from './pages/Share'
 import Placeholder from './pages/Placeholder'
 
 // The three screens, listed once and reused for both the routes and the tab bar
@@ -36,32 +38,28 @@ function TabBar() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      {/* max-w-md keeps it phone-shaped even when opened on a laptop */}
-      <div className="mx-auto min-h-screen max-w-md bg-stone-50 pb-20">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route
-            path="/share"
-            element={
-              <Placeholder
-                title="Sharing Platform"
-                description="Borrow, give away, swap and rent with neighbours — including the Expiring Soon Shelf for food."
-              />
-            }
-          />
-          <Route
-            path="/impact"
-            element={
-              <Placeholder
-                title="Impact Calculator"
-                description="See the CO₂, water, waste and money you save by changing a habit."
-              />
-            }
-          />
-        </Routes>
-        <TabBar />
-      </div>
-    </BrowserRouter>
+    // PointsProvider wraps everything so the map screen and the share screen
+    // read and change the same points balance.
+    <PointsProvider>
+      <BrowserRouter>
+        {/* max-w-md keeps it phone-shaped even when opened on a laptop */}
+        <div className="mx-auto min-h-screen max-w-md bg-stone-50 pb-20">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/share" element={<Share />} />
+            <Route
+              path="/impact"
+              element={
+                <Placeholder
+                  title="Impact Calculator"
+                  description="See the CO₂, water, waste and money you save by changing a habit."
+                />
+              }
+            />
+          </Routes>
+          <TabBar />
+        </div>
+      </BrowserRouter>
+    </PointsProvider>
   )
 }
