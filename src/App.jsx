@@ -4,7 +4,7 @@ import SharingProvider from './context/SharingProvider'
 import PhoneSwitcher from './components/PhoneSwitcher'
 import Dashboard from './pages/Dashboard'
 import Share from './pages/Share'
-import Placeholder from './pages/Placeholder'
+import Impact from './pages/Impact'
 
 // The three screens, listed once and reused for both the routes and the tab bar
 // so the two can never drift apart.
@@ -53,15 +53,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/share" element={<Share />} />
-              <Route
-                path="/impact"
-                element={
-                  <Placeholder
-                    title="Impact Calculator"
-                    description="See the CO₂, water, waste and money you save by changing a habit."
-                  />
-                }
-              />
+              <Route path="/impact" element={<Impact />} />
             </Routes>
             <TabBar />
           </div>

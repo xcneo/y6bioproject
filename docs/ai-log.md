@@ -56,3 +56,11 @@ appends a one-line summary of each task it completes.
   ahead, and the card says so when the rate hits zero. Pair keys are
   order-independent so alternating direction does not dodge the taper. Explained
   in `src/lib/pairing.js`, including why the app must not try to detect families.
+- 2026-08-28 — Built the Impact Calculator (feature 3), completing all three.
+  `src/data/factors.js` now holds every figure the app shows with a cited source;
+  where Claude had no trustworthy figure it left `value: null` and the screen
+  shows a "Source needed" chip instead of inventing one. Four "what if I…" habit
+  cards with steppers estimate CO₂, water, money and waste over a year; a "since
+  January" panel totals what the resident has actually done; and the personalised
+  nudges are plain rule functions over mock activity — no ML, as specified.
+  The sources are printed on the screen itself, not just in the code.

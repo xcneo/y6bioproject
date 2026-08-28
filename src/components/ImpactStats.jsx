@@ -1,0 +1,68 @@
+import {
+  formatCo2,
+  formatMoney,
+  formatWaste,
+  formatWater,
+  isUnsourced,
+} from '../lib/impact'
+
+// The four numbers a habit change is worth, as a 2×2 of stat tiles.
+//
+// No chart here on purpose. Four unrelated scalars with different units are not
+// a comparison — plotting them side by side would invite the reader to compare
+// "173" against "265" as if they meant the same kind of thing. A tile per
+// measure, each labelled with its own unit, says what is actually known.
+//
+// Three states per tile, and the difference between the last two matters:
+//   a number      we can work it out
+//   "No change"   we can work it out, and the answer is nothing
+//   "Source needed"  nobody has sourced the factor, so we do not know
+//
+// A blank tile would collapse the last two into each other and quietly imply
+// zero. See the header of data/factors.js.
+
+const MEASURES = [
+  { key: 'co2', icon: '☁️', label: 'CO₂e', format: formatCo2 },
+  { key: 'water', icon: '💧', label: 'Water', format: formatWater },
+  { key: 'money', icon: '💵', label: 'Money', format: formatMoney },
+  { key: 'waste', icon: '🗑️', label: 'Waste', format: formatWaste },
+]
+
+export default function ImpactStats({ result, period = 'a year' }) {
+  return (
+    <dl className="mt-3 grid grid-cols-2 gap-2">
+      {MEASURES.map((measure) => {
+        const raw = result[measure.key]
+        const missing = isUnsourced(raw)
+        const value = missing ? null : measure.format(raw)
+
+        return (
+          <div key={measure.key} className="rounded-xl bg-stone-50 p-3">
+            <dt className="text-[11px] font-medium uppercase tracking-wide text-stone-500">
+              <span aria-hidden="true">{measure.icon}</span> {measure.label}
+            </dt>
+
+            {missing ? (
+              <dd className="mt-1">
+                <span className="inline-block rounded-md bg-amber-100 px-1.5 py-0.5 text-[11px] font-semibold text-amber-900">
+                  Source needed
+                </span>
+              </dd>
+            ) : (
+              <dd>
+                {/* Value in ink, not in an accent colour — the icon beside the
+                    label already carries which measure this is. */}
+                <span className="block text-xl font-bold text-stone-900">
+                  {raw === 0 ? 'No change' : value}
+                </span>
+                {raw !== 0 && (
+                  <span className="block text-[11px] text-stone-400">{period}</span>
+                )}
+              </dd>
+            )}
+          </div>
+        )
+      })}
+    </dl>
+  )
+}

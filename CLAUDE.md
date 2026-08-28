@@ -77,7 +77,7 @@ Customising theme values (brand colours, fonts) is done with a `@theme { }` bloc
 Built so far:
 - **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`.
 - **Feature 2, Sharing Platform** — `src/pages/Share.jsx`.
-- **Feature 3, Impact Calculator** — not started. Still `src/pages/Placeholder.jsx`.
+- **Feature 3, Impact Calculator** — `src/pages/Impact.jsx`. All three are built.
 
 `src/context/` holds two providers. `SessionProvider` knows which resident's
 phone you are on and keeps a points balance per resident; `SharingProvider`
@@ -103,8 +103,11 @@ screen a completion that pays points also needs the other person's four-digit
 handover code, so nobody can pay themselves for a meeting that never happened.
 Keep both rules.
 
-`src/data/` exists and holds the mock data. `factors.js` does **not** exist yet — it is
-feature 3's job, and it is where every sourced conversion figure must go.
+`src/data/` exists and holds the mock data, including **`factors.js`** — every
+conversion figure the app shows, each with a `source`. Read its header before
+touching it. Figures Claude could not source are `value: null` and the screen
+shows a "Source needed" chip rather than a guess; filling them in is a real
+outstanding task, not decoration.
 
 `README.md` is still the stock Vite template text and does not describe this project.
 
