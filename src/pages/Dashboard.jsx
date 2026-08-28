@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { FACILITIES } from '../data/facilities'
 import { FACILITY_TYPES } from '../data/facilityTypes'
 import { USER } from '../data/user'
+import { usePoints } from '../context/PointsContext'
 import MapView from '../components/MapView'
 import FilterChips from '../components/FilterChips'
 import FacilitySheet from '../components/FacilitySheet'
@@ -23,9 +24,9 @@ export default function Dashboard() {
     'canal-cleanup': 'attended',
     'ewaste-jul': 'going',
   })
-  // Points live here for now. When the other two screens need them too, move
-  // this into a React context so all three screens share one number.
-  const [points, setPoints] = useState(USER.points)
+  // The points balance is shared with the Share screen, so it lives in a
+  // context rather than in this file. See src/context/PointsContext.js.
+  const { points, earnPoints } = usePoints()
 
   const visible =
     activeTypes.length === 0
@@ -62,7 +63,7 @@ export default function Dashboard() {
   function confirmAttendance(event) {
     if (eventStatus[event.id] === 'attended') return
     setEventStatus((current) => ({ ...current, [event.id]: 'attended' }))
-    setPoints((current) => current + event.pointsForAttending)
+    earnPoints(event.pointsForAttending)
   }
 
   return (
@@ -158,7 +159,7 @@ export default function Dashboard() {
       <FacilitySheet
         facility={selected}
         onClose={() => setSelected(null)}
-        onReportSent={() => setPoints((current) => current + 10)}
+        onReportSent={() => earnPoints(10)}
       />
     </div>
   )

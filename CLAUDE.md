@@ -72,14 +72,21 @@ Customising theme values (brand colours, fonts) is done with a `@theme { }` bloc
 
 ## Current state of the repo
 
-`src/App.jsx` is a near-empty placeholder — a heading and one line of text, styled with
-Tailwind to prove the setup works. It holds no Eco SG features yet. The first feature
-session should replace its contents.
+`src/App.jsx` holds the router and the three-tab bottom nav, wrapped in `PointsProvider`.
+
+Built so far:
+- **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`.
+- **Feature 2, Sharing Platform** — `src/pages/Share.jsx`.
+- **Feature 3, Impact Calculator** — not started. Still `src/pages/Placeholder.jsx`.
+
+The points balance lives in `src/context/` so every screen shows one number.
+Points are only ever awarded when something is actually completed — attendance
+confirmed, item handed over — never for signing up or posting. Keep that rule.
+
+`src/data/` exists and holds the mock data. `factors.js` does **not** exist yet — it is
+feature 3's job, and it is where every sourced conversion figure must go.
 
 `README.md` is still the stock Vite template text and does not describe this project.
-
-Directories the sections below refer to **do not exist yet** — create them when first
-needed: `src/data/` (mock JSON + `factors.js`).
 
 Leftover starter files that are no longer used and can be deleted whenever convenient:
 `src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`.
