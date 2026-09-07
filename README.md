@@ -10,14 +10,14 @@ option the low-effort one, and make the payoff visible.
 
 ## The three features
 
-1. **Neighbourhood Dashboard** — a map of green infrastructure near your block
+1. **Neighbourhood Dashboard** : A map of green infrastructure near your block
    (recycling points, Bloobox collection, EV chargers, community gardens, water refill
    stations and more), plus upcoming recycling drives you can volunteer for and a way to
    report an overflowing bin or broken facility.
-2. **Sharing Platform** — borrow, give away, swap, rent or request repairs from
+2. **Sharing Platform** : Borrow, give away, swap, rent or request repairs from
    neighbours, including an *Expiring Soon Shelf* where food gets claimed before it's
    wasted.
-3. **Impact Calculator** — estimates the CO₂, water, waste and money saved by a specific
+3. **Impact Calculator** : Estimates the CO₂, water, waste and money saved by a specific
    habit change, and gives personalised nudges based on your activity in the app.
 
 Two additions of our own run across all three: a **points system** redeemable for
