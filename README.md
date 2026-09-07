@@ -3,9 +3,9 @@
 A prototype app for BL6131 Applied Biology (NUS High), Sustainability Project 2026.
 
 Singapore's Green Plan 2030 target area: **Sustainable Living**. The problem we're
-addressing is the *value–action gap* — around 4 in 10 Singaporeans say they value
-sustainability but don't act on it, because sustainable choices take more effort and
-their benefit is invisible while their cost isn't. Eco SG tries to make the sustainable
+addressing is the *value–action gap*. Around 4 in 10 Singaporeans say they value
+sustainability but do not actively act on it, because sustainable choices take more effort and
+their benefit is invisible while their cost is higher. Eco SG tries to make the sustainable
 option the low-effort one, and make the payoff visible.
 
 ## The three features
