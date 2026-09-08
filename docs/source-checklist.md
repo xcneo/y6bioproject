@@ -731,10 +731,17 @@ for a finding.
 | ☐ | `neighbourhoods.js` | Scores 81 / 76 / 68 / 64 / 59 / 52 | ✅ "EVERY SCORE BELOW IS INVENTED" |
 | ☐ | `facilities.js` | Whether each facility exists at that spot | ✅ header warning |
 | ☐ | `facilities.js` | `x` / `y` map positions | ✅ "not real coordinates" |
-| ☐ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended | ⬜ no warning |
+| ☐ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended | ✅ "ALL INVENTED" |
 | ☐ | `events.js` | Event titles, dates, venues | ✅ "All invented" |
-| ☐ | `listings.js`, `foodShelf.js` | Items, expiry dates, owners | ⬜ no warning |
-| ☐ | `residents.js` | Names and block numbers | ⬜ no warning |
+| ☐ | `listings.js` | Items, prices, owners | ✅ "ALL INVENTED" |
+| ☐ | `foodShelf.js` | Items, expiry dates, owners | ✅ "ALL INVENTED" |
+| ☐ | `recipes.js` | Recipes, times, ingredient tags | ⚠️ partial — disclaims the *times* and says no CO₂ is claimed, but does not say the recipes are invented. Lowest risk on this list: a recipe is not a claim about Singapore. |
+| ☐ | `residents.js` | Names and block numbers | ✅ added 8 Sept — was the last mock file with no warning |
+
+**Corrected 8 Sept 2026.** Three rows above used to say "no warning"; those
+warnings have since been added, and this table had not kept up. `residents.js`
+was the genuine remaining gap and is now closed — it is the riskiest of the set,
+being invented people attached to real Clementi addresses.
 
 ⚠️ **Real block numbers, invented facts.** The blocks and streets are real
 Clementi addresses. Don't let the report imply anyone surveyed them, and don't

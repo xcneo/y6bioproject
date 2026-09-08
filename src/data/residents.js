@@ -1,5 +1,10 @@
 // Everyone the app knows about.
 //
+// ⚠️ ALL INVENTED, like the rest of the mock data. These are not real people.
+//    The BLOCK NUMBERS are real Clementi addresses, which is the combination to
+//    be careful with: never let the report imply anyone surveyed a household, or
+//    that a named resident lives at a real address.
+//
 // This replaces the old single USER. A sharing app has two sides to every
 // exchange, so the prototype has to be able to be two different people —
 // otherwise the handover code can never actually be demonstrated, only

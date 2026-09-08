@@ -33,10 +33,31 @@ and makes the payoff visible.
 This is a **prototype for a class demo**, not a production app. Hard constraints:
 
 - **Frontend only.** No backend, no database, no auth, no API keys.
-- **All data is mock data** in `src/data/`. These are `.js` modules exporting plain
-  objects and arrays — not `.json` files — so they can carry comments, and the
-  comments are where the sourcing lives. Hand-authored, plausible,
-  Singapore-specific (real town names, real block numbers, realistic prices in SGD).
+- **`src/data/` holds three different kinds of thing. Do not treat them alike.**
+  They are `.js` modules exporting plain objects and arrays — not `.json` — so they
+  can carry comments, and the comments are where the honesty lives.
+
+  1. **Invented scenario data** — `activity.js`, `events.js`, `facilities.js`,
+     `foodShelf.js`, `listings.js`, `neighbourhoods.js`, `recipes.js`,
+     `residents.js`. Hand-authored, plausible, Singapore-specific (real town
+     names, real block numbers, realistic prices in SGD). Every one of these
+     should say in its header that it is invented. Inventing more is fine and
+     expected — that is what makes the demo work.
+  2. **`factors.js` — NOT mock, and the one exception to everything above.**
+     Every figure in it is real and cited: Poore & Nemecek, Mekonnen & Hoekstra,
+     NEA, PUB, EPA USEEIO, BLS. **Never invent a number here**, never round one
+     to make it look tidier, and never treat "it is only a prototype" as licence
+     to guess. See "Important: figures must be sourced" below.
+  3. **UI taxonomy and card copy** — `facilityTypes.js`, `listingTypes.js`,
+     `habits.js`. Structure and wording, not claims about the world. `habits.js`
+     names the `factors.js` keys each card needs; it holds no numbers of its own,
+     and it should stay that way — a number typed here sits outside the sourcing
+     mechanism where nothing will flag it.
+
+  ⚠️ An earlier version of this brief said "all data is mock data" as a hard
+  constraint. That was wrong and it was dangerous: read literally, it licenses
+  inventing a conversion factor in `src/data/`, which is the single thing this
+  project most needs not to happen.
 - **State lives in React state.** Changes don't persist across reload. That's fine.
 - **Mobile-first.** Target viewport ~390px wide. It will be demoed on a phone.
 - **Prefer boring, working code** over clever abstractions. Six students of mixed coding
