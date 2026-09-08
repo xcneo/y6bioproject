@@ -143,7 +143,12 @@ A figure shown on screen that is **not** in `factors.js` is outside this
 mechanism entirely and nothing will flag it — `docs/source-checklist.md` §8 lists
 the ones that remain.
 
-`README.md` is still the stock Vite template text and does not describe this project.
+`README.md` describes the project properly and has done since 14 Aug 2026 — it is
+not the stock Vite template. Xuan Che edited the wording on 7 Sept.
+
+⚠️ It carries **its own copy of the "4 in 10 Singaporeans" claim**, the unsourced
+one flagged at the top of this file. That figure now lives in two places. Change
+it in one and you have contradicted yourself in the other, so change both.
 
 Leftover starter files that are no longer used and can be deleted whenever convenient:
 `src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`.
