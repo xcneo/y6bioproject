@@ -33,8 +33,10 @@ and makes the payoff visible.
 This is a **prototype for a class demo**, not a production app. Hard constraints:
 
 - **Frontend only.** No backend, no database, no auth, no API keys.
-- **All data is mock data** in local JSON files under `src/data/`. Hand-authored,
-  plausible, Singapore-specific (real town names, real block numbers, realistic prices in SGD).
+- **All data is mock data** in `src/data/`. These are `.js` modules exporting plain
+  objects and arrays — not `.json` files — so they can carry comments, and the
+  comments are where the sourcing lives. Hand-authored, plausible,
+  Singapore-specific (real town names, real block numbers, realistic prices in SGD).
 - **State lives in React state.** Changes don't persist across reload. That's fine.
 - **Mobile-first.** Target viewport ~390px wide. It will be demoed on a phone.
 - **Prefer boring, working code** over clever abstractions. Six students of mixed coding
@@ -60,9 +62,9 @@ framework that isn't installed — if a change needs verifying, verify it by run
 
 All of these are installed and working:
 
-- Vite + React (JavaScript, not TypeScript)
+- Vite + **React 19** (JavaScript, not TypeScript)
 - **Tailwind CSS v4** — styling is class names in the JSX
-- **react-router-dom v7** — installed, but no routes are set up yet
+- **react-router-dom v7** — wired up, with three routes in `src/App.jsx`
 - No state management library. `useState` / `useContext` only.
 
 Tailwind v4 is wired up differently from the v3 setup most tutorials show. There is
@@ -77,12 +79,19 @@ Customising theme values (brand colours, fonts) is done with a `@theme { }` bloc
 
 ## Current state of the repo
 
-`src/App.jsx` holds the router and the three-tab bottom nav, wrapped in `PointsProvider`.
+`src/App.jsx` holds the router and the three-tab bottom nav, wrapped in
+`SessionProvider` and `SharingProvider`. (An earlier version of this brief named a
+`PointsProvider`; no such thing exists — the points balance lives in
+`SessionProvider`, because it is per-resident.)
 
-Built so far:
-- **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`.
-- **Feature 2, Sharing Platform** — `src/pages/Share.jsx`.
-- **Feature 3, Impact Calculator** — `src/pages/Impact.jsx`. All three are built.
+**All three features are built.** The prototype is feature-complete for the demo:
+- **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`
+- **Feature 2, Sharing Platform** — `src/pages/Share.jsx`
+- **Feature 3, Impact Calculator** — `src/pages/Impact.jsx`
+
+`src/lib/` holds the logic the pages call: `impact.js` (the calculator's
+arithmetic), `nudges.js` (the rule-based personalised nudges), `pairing.js` (the
+repeat-exchange taper) and `handover.js` (the four-digit codes).
 
 `src/context/` holds two providers. `SessionProvider` knows which resident's
 phone you are on and keeps a points balance per resident; `SharingProvider`
@@ -150,10 +159,16 @@ not the stock Vite template. Xuan Che edited the wording on 7 Sept.
 one flagged at the top of this file. That figure now lives in two places. Change
 it in one and you have contradicted yourself in the other, so change both.
 
-Leftover starter files that are no longer used and can be deleted whenever convenient:
+Leftover starter files, all still present as of 8 Sept 2026, none of them used, all
+safe to delete whenever convenient. They belong to the Vite template, not to Eco SG:
 `src/assets/hero.png`, `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`.
 
-`src/assets/hero.png` and `public/icons.svg` belong to the starter template, not to Eco SG.
+## The repo is shared
+
+`origin` is **https://github.com/xcneo/y6bioproject** — Xuan Che's repo, which the
+whole team pulls from. A push to `main` lands on everyone. Commit and push only
+when asked, and check `git fetch` first: teammates push too, and on 7 Sept two
+README commits appeared between one session and the next.
 
 ## The three features
 
@@ -206,21 +221,33 @@ put a `TODO_SOURCE` marker and tell the team to look it up.
 
 ## Working style
 
-- One feature per session. Don't scaffold all three at once.
+- **The build phase is over.** All three features exist. Work now is sourcing,
+  verifying, correcting and writing up — not new features. If a new feature is
+  requested this close to the deadline, say what it would cost and confirm first.
 - Explain what you changed in plain language at the end of each task — team members
   need to be able to describe the code in the report and presentation.
 - When you make a design decision with a real alternative, name the alternative. The
   team is marked on critically evaluating and refining AI-generated suggestions, so they
   need to know what they're choosing between.
-- Append a one-line summary of each task to `docs/ai-log.md`. The team pastes their own
-  prompts there; the annex requires all AI prompts and outputs.
+- Append a summary of each task to `docs/ai-log.md`. It started as one line per
+  task; entries are now a paragraph, because what was *decided and why* is the
+  part the report needs. Match the existing style. The team pastes their own
+  prompts there too; the annex requires all AI prompts and outputs.
+- `docs/source-checklist.md` is the live record of which figures are sourced and
+  which have been checked by a person. Update it in the same task that changes a
+  figure, never later.
 
 ## Deadlines
 
-- **21 Aug 2026** — two-page prototype progress update with photos/screenshots.
-- **21 Sept 2026** — final report (3500–4000 words), team presentation, prototype demo.
+- ~~**21 Aug 2026** — two-page prototype progress update with photos/screenshots.~~
+  **Passed.** If it happens to contain a screenshot of a "Source needed" chip,
+  that is now the easiest place to find one — none appear in the app any more.
+- **21 Sept 2026** — final report (3500–4000 words), team presentation, prototype
+  demo. **Under two weeks away as of 8 Sept.**
 
-Prioritise getting something screenshot-able and tappable over completeness.
+The prototype is already screenshot-able and tappable. The binding constraint now
+is the written report and the outstanding verification in
+`docs/source-checklist.md`, not the code.
 
 The team is new to the terminal and to React. Explain what a command
 does before running it, in plain language. Avoid jargon or define it.
