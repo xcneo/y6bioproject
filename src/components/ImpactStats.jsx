@@ -28,7 +28,11 @@ const MEASURES = [
   { key: 'waste', icon: '🗑️', label: 'Waste', format: formatWaste },
 ]
 
-export default function ImpactStats({ result, period = 'a year' }) {
+// `labels` lets one card rename a tile. Only the drill card uses it, and only
+// for water: its figure is a withdrawal rather than the consumptive footprint
+// the food cards show, so calling both of them "Water" would quietly claim the
+// two numbers are comparable. They are not. See factors.js, ITEM_WATER_L.
+export default function ImpactStats({ result, period = 'a year', labels = {} }) {
   return (
     <dl className="mt-3 grid grid-cols-2 gap-2">
       {MEASURES.map((measure) => {
@@ -39,7 +43,8 @@ export default function ImpactStats({ result, period = 'a year' }) {
         return (
           <div key={measure.key} className="rounded-xl bg-stone-50 p-3">
             <dt className="text-[11px] font-medium uppercase tracking-wide text-stone-500">
-              <span aria-hidden="true">{measure.icon}</span> {measure.label}
+              <span aria-hidden="true">{measure.icon}</span>{' '}
+              {labels[measure.key] ?? measure.label}
             </dt>
 
             {missing ? (

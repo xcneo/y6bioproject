@@ -45,7 +45,7 @@ export const ACTIVITY = {
 
     // Food he took off the shelf that would otherwise have been binned.
     foodClaimed: [
-      { what: 'Loaf of wholemeal', foodType: 'bread', kg: 0.4, month: 5, dayOfMonth: 12 },
+      { what: 'Loaf of white bread', foodType: 'bread', kg: 0.4, month: 5, dayOfMonth: 12 },
       { what: 'Box of tomatoes', foodType: 'tomatoes', kg: 0.3, month: 7, dayOfMonth: 4 },
     ],
 

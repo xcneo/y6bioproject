@@ -49,7 +49,7 @@ export default function HabitCard({ habit }) {
         </button>
       </div>
 
-      <ImpactStats result={result} />
+      <ImpactStats result={result} labels={habit.statLabels} />
     </li>
   )
 }

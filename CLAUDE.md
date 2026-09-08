@@ -13,10 +13,15 @@ Target area under the Singapore Green Plan 2030: **Sustainable Living**.
 
 **Problem being addressed:** the value–action gap. Around 4 in 10 Singaporeans
 don't actively contribute to sustainability efforts despite saying they value them.
+(⚠️ That "4 in 10" is still unsourced — find the survey it came from or drop it.
+See `docs/source-checklist.md`.)
 Two root causes:
 1. **Inconvenience** — sustainable options take more effort (e.g. residents don't know
-   where the nearest Bloobox collection point or EV charger is; home recycling
-   collection sits around 20%).
+   where the nearest Bloobox collection point or EV charger is; the domestic
+   recycling rate was **11% in 2025** — NEA, "Waste Statistics and Overall
+   Recycling"). *This figure was "around 20%" in an earlier draft of this brief.
+   That was a stale number: the domestic recycling rate has been falling for
+   years. The current figure makes the problem larger, not smaller.*
 2. **Invisible benefit vs. visible cost** — the price premium on sustainable goods is
    obvious, but the benefit requires hunting down a carbon calculator.
 
@@ -106,8 +111,37 @@ Keep both rules.
 `src/data/` exists and holds the mock data, including **`factors.js`** — every
 conversion figure the app shows, each with a `source`. Read its header before
 touching it. Figures Claude could not source are `value: null` and the screen
-shows a "Source needed" chip rather than a guess; filling them in is a real
-outstanding task, not decoration.
+shows a "Source needed" chip rather than a guess.
+
+As of 8 Sept 2026 every figure is filled and **no card shows a "Source needed"
+chip any more**. The drill's water was the last gap: it was deliberately
+unsourced for weeks, then sourced from the EPA's USEEIO input-output model. Keep
+the chip mechanism anyway — it is what stopped a guess going in, and the next
+unsourced number needs somewhere to show. If you want a screenshot of a chip for
+the report, take it from the 21 Aug progress update or an earlier commit.
+
+Three things that follow from this:
+
+- **The drill card's water tile is labelled "Water withdrawn", not "Water".**
+  USEEIO gives freshwater *withdrawals*; the food cards use Mekonnen & Hoekstra's
+  *consumptive* footprint. Same unit, different physical quantity. Never merge
+  the labels — `docs/source-checklist.md` §4d explains why at length.
+- **The drill card mixes methods on purpose**: CO₂ from a process LCA, water from
+  a spend-based model. Each is the best available for its quantity. The two
+  methods were cross-checked on CO₂ and agree within 1.4×.
+- **A chip means two different things and the screen cannot tell them apart** —
+  "nobody has found this yet" and "we do not think this is knowable". That is a
+  real limitation of our own design; see `docs/source-checklist.md` §4c before
+  changing anything about it.
+- **Claude finding a source is not verification.** The checklist's tick-boxes
+  mean *a team member opened the page and read the number*, and they are the
+  team's to tick — never tick them on their behalf. When the team did open the
+  papers, four Claude-sourced figures turned out wrong. Sections 4, 4b, 5 and 6
+  currently have sources that nobody has checked.
+
+A figure shown on screen that is **not** in `factors.js` is outside this
+mechanism entirely and nothing will flag it — `docs/source-checklist.md` §8 lists
+the ones that remain.
 
 `README.md` is still the stock Vite template text and does not describe this project.
 

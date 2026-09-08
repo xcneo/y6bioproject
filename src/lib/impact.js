@@ -3,6 +3,9 @@ import {
   FOOD_CO2,
   FOOD_PRICE_SGD,
   FOOD_WATER,
+  ITEM_MASS_KG,
+  ITEM_PRICE_SGD,
+  ITEM_WATER_L,
   MANUFACTURING_CO2,
   isSourced,
 } from '../data/factors'
@@ -23,9 +26,10 @@ import {
 
 const UNSOURCED = 'unsourced'
 
-// Multiplies a factor by an amount, or reports that it cannot.
-function apply(factor, kg) {
-  return isSourced(factor) ? factor.value * kg : UNSOURCED
+// Multiplies a factor by an amount, or reports that it cannot. The amount is
+// kilograms for the food factors and a count of items for the drill.
+function apply(factor, amount) {
+  return isSourced(factor) ? factor.value * amount : UNSOURCED
 }
 
 // a - b, but only if BOTH factors are sourced. A difference against a missing
@@ -73,14 +77,38 @@ function foodSaved(habit, unitsPerMonth) {
 }
 
 // ─── A thing borrowed instead of bought ──────────────────────────────────────
+//
+// The manufacturing factor is per KILOGRAM of tool, not per tool, so the mass
+// does real work here: it converts the factor into a per-item figure AND it is
+// the waste saved. One number, two outputs, which is why it is a sourced factor
+// of its own (ITEM_MASS_KG) rather than a bare number inline in habits.js.
+//
+// Every figure on this card now comes out of factors.js — the price used to be
+// typed into habits.js with no source, which meant a wrong price would have
+// shown on screen looking exactly as solid as the cited ones. It goes through
+// apply() like everything else now, so if anyone empties it out, the card says
+// "Source needed" instead of lying.
 function notBuying(habit, itemsPerYear) {
+  const mass = ITEM_MASS_KG[habit.item]
+
+  // The mass is a factor like any other, so an unsourced one has to stop the
+  // CO₂ and the waste figure both. Falling back to zero kilograms would read on
+  // screen as "borrowing this saves nothing", which is a claim we would not have
+  // the evidence to make.
+  const kgOfTool = isSourced(mass) ? mass.value * itemsPerYear : UNSOURCED
+
   return {
-    co2: apply(MANUFACTURING_CO2[habit.co2Factor], itemsPerYear),
-    // Borrowing a drill does not save water in any way we can evidence, and an
-    // unevidenced zero is still a claim. Say we do not know.
-    water: UNSOURCED,
-    money: habit.priceSgd * itemsPerYear,
-    waste: habit.massKg * itemsPerYear,
+    co2: isUnsourced(kgOfTool)
+      ? UNSOURCED
+      : apply(MANUFACTURING_CO2[habit.item], kgOfTool),
+    // Sourced 8 Sept 2026 from EPA USEEIO. This tile was a "Source needed" chip
+    // for weeks because we had no figure, and we would rather have shown the gap
+    // than a guess. Note that the card labels this one "Water withdrawn": it is
+    // a withdrawal, not the consumptive footprint the food cards use, and the
+    // long note in factors.js explains why they must not share a label.
+    water: apply(ITEM_WATER_L[habit.item], itemsPerYear),
+    money: apply(ITEM_PRICE_SGD[habit.item], itemsPerYear),
+    waste: kgOfTool,
   }
 }
 
