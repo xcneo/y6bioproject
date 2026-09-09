@@ -17,7 +17,8 @@
 //               for who earns them and why rent is 0
 //   requests    how many neighbours asked BEFORE the demo started. A request
 //               made during the demo is counted on top of this.
-//   price       rent only, in SGD
+//   price       rent only, in SGD. Invented like the rest of the listing —
+//               a plausible asking price, not a market rate we looked up.
 //   handoverCode  the four digits the OTHER person reads out when you meet.
 //               Only on listings where completing them pays someone points —
 //               your own posts, and repair requests (the helper is credited

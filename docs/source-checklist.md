@@ -24,21 +24,21 @@ cannot be wrong in the demo.
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
 | 7. Servings and assumptions | ✅ | ⬜ **not yet** |
-| 8. On-screen numbers outside `factors.js` | ⚠️ invented | ⬜ **not yet** |
-| 9. Design parameters | n/a — our choices | ⬜ **not yet** |
-| 10. Mock scenario data | n/a — invented | ⬜ **not yet** |
+| 8. On-screen numbers outside `factors.js` | ⚠️ invented, now disclaimed in the file headers | ⬜ **not yet** |
+| 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
+| 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
 | 11b. Our own survey | ✅ our own data | ⬜ **not yet** |
+| 12. Anti-misuse limits | n/a — our decisions | ✅ **Henrison, 9 Sept** — arithmetic by hand, code claims by test |
 
 ### Outstanding
 
 | # | Item | Section |
 |---|---|---|
-| 1 | **The `detail` strings and walk times** — invented facts on real Clementi addresses | §8 |
-| 2 | Read through the design parameters | §9 |
-| 3 | Read through the mock-data warnings | §10 |
-| 4 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
-| 5 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
+| 1 | **The `detail` strings and walk times** — headers now disclaim them; decide whether to soften or check the twelve on screen | §8 |
+| 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
+| 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
+| 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
 
 ---
 
@@ -429,19 +429,27 @@ correction.
 
 ## 8. Numbers on screen that are **not** in `factors.js`
 
-⬜ **Not verified. This is the remaining gap.** These reach a rendered screen and
-read as factual claims, but sit outside the sourcing mechanism — no `source`
-field, no "Source needed" chip if they are wrong. On screen they look exactly as
-authoritative as the Poore & Nemecek figures.
+**Route 1 of the three below was taken on 9 Sept: the `facilities.js` header now
+disclaims the `detail` strings and the walk times, not just whether each facility
+exists.** `listings.js` already said "ALL INVENTED"; its `price` field now says so
+on its own line too.
+
+⬜ **Still not read through by a person, and the screen is unchanged.** A header
+comment tells whoever opens the file. It tells nobody looking at the demo, where
+these still sit outside the sourcing mechanism — no `source` field, no "Source
+needed" chip if they are wrong, and on screen they look exactly as authoritative
+as the Poore & Nemecek figures. That is the residual gap, and it is a fair
+question to be asked in the presentation.
 
 | ⬜ | Where | Value | What it claims |
 |---|---|---|---|
 | ⬜ | `facilities.js` → `walkMinutes` | 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 11, 12, 14, 16 | Walking time from Blk 442 to each facility |
 | ⬜ | `listings.js` → `price` | 8, 12 | Rental asking prices in SGD |
 
-**The `detail` strings are the larger part.** Each attaches an invented specific
-to a **real, named, findable Clementi address**, ranked by how fast a marker could
-check one:
+The walk times are the mildest of these: the screen already says "**about** 7 min
+walk", and nobody reads a walk time as a measurement. The `detail` strings are the
+larger part, because each attaches an invented specific to a **real, named,
+findable Clementi address**. Ranked by how fast a marker could check one:
 
 | ⬜ | Address | The claim |
 |---|---|---|
@@ -458,39 +466,46 @@ check one:
 | ⬜ | Blk 726 Clementi West St 2 | "Often overflowing on **Sunday nights**." |
 | ⬜ | Off West Coast Road | "Mature trees, **noticeably cooler** at midday." |
 
-⚠️ **The file header does not cover these.** `facilities.js` disclaims whether each
-facility *exists*; it says nothing about tariffs, opening hours or collection
-schedules, which read as researched detail rather than scene-setting.
+**The three ways to close it, cheapest first:**
 
-**Three ways to close it, cheapest first:**
+1. ✅ **Extend the file header** so the `detail` text and walk times are covered
+   too — **done 9 Sept**. Costs nothing and protects the report; changes nothing
+   a user sees.
+2. ⬜ **Soften the specifics** — "roughly $0.55 per kWh" → "paid charging". This
+   is the one that reaches the screen. Still available, and the twelve rows above
+   are the worklist for it.
+3. ⬜ **Check them** against real data. If only some, do the two EV tariffs and
+   the CC opening hours.
 
-1. **Extend the file header** to say the `detail` text is illustrative too.
-2. **Soften the specifics** — "roughly $0.55 per kWh" → "paid charging".
-3. **Check them** against real data. If only some, do the two EV tariffs and the
-   CC opening hours.
+They stack rather than compete: 1 is a floor, and 2 or 3 can still be done on top.
+The reason to consider 3 for two or three entries is that "we checked what we
+could and disclaimed the rest" is a stronger sentence in the report than "we
+disclaimed all of it".
 
 Whichever you pick, **do not leave a specific number attached to a real address
-with no disclaimer.**
+with no disclaimer.** As of 9 Sept all twelve are disclaimed in the file that
+holds them, and none is disclaimed on the screen that shows them.
 
 ---
 
 ## 9. Design parameters — decisions, not measurements
 
-⬜ **Not yet read through.** Nothing here needs a source; it needs **stating** in
-the report. A parameter you have written down is a design choice; one you have
-not is a magic number.
+✅ **Read through and verified — Henrison, 9 Sept.** Nothing here needs a source;
+it needs **stating** in the report. A parameter you have written down is a design
+choice; one you have not is a magic number.
 
-| ⬜ | Where | Values | The justification |
+| ☑ | Where | Values | The justification |
 |---|---|---|---|
-| ⬜ | `pairing.js` → `TAPER` | 1, 1, 0.5, 0.25, 0 | Full rate twice because real neighbours do exchange twice, then half, quarter, nothing — a colluding pair earns zero within a week while a generous one is barely touched. **Cap the points, never the sharing**: nothing blocks an exchange, only the reward tapers. |
-| ⬜ | `nudges.js` → `REPEAT_THRESHOLD` | 3 | "Three is a pattern; two is a coincidence." |
-| ⬜ | `nudges.js` → `END_OF_MONTH_DAY` | 25 | A month ends in its last five or six days. |
-| ⬜ | `nudges.js` → late-share ratio | 0.6 | Most of them, not just some — a couple of late entries is just a month passing. |
-| ⬜ | `events.js` → `pointsForAttending` | 20–60 | Scaled by effort. Credited **only once attendance is confirmed**, never for signing up. |
-| ⬜ | `foodShelf.js` → `points` | 30, flat | Flat on purpose. Varying it would imply we can rank how much waste each rescue avoids, which we cannot. |
-| ⬜ | `listings.js` → `points` | 0, 15, 20, 25, 40 | By type, and **who earns differs by type**: for lend/giveaway/swap/food the poster earns, for repair the helper earns, and for **rent nobody earns — money already changed hands.** |
-| ⬜ | `residents.js` → `points` | 1240, 860 | Demo opening balances so the redemption screen has something to spend. Not earned; they mean nothing. |
-| ⬜ | `impact.js` → rounding thresholds | 10, 100, 1000 | **Rounding is a claim about precision.** The factors are one or two significant figures, so the display rounds hard. Below 10 kg a decimal is kept, because "0 kg" beside a real saving reads as a bug. |
+| ☑ | `pairing.js` → `TAPER` | 1, 1, 0.5, 0.25, 0 | Full rate twice because real neighbours do exchange twice, then half, quarter, nothing — a colluding **pair** earns zero within a week while a generous one is barely touched. **Cap the points, never the sharing**: nothing blocks an exchange, only the reward tapers. ⚠️ **Scope:** it bounds the reward *per pair* and does nothing about multi-party circulation — see §12. |
+| ☑ | `nudges.js` → `REPEAT_THRESHOLD` | 3 | "Three is a pattern; two is a coincidence." |
+| ☑ | `nudges.js` → `END_OF_MONTH_DAY` | 25 | A month ends in its last few days. The rule is `dayOfMonth >= 25`, so the window is the last 7 days of a 31-day month, 6 of a 30-day one, 4 of February — not a fixed five. |
+| ☑ | `nudges.js` → late-share ratio | 0.6 | Most of them, not just some — a couple of late entries is just a month passing. |
+| ☑ | `events.js` → `pointsForAttending` | 20–60 | Scaled by effort. Credited **only once attendance is confirmed**, never for signing up. |
+| ☑ | `foodShelf.js` → `points` | 30, flat | Flat on purpose. Varying it would imply we can rank how much waste each rescue avoids, which we cannot. |
+| ☑ | `listings.js` → `points` | 0, 15, 20, 25, 40 | By type, and **who earns differs by type**: for lend/giveaway/swap/food the poster earns, for repair the helper earns, and for **rent nobody earns — money already changed hands.** |
+| ☑ | `residents.js` → `points` | 1240, 860 | Demo opening balances so the redemption screen has something to spend. Not earned; they mean nothing. |
+| ☑ | Redemption — **grocery vouchers**, not green-goods-only | Cost is the barrier our own survey ranked first, at **4.37/5 with 28 of 52 rating it maximum** (§11b), so a reward that reduces grocery spending targets the barrier residents named rather than the one we would prefer them to name. The alternative — restricting redemption to sustainable goods — was considered and rejected: it would confine any farming to behaviour we promote, but it is a weaker incentive against the barrier we set out to address. **The trade-off is deliberate and belongs in the report:** a cash-equivalent reward is what makes farming worth attempting at all (§12). |
+| ☑ | `impact.js` → rounding thresholds | CO₂ 10 / 100 / 1000 · water 1000 / 10000 · waste 10 / 100 · money whole dollars | **Rounding is a claim about precision.** The factors are one or two significant figures, so the display rounds hard. Each unit has its own ladder — kg → t, L → m³ — so quoting a single set of thresholds understates it. Below 10 kg a decimal is kept, because "0 kg" beside a real saving reads as a bug. |
 
 ⚠️ **Lead with the taper.** It is the only parameter here encoding an *ethical*
 decision: the alternative — detecting families, flatmates or shared addresses —
@@ -501,26 +516,36 @@ from a generous one and the app has no business holding identity data.
 
 ## 10. Mock scenario data — plausibility only
 
-⬜ **Not yet read through.** No sourcing applies; these are the invented world the
-demo runs in. Every file carries a header saying so.
+✅ **Read through — Henrison, 9 Sept 2026.** No sourcing applies; these are the
+invented world the demo runs in. Every file carries a header saying so, and all
+eight were confirmed to.
 
-| ⬜ | Where | What |
+| ☑ | Where | What |
 |---|---|---|
-| ⬜ | `neighbourhoods.js` | Scores 81 / 76 / 68 / 64 / 59 / 52 |
-| ⬜ | `facilities.js` | Whether each facility exists at that spot; `x`/`y` map positions |
-| ⬜ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended |
-| ⬜ | `events.js` | Titles, dates, venues |
-| ⬜ | `listings.js` | Items, prices, owners |
-| ⬜ | `foodShelf.js` | Items, expiry dates, owners |
-| ⬜ | `recipes.js` | Recipes, times, ingredient tags |
-| ⬜ | `residents.js` | Names and block numbers |
+| ☑ | `neighbourhoods.js` | Scores 81 / 76 / 68 / 64 / 59 / 52 |
+| ☑ | `facilities.js` | Whether each facility exists at that spot; `x`/`y` map positions |
+| ☑ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended |
+| ☑ | `events.js` | Titles, dates, venues |
+| ☑ | `listings.js` | Items, prices, owners |
+| ☑ | `foodShelf.js` | Items, expiry dates, owners |
+| ☑ | `recipes.js` | Recipes, times, ingredient tags |
+| ☑ | `residents.js` | Names and block numbers |
 
 ⚠️ **Real block numbers, invented facts.** The blocks and streets are real
 Clementi addresses. Do not let the report imply anyone surveyed them, and do not
 attach an invented resident to a real address in a way that reads as real.
 
-`activity.js` drives the "since January" panel, so its weights become the CO₂
-total on screen. Plausible, not measured — worth a line.
+`activity.js` drives the year-so-far panel, so its weights become the CO₂ total
+on screen. Plausible, not measured — worth a line. **It is only "since January"
+on Henrison's phone**; Mr Lim joined in July 2026, and his thinner history is
+what makes the near-empty state demoable.
+
+**All eight headers checked, 9 Sept.** Every file does carry its warning.
+`events.js` was the weakest — it said "All invented" in passing, with no ⚠️ and
+no mention that its venues (Blk 442's void deck, the Community Centre, Clementi
+Mall) are real places. It now carries the same warning as `facilities.js` and
+`residents.js`. The risk it closes is small but is the same one as §8: an
+invented specific sitting on a real, findable address.
 
 ---
 
@@ -605,6 +630,152 @@ engagement 2.54".
 4. **Ceiling effects.** No respondent scored the three aims below 3, so the
    4.44 / 4.40 / 4.35 ordering is not meaningful. Do not rank them.
 5. **n = 52 is small.** Quote counts alongside percentages.
+
+---
+
+## 12. Anti-misuse — what we bound, and what we did not
+
+**What needs checking here, and what does not.** The decisions in this section are
+the team's own — the voucher choice, and *bound the rewards, do not identify the
+users*. Nobody needs to verify a decision they made; there is no external source
+to open, and the argument stands or falls on whether it convinces a reader.
+
+✅ **All three verified — Henrison, 9 Sept 2026.** Three things in this section
+were Claude's, not the team's, and each needed a person:
+
+1. ☑ **The arithmetic — checked by hand, Henrison, 9 Sept.** 6 × 5 / 2 = 15
+   pairs; the taper sums to 2.75; 15 × 2.75 = 41.25; × 15 points = 619. `lend` =
+   15 points confirmed in `listings.js`. **The check also corrected the framing**:
+   15 pairs assumes every possible pair exchanges, which no real household does,
+   so the figure is written as an upper bound throughout — see the warning below.
+2. ☑ **The claims about the code — tested, not merely read. Henrison, 9 Sept**,
+   with before/after screenshots. On Henrison's phone the `bananas` card's code
+   box was given **3948** and Confirm handover tapped; **30 points landed with no
+   second person involved.** The code matches `foodShelf.js` → `bananas` →
+   `handoverCode: '3948'`, so the test hit the intended item. The self-credit
+   hole is real and is now evidenced rather than asserted.
+
+   ⚠️ **Two sub-claims the test does not reach, and neither is provable by
+   repeating it.**
+
+   - **That the taper was *skipped*, rather than applied at full rate.** The
+     seeded pair count for Henrison–Mr Lim is 1, and `TAPER[1]` is 1, so a
+     tapered path and an untapered path both pay 30. The test cannot tell them
+     apart. The claim rests on reading `Share.jsx:49` and `:55` — partner is
+     `null`, so `effectivePoints` is `item.points` unconditionally.
+   - **That no cap exists.** One 30-point award is consistent with a cap set
+     above 30. The claim rests on reading `SessionProvider.jsx:21–28`, which is
+     eight lines and has no cap logic in it.
+
+   **Nor can the exploit be repeated in this build**, which is worth knowing
+   before anyone tries: `bananas` is the only self-creditable item on Henrison's
+   phone. `carrots-celery` is past its date, and expired items show no code box;
+   newly posted items carry `requests: 0` and show "Nobody has claimed this yet".
+   So the hole is real but bounded at one item per demo — which is a fact about
+   the mock data, not about the design.
+3. ☑ **Whether the write-up says what the team meant — read, Henrison, 9 Sept.**
+   The decision was given to Claude in a few sentences and came back as a section.
+   Read for anything strengthened, softened or invented, particularly the Healthy
+   365 objections and the blunt line about the payoff being unbounded. Passed as
+   written, with the one phrasing correction in point 1.
+
+It is the section most likely to be worth marks, because it is where the project
+says what its own design cannot do.
+
+**The class of problem.** The app cannot verify a physical fact. It cannot see
+whether an item changed hands, whether a listing matches the thing in the
+cupboard, or whether two people who met actually needed to. Every listing is
+self-reported. So none of our three mechanisms verifies anything — they raise
+**effort** or bound **reward**:
+
+| Mechanism | What it does | What it cannot do |
+|---|---|---|
+| Handover code (`handover.js`) | Whoever is credited must type the OTHER person's four digits, so points need two people in the same place | Two people who agree to cheat can read codes down the phone. Stated in `handover.js` since 28 Aug |
+| Taper (`pairing.js`) | Bounds the reward **per pair** — full, full, half, quarter, nothing | Nothing about three or more people. See the ring below |
+| Photo rule (`NewListingSheet.jsx`) | Food cannot be listed without a photo, and which kind is recorded and shown | Upload is faked; no image is stored or compared. It is a social deterrent, not a mechanism |
+
+### The circulating ring
+
+**The exploit.** The taper is per-pair, so a household of six is 15 distinct pairs
+(6 choose 2), each with two full-rate exchanges before it tapers. One drill can
+circulate indefinitely without anyone ever using it. Taking the full taper
+sequence, each pair yields 1 + 1 + 0.5 + 0.25 = **2.75 times the base points**, so
+15 pairs extract **up to about 41 times one listing's points** from a single item
+— **up to 619 points** for a drill lent at 15, before the ring even starts again
+with a second item.
+
+⚠️ **"Up to" is doing real work in that sentence.** 15 is every pair that *could*
+exist among six people, and it assumes all 15 actually exchange. No real household
+does that — some pairs never trade with each other. **619 is a ceiling, not an
+expected figure**, and quoting it as what a household would earn would be the same
+error this document keeps catching elsewhere: a bound presented as a measurement.
+The ceiling is still the right number to design against, because the mitigation
+has to hold at the worst case.
+
+**This is the case `pairing.js` deliberately declined to catch**, and the decision
+has not changed on seeing it.
+
+**Our decision: bound the rewards, do not identify the users.** Two reasons, and
+the second is the one that survives disagreement:
+
+1. Catching a ring requires social-graph analysis — working out who is related to
+   whom. That is the profiling `pairing.js` rejected, and it would mean holding
+   identity data the app has no business holding.
+2. **Any rule sharp enough to catch a colluding household also catches a real
+   one.** A family passing a drill between six members over a year is the
+   behaviour the app exists to encourage. A rule cannot tell the two apart,
+   because the difference is intent, and intent is not on the phone.
+
+**The mitigation we would add and did not build: a per-week points cap.** It is
+the only measure that touches the ring, because it bounds the payoff globally
+rather than per relationship, and it profiles nobody — the same ethical footing as
+the taper. It was not built because the build phase closed before the exploit was
+found, and a cap firing during the demo would read as a bug. ⚠️ **There is
+currently no cap of any kind** — `earnPoints` in `SessionProvider.jsx` adds and
+returns. Any sentence in the report arguing "the payoff is too small to be worth
+sustained fraud" is **false as the code stands**, and must not be written until
+either the cap exists or the sentence is rewritten to say the payoff is unbounded.
+
+**Why this matters more given the voucher decision.** Redemption is grocery
+vouchers (§9), which is cash-equivalent. That choice targets the barrier our
+survey ranked first, and the cost of it is precisely that farming becomes worth
+attempting. The two decisions have to be presented together or each looks
+careless on its own.
+
+### If this scaled to a government platform
+
+Recorded for future development, not for this prototype. On something like Healthy
+365, household composition is **already known** through Singpass and HDB records,
+so the profiling we rejected stops being technically hard and becomes a policy
+decision rather than a technical one. The objections we would still raise:
+
+- **Consent context.** Data given for housing was not given for policing rewards.
+  Lawful access is not the same as appropriate use.
+- **It penalises genuine household sharing** — the same objection as above, except
+  now enforced with real records rather than guesswork.
+- **The participation cost of surveillance.** An app whose stated purpose is
+  raising civic engagement damages that purpose by monitoring who lives with whom.
+  Our survey already found "no dedicated community" a barrier at 4.23/5 (§11b);
+  surveillance is not how that is lowered.
+
+**Our answer holds at either scale: bound the rewards, do not identify the users.**
+At prototype scale it is the only option available; at national scale it is the
+one that should still be chosen.
+
+### Also open, no decision taken yet
+
+⚠️ **An unclaimed shelf item can be self-credited, with no taper.** Found 9 Sept
+while checking the ring, and **confirmed by test the same day** — 3948 entered on
+Henrison's `bananas` card paid 30 points with nobody else involved (see point 2
+above for what the test does and does not establish). In `Share.jsx` the partner is `claims[item.id]?.by ?? null`,
+so with no live claim there is no partner and **the taper is skipped entirely**;
+`ShelfCard.jsx` falls back to the item's own code and `showHint` prints it on
+screen. One person on one phone can therefore collect the full points on a seeded
+item — `bananas`, `requests: 2`, is the live example. It is a labelled demo crutch
+("Demo only: their code is …") and a **newly posted** item is not exposed, because
+`requests: 0` shows "Nobody has claimed this yet" and no code box. The team has not
+yet decided whether to leave it, and it is listed here so a limitations section
+that claims to be complete actually is.
 
 ---
 

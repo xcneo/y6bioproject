@@ -132,6 +132,13 @@ resident; never reintroduce a literal `'You'`.
   the sharing** — nothing ever blocks an exchange. Do not add rules about who
   people are (families, friends, same address); a phone cannot tell a colluding
   pair from a generous one, and trying would mean profiling.
+- **The taper is per-pair and a ring of three or more defeats it.** Known and
+  accepted, not an oversight — a household of six is 15 pairs, each good for two
+  full-rate exchanges. The standing decision is **bound the rewards, do not
+  identify the users**, because any rule sharp enough to catch a colluding
+  household also catches a real one sharing a drill. The fix that fits that
+  decision is a per-week points cap; it is **not built**, so nothing may claim
+  the payoff is bounded. See §12 of `docs/source-checklist.md`.
 
 Leftover Vite starter files, unused, safe to delete: `src/assets/hero.png`,
 `src/assets/react.svg`, `src/assets/vite.svg`, `public/icons.svg`.
@@ -179,6 +186,12 @@ ML.
 
 - **Points system.** Earned for eco-friendly swaps, attending events, donating
   food. Redeemable for grocery vouchers and restaurant discounts in-app.
+  **Grocery vouchers, decided 9 Sept, not green-goods-only** — cost is the
+  barrier our survey ranked first (4.37/5, 28 of 52 at maximum), so the reward
+  targets the barrier residents named. Restricting redemption to sustainable
+  goods was the alternative and would have confined farming to behaviour we
+  promote; it was rejected as a weaker incentive against that barrier. The
+  accepted cost is that a cash-equivalent reward makes farming worth attempting.
 - **Neighbourhood sustainability score.** A mini-map scoring each neighbourhood,
   creating friendly competition and letting planners spot low-engagement areas.
 
@@ -235,10 +248,17 @@ not the code.
 
 ## Next task
 
-**§8 of the checklist** — the twelve `detail` strings and the walk times in
-`facilities.js`. These are invented facts attached to real, named Clementi
-addresses (EV tariffs, a community centre's opening hours, collection schedules),
-and they reach a rendered screen while sitting outside the sourcing mechanism.
-Closing it means looking at real data and linking it to the map. §8 lists all
-twelve, ranked by how quickly a marker could check one, with three options for
-closing them.
+**§8 is half closed.** The twelve `detail` strings and the walk times in
+`facilities.js` are invented facts attached to real, named Clementi addresses (EV
+tariffs, a community centre's opening hours, collection schedules). On 9 Sept the
+file header was extended to disclaim them — route 1 of the three in §8 — so
+anyone opening the file is told. **The screen still shows them undisclaimed**, so
+the two remaining routes are open and stack on top of the header: soften the
+specifics ("roughly $0.55 per kWh" → "paid charging"), or check two or three
+against real data. §8 lists all twelve, ranked by how quickly a marker could
+check one.
+
+§9, §10 and §12 are verified as of 9 Sept. What remains besides §8 is report
+work rather than code: §7's four HPB/Gardenia lookups and §11b's survey figures
+are still unticked (nobody has re-opened those sources), and writing §7's
+assumptions and §9's parameters into the methodology.

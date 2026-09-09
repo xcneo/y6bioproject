@@ -19,8 +19,11 @@
 // two is a coincidence.
 const REPEAT_THRESHOLD = 3
 
-// A month is treated as ending in its last five days. Nothing here does date
-// arithmetic — dayOfMonth is written into the mock data by hand.
+// A month is treated as ending on day 25 or later. That is the last 7 days of a
+// 31-day month and the last 4 of February, so it is "the last few days" rather
+// than a fixed count — fine for spotting a cluster, but do not describe it in
+// the report as a five-day window. Nothing here does date arithmetic;
+// dayOfMonth is written into the mock data by hand.
 const END_OF_MONTH_DAY = 25
 
 // ─── Rules ───────────────────────────────────────────────────────────────────

@@ -776,3 +776,169 @@ appends a one-line summary of each task it completes.
   learned: cite the page you opened, check the qualifier rather than the number,
   and treat a data change as unfinished until the copy describing it has been
   re-read.
+- 2026-09-09 (§8 disclaimed in the file headers) — Took the cheapest of the three
+  routes §8 offered for the twelve invented `detail` strings and the walk times in
+  `facilities.js`. The old header disclaimed one thing only, whether each facility
+  exists at that spot, and the gap was that it said nothing about the specifics
+  written into `detail` — the $0.55 per kWh at Clementi Mall, the community
+  centre's 9am to 9.30pm, the Bloobox emptied every Tuesday and Friday, the 14
+  garden beds, the 60 bicycle spaces. Those are the dangerous ones precisely
+  because they are attached to real, findable addresses: a marker could go and
+  check one, and would find we made it up. The header now names all three kinds
+  of invention separately — existence, walk times, and the detail specifics —
+  says not to quote a detail line as a finding, and asks anyone who does check an
+  entry to write beside it where they checked, so a later reader can tell a
+  checked entry from an invented one. `listings.js` already said ALL INVENTED at
+  the top, so its two rental prices were covered; its `price` field now says on
+  its own line that it is a plausible asking price rather than a market rate we
+  looked up. What this does not do is worth stating plainly in the report,
+  because it is the honest limit of the cheap option: a comment disclaims to
+  whoever opens the file, and nobody watching the demo opens the file. The screen
+  is unchanged, so on screen these still look exactly as authoritative as the
+  Poore & Nemecek figures. The two costlier routes — softening the specifics, or
+  checking two or three against real data — stack on top of this one rather than
+  competing with it, and §8 keeps the twelve rows as the worklist if either is
+  taken. The checklist's status row for §8 now reads "invented, now disclaimed in
+  the file headers" and its verified box stays empty, since nobody has read the
+  new header yet, and CLAUDE.md's next-task section was rewritten to match rather
+  than left pointing at work already done.
+- 2026-09-09 (two decisions recorded, and the ring exploit written up) — Two
+  design decisions and one newly found exploit are now on the record in
+  docs/source-checklist.md, which gained a §12 for anti-misuse. The first
+  decision is that points redeem for grocery vouchers rather than
+  sustainable-goods-only. The reasoning is our own survey: cost was the barrier
+  ranked first at 4.37 out of 5 with 28 of 52 respondents rating it maximum, so a
+  reward that reduces grocery spending targets the barrier residents actually
+  named rather than the one we would prefer them to name. The alternative was
+  considered properly and rejected rather than ignored — restricting redemption
+  to sustainable goods would confine any farming to behaviour we promote, which
+  is a real advantage, but it is a weaker incentive against the barrier the
+  project set out to address. The accepted cost is that a cash-equivalent reward
+  is what makes farming worth attempting at all, and the two decisions have to be
+  presented together in the report or each looks careless alone. The second is the
+  circulating ring: because the taper in pairing.js is per pair, a household of
+  six is 15 distinct pairs, each good for two full-rate exchanges before it
+  tapers, so one drill can circulate indefinitely without anyone using it. Each
+  pair yields 2.75 times the base points across the full sequence, so 15 pairs
+  extract about 41 times one listing's points from a single item, roughly 619
+  points for a drill lent at 15. This is precisely the case pairing.js declined to
+  catch, and seeing it has not changed the decision: catching a ring means
+  social-graph analysis, which is the profiling the file exists to refuse, and any
+  rule sharp enough to catch a colluding household also catches a real one, since
+  six people sharing one drill for a year is exactly what the app is for and the
+  difference between the two cases is intent, which is not on the phone. The
+  standing answer is therefore to bound the rewards and not identify the users.
+  The mitigation that fits it is a per-week points cap, which bounds the payoff
+  globally rather than per relationship and profiles nobody; it is not built,
+  because the build phase closed before the exploit was found and a cap firing on
+  stage would read as a bug. §12 states plainly that no cap of any kind exists in
+  SessionProvider.jsx, so the tempting report sentence — that the payoff is too
+  small to be worth sustained fraud — is false as the code stands and must not be
+  written until either the cap exists or the sentence is rewritten to say the
+  payoff is unbounded. Recorded alongside it, for future development rather than
+  this prototype, is what changes at national scale: on a platform like Healthy
+  365 household composition is already known through Singpass and HDB records, so
+  the profiling we rejected stops being technically hard and becomes a policy
+  decision instead of a technical one, and the objections we would still raise are
+  consent context (data given for housing was not given for policing rewards),
+  that it penalises genuine household sharing, and the participation cost of
+  surveillance in an app whose purpose is raising civic engagement. §12 also
+  carries the class-of-problem framing that the app cannot verify a physical fact,
+  with a table of what each of the three mechanisms actually does — the handover
+  code raises effort, the taper bounds reward per pair, the photo rule is a social
+  deterrent — and none of them verifies anything. §9's taper row now says
+  explicitly that it bounds reward per pair and does not address multi-party
+  circulation, pairing.js carries the same limitation beside the TAPER constant
+  where anyone tempted to weaken it will read it first, and CLAUDE.md records both
+  decisions so a later session does not re-litigate them. One further hole found
+  while checking the ring is listed in §12 as undecided rather than quietly
+  omitted: an unclaimed shelf item has no partner, so the taper is skipped
+  entirely and the item's own code is printed on screen by the demo hint, letting
+  one person on one phone collect full points on a seeded item. Newly posted items
+  are not exposed, since requests is 0 and no code box appears. Nothing was built
+  this task and no box was ticked.
+- 2026-09-09 (§9 verified, and §12's checkbox made honest) — Henrison read
+  through the design parameters and §9 is now ticked, taking the outstanding list
+  from six items to five. The more useful part of the task was a question the team
+  asked while ticking it: what is there to verify in §12 when the idea was ours?
+  The answer is that nothing in a decision needs verifying by the person who made
+  it — there is no source to open, and *bound the rewards, do not identify the
+  users* stands or falls on whether it convinces a reader, not on whether it
+  matches a document. But §12 is not all decision. Three things in it came from
+  Claude and are exactly the kind of thing this project has been caught by before:
+  the arithmetic (15 pairs, 2.75 times base per pair, about 41 times a listing's
+  points, roughly 619 for a drill lent at 15), the claims about what the code
+  does (no cap in SessionProvider.jsx, the taper skipped when there is no partner,
+  the bananas card paying full points to one person on one phone), and whether a
+  few sentences of the team's reasoning came back as a section that still says
+  what they meant. §12's checkbox now names those three rather than asking
+  vaguely for a read-through, and points out that the cheapest check on the second
+  is to open the app and tap the banana card's code box. The drill's 15 points was
+  confirmed against listings.js while writing this, so the 619 figure is at least
+  internally consistent; it still needs a person. The general rule worth keeping
+  is that a section mixing the team's judgement with Claude's arithmetic needs its
+  checkbox to say which half is being ticked, or the tick means nothing.
+- 2026-09-09 (the self-credit hole confirmed by test) — Henrison tested the
+  banana card on Henrison's phone, entered 3948, tapped Confirm handover and
+  watched 30 points land with no second person involved, with before and after
+  screenshots. The code was checked against foodShelf.js and the bananas item's
+  handoverCode is indeed '3948', so the test hit the intended item and the
+  self-credit hole is now evidenced rather than asserted — a real improvement on
+  a Claude claim about the code, and the second point of §12 is ticked as verified
+  by test rather than by reading. Two sub-claims bundled into that point are NOT
+  covered by the test and have been separated out rather than swept along with it.
+  First, the test cannot show that the taper was skipped as opposed to applied at
+  full rate, because the seeded pair count for Henrison and Mr Lim is 1 and
+  TAPER[1] is 1, so both paths pay exactly 30 and the observation cannot
+  distinguish them; that claim still rests on reading Share.jsx, where partner is
+  null and effectivePoints is item.points unconditionally. Second, a single
+  30-point award is consistent with a cap set above 30, so the no-cap claim still
+  rests on reading the eight lines of SessionProvider.jsx. Worth recording too:
+  the exploit cannot be repeated in this build, because bananas is the only
+  self-creditable item on Henrison's phone — carrots-celery is past its date and
+  expired items show no code box, and newly posted items carry requests 0 and show
+  "Nobody has claimed this yet" instead. That bound is a fact about the mock data
+  rather than about the design, and saying so is what stops it being quoted as a
+  mitigation. The general point for the report is that a test verifies exactly
+  what it exercises: watching the number 30 appear proved the hole exists and
+  proved nothing at all about the two mechanisms that were supposed to have
+  stopped it.
+- 2026-09-09 (§12 verified, and 619 demoted to an upper bound) — Henrison checked
+  the ring arithmetic by hand — 6 x 5 / 2 = 15 pairs, the taper summing to 2.75,
+  15 x 2.75 = 41.25, times 15 points = 619, with lend = 15 confirmed against
+  listings.js — and read the write-up for faithfulness. Both pass, so §12 is now
+  ticked in full: arithmetic by hand, code claims by test, write-up by reading.
+  The check produced one correction and it is the interesting part of the task.
+  The figure was written as though 619 points were what a household of six would
+  earn, when 15 is every pair that COULD exist among six people and the total
+  assumes all 15 actually exchange, which no real household does. It is a ceiling,
+  not an expectation, and it now reads "up to 619 points" everywhere with a
+  warning saying why the words are doing work. Quoting it as an expected figure
+  would have been the same error this document keeps catching in sourced data — a
+  bound presented as a measurement — arrived at from the opposite direction, since
+  every input was correct and only the sentence around them was wrong. The ceiling
+  is still the right number to design against, because a mitigation has to hold at
+  the worst case, and that is now said explicitly so nobody softens the figure on
+  the grounds that it is unrealistic. Worth noting for the report that all three
+  verification methods in §12 were different — hand arithmetic, a test with
+  screenshots, and a careful read — and that the read was the one that caught the
+  error, on a number the other two had already confirmed was correct. §12's
+  remaining items are decisions rather than verifications: whether to build the
+  per-week cap, and what to do about the self-credit hole. The outstanding list
+  stands at five, of which one is a decision and four are checks.
+- 2026-09-09 (§10 ticked; §7 and §11b left open) — Henrison read through the mock
+  scenario data and §10 is ticked, so §9, §10 and §12 are all verified and the
+  outstanding list is down to four. One note was added rather than left implicit:
+  the reason given for §10 being low-risk was that the demo audience knows it is a
+  prototype, but §10's warning is aimed at the report rather than the audience,
+  where nobody is standing there knowing anything. The tick stands, since the
+  section was read; the reasoning should not be carried into the write-up. §7 and
+  §11b were described as fine as well, and were deliberately NOT ticked. Neither
+  is a read-through: §7 is four lookups on HealthHub and Gardenia, including the
+  meat serving that changed four times in one day and carries a 33% sensitivity on
+  every food figure on screen, and §11b's figures live in a responses spreadsheet
+  that is not in the repo and cannot be checked from here at all. The standing
+  rule that a tick means a team member opened the source was written precisely for
+  the end of a long session, so it was applied at the end of a long session. The
+  team's instruction to move on to §8 tomorrow is recorded in CLAUDE.md, which now
+  says §9, §10 and §12 are done and names §7 and §11b as still open.

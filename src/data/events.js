@@ -1,6 +1,14 @@
 // Mock recycling drives and sustainability events in Clementi.
-// All invented. Dates are written out so they read clearly in a demo —
-// nothing here works out "days from today".
+//
+// ⚠️ ALL INVENTED, like the rest of the mock data. No drive, workshop or
+//    workday below has been organised, and no venue has agreed to host one.
+//    The LOCATIONS are real Clementi addresses — Blk 442's void deck, the
+//    Community Centre, Clementi Mall — which is the combination to be careful
+//    with: never let the report imply an event is actually scheduled at a real
+//    place. Same warning as facilities.js and residents.js carry.
+//
+// Dates are written out so they read clearly in a demo — nothing here works out
+// "days from today".
 //
 // hasHappened marks events already in the past. Points are only credited once
 // attendance at a past event is confirmed, so the past events are what make the

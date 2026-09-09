@@ -2,11 +2,27 @@
 //
 // ⚠️ READ BEFORE PUTTING THIS IN THE REPORT ⚠️
 // The street names, block numbers and parks below are REAL places in Clementi.
-// Whether each facility actually exists at that exact spot is INVENTED — nobody
-// has surveyed these. That is fine for a class prototype (the spec says mock data),
-// but do NOT write in the report that Clementi "has" these facilities.
-// If you want the real ones, walk the estate and check, or look them up on
-// the NEA / Town Council / LTA sites, then correct this file.
+// Everything this file says ABOUT them is INVENTED — nobody has surveyed any of
+// it. That covers three separate things, and the third is the easiest to miss:
+//
+//   1. Whether each facility exists at that spot at all.
+//   2. walkMinutes — a plausible guess from Blk 442 Clementi Ave 3, not a
+//      measured or mapped walk. The screen says "about" for this reason.
+//   3. Every specific inside `detail` — the EV tariffs, the community centre's
+//      opening hours, the Bloobox collection days, the counts of garden beds and
+//      bicycle spaces, the allotment waiting list. These are the dangerous ones.
+//      They read as researched fact because they are attached to a real address
+//      a marker could go and check, and they would find we made them up. They
+//      are scene-setting, written so the demo feels like a real estate.
+//
+// So do NOT write in the report that Clementi "has" these facilities, and do not
+// quote a `detail` line as a finding. Any number we are actually claiming is
+// true belongs in factors.js with a source field — see CLAUDE.md.
+//
+// If you want the real ones, walk the estate and check, or look them up on the
+// NEA / Town Council / LTA sites, then correct this file. If you do check one,
+// write where you checked it beside that entry, so the next person can tell the
+// checked entries from the invented ones.
 //
 // x and y are percentage positions on the stylised map (0-100, left and top).
 // They are not real coordinates — nudge them until the map looks right.

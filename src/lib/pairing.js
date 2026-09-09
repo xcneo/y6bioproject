@@ -28,6 +28,25 @@
 //   5th on     nothing    a farming pair is earning zero within a week
 export const TAPER = [1, 1, 0.5, 0.25, 0]
 
+// ⚠️ WHAT THIS DOES NOT CATCH, and the decision not to extend it.
+//
+// The taper is PER PAIR. Three or more people defeat it by circulating. A
+// household of six is 15 distinct pairs, each good for two full-rate exchanges
+// before it tapers, so one drill can go round indefinitely without anyone ever
+// drilling anything.
+//
+// We are not fixing this here, and the reason is the one at the top of the file
+// rather than laziness. Catching a ring means working out who is related to
+// whom, which is the profiling this file exists to refuse. And any rule sharp
+// enough to catch a colluding household catches a real one too: six people
+// sharing one drill for a year is exactly what the app is for. The difference
+// between the two is intent, and intent is not on the phone.
+//
+// The measure that would work is a cap on points earned per week — it bounds the
+// payoff globally instead of per relationship, and it profiles nobody. It is not
+// built (see §12 of docs/source-checklist.md), so do not write anywhere that the
+// payoff is bounded. It is not.
+
 // "This month" is the intended window. Nothing in this prototype does date
 // arithmetic (see the note at the top of events.js), so the count here is
 // really "seeded history plus whatever happens during the demo". A real version
