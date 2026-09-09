@@ -3,10 +3,18 @@
 A prototype app for BL6131 Applied Biology (NUS High), Sustainability Project 2026.
 
 Singapore's Green Plan 2030 target area: **Sustainable Living**. The problem we're
-addressing is the *value–action gap*. Around 4 in 10 Singaporeans say they value
-sustainability but do not actively act on it, because sustainable choices take more effort and
-their benefit is invisible while their cost is higher. Eco SG tries to make the sustainable
-option the low-effort one, and make the payoff visible.
+addressing is the *value–action gap*: 7 in 10 Singaporeans feel sustainability is important,
+but only 3 in 10 are actively contributing ([Singlife, *Sustainable Future Index
+2024*](https://singlife.com/content/dam/public/sg/documents/about-us/sustainability-strategy/singlife-sustainable-future-index-2024.pdf)
+— 1,000 Singaporeans and PRs aged 18–64, surveyed June–July 2024). Sustainable choices take
+more effort and their benefit is invisible while their cost is higher. Eco SG tries to make the
+sustainable option the low-effort one, and make the payoff visible.
+
+We also ran our own survey (n=52, Aug–Sept 2026): **46 of 52 had never taken part in a
+community sustainability initiative**, yet the same people rated this app's aims 4.35–4.44 out
+of 5, and ranked cost the biggest barrier (4.37/5). It is a small convenience sample of mostly
+students, so it speaks for the people we asked and not for Singapore — details and limitations
+in [`docs/source-checklist.md`](docs/source-checklist.md) §11b.
 
 ## The three features
 

@@ -7,6 +7,7 @@ import {
   ITEM_PRICE_SGD,
   ITEM_WATER_L,
   MANUFACTURING_CO2,
+  SERVING_KG,
   isSourced,
 } from '../data/factors'
 
@@ -32,26 +33,56 @@ function apply(factor, amount) {
   return isSourced(factor) ? factor.value * amount : UNSOURCED
 }
 
-// a - b, but only if BOTH factors are sourced. A difference against a missing
-// number is not a smaller saving, it is an unknown one.
-function difference(table, fromKey, toKey, kg) {
+// What the food given up costs, minus what the food replacing it costs — but
+// only if BOTH factors are sourced. A difference against a missing number is not
+// a smaller saving, it is an unknown one.
+//
+// The two masses are SEPARATE arguments on purpose. This used to take one `kg`
+// for both sides and return (from - to) * kg, which quietly assumed you replace
+// a mass of one food with the same mass of another. See foodSwap below.
+function difference(table, fromKey, toKey, kgFrom, kgTo) {
   const from = table[fromKey]
   const to = table[toKey]
 
   if (!isSourced(from) || !isSourced(to)) return UNSOURCED
 
-  return (from.value - to.value) * kg
+  return from.value * kgFrom - to.value * kgTo
 }
 
 // ─── One food instead of another, n meals a week ─────────────────────────────
+//
+// SERVING FOR SERVING, not kilogram for kilogram. Each food brings its own
+// serving mass from SERVING_KG, so swapping one meal of beef for one meal of
+// tofu means giving up a 90 g serving of beef and taking on a 200 g serving of
+// tau kwa — both figures from HPB's own published list.
+//
+// This replaced a single shared `portionKg` on 9 Sept 2026. The old version
+// multiplied one mass by the DIFFERENCE of the two factors, which assumed you
+// replace a mass of one food with the same mass of another. Fine for
+// beef → chicken; wrong for beef → tofu, where a real portion is about twice
+// the mass. It was also wrong in the direction that flattered us: crediting the
+// swap for less tofu than a person really eats makes the saving look bigger.
+// Correcting it cut the tofu card's water and money figures by about a fifth.
+//
+// A swap needs a serving for BOTH foods. Anything outside HPB's "meat and
+// others" group — rice, bread, vegetables — has no serving, and the card says
+// "Source needed" rather than guessing one.
 function foodSwap(habit, mealsPerWeek) {
-  const kgPerYear =
-    mealsPerWeek * ASSUMPTIONS.weeksPerYear.value * ASSUMPTIONS.portionKg.value
+  const servingFrom = SERVING_KG[habit.from]
+  const servingTo = SERVING_KG[habit.to]
+
+  if (!isSourced(servingFrom) || !isSourced(servingTo)) {
+    return { co2: UNSOURCED, water: UNSOURCED, money: UNSOURCED, waste: 0 }
+  }
+
+  const mealsPerYear = mealsPerWeek * ASSUMPTIONS.weeksPerYear.value
+  const kgFrom = mealsPerYear * servingFrom.value
+  const kgTo = mealsPerYear * servingTo.value
 
   return {
-    co2: difference(FOOD_CO2, habit.from, habit.to, kgPerYear),
-    water: difference(FOOD_WATER, habit.from, habit.to, kgPerYear),
-    money: difference(FOOD_PRICE_SGD, habit.from, habit.to, kgPerYear),
+    co2: difference(FOOD_CO2, habit.from, habit.to, kgFrom, kgTo),
+    water: difference(FOOD_WATER, habit.from, habit.to, kgFrom, kgTo),
+    money: difference(FOOD_PRICE_SGD, habit.from, habit.to, kgFrom, kgTo),
     // Swapping one food for another does not change how much lands in the bin.
     waste: 0,
   }

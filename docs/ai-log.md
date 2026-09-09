@@ -279,3 +279,500 @@ appends a one-line summary of each task it completes.
   all — not even blue, since blue is consumptive and this is withdrawal. This
   retrospectively justifies the separate "Water withdrawn" label better than the
   argument originally given for it.
+- 2026-09-09 — Sourced the "4 in 10 Singaporeans" claim, the last unsourced
+  number in the project and the opening line of the problem statement in both
+  `CLAUDE.md` and `README.md`. The survey exists — Singlife's *Sustainable Future
+  Index 2024*, an online survey of 1,000 Singaporeans and PRs aged 18 to 64
+  fielded June–July 2024 — but it does not contain "4 in 10" anywhere. What it
+  publishes is two figures: 7 in 10 feel sustainability is important, and only 3
+  in 10 are actively contributing. Our "4 in 10" was 7 minus 3, somebody's own
+  arithmetic on the way to "the share who value it but don't act", and the
+  subtraction is an assumption rather than a finding: it gives exactly 4 only if
+  every one of the 3 who act comes from the 7 who value, and if some who act
+  don't much care about it then the value-but-don't-act group is bigger than 4 in
+  10. The old sentence was a lower bound written as a measurement. Both files now
+  quote the two published figures instead, which needs no derivation defending
+  and makes a sharper opening line — 7 value it, 3 do it. The report's PDF
+  resisted the usual tools (no poppler on the machine, and the fetcher returned
+  binary), so the text came out by decompressing the PDF's own content streams
+  with zlib and reading the figures verbatim off p. 6. Two traps are now written
+  into §11 for whoever verifies it. First, the newer Singlife-SGFIN 2026 edition
+  has its own "4 in 10" and it means something completely different — willingness
+  to pay a price premium, not failure to act — so it must not be swapped in
+  because it looks familiar. Second, that 2026 edition does not supersede the
+  figure despite being newer: it changed instrument to the AKOA framework and
+  never repeats the awareness-versus-action split, which is the answer if a marker
+  asks why we cite a 2024 survey in 2026. One wording limitation is recorded
+  rather than smoothed over: Singlife glosses its own result as an *awareness*-
+  action gap while we call it a *value*-action gap, and although the question
+  wording ("feel sustainability is important") supports our reading, the mismatch
+  belongs in the methodology paragraph. The figure is sourced, not verified —
+  it goes on the same ☐ list as §4, §4b, §5 and §6, because Claude reading a PDF
+  is exactly what this document says is not a verification. Two stale passages in
+  the checklist's status block were corrected in the same pass: it still claimed
+  the drill card shows a "Source needed" chip and that its water tile always
+  would, both overtaken when USEEIO filled that figure on 8 Sept.
+- 2026-09-09 (later) — §11 closed and our own survey brought into the checklist
+  as a source. Henrison opened the Singlife article, published 10 Feb 2025, saw
+  the 7 in 10 and the 3 in 10 for himself and confirmed the tick, so the
+  value–action gap went from unsourced to sourced to human-verified inside one
+  day — the first figure in the project to do that. Before touching anything the
+  repo was swept for every variant of the old claim: the live wording exists in
+  exactly two places, `README.md` and `CLAUDE.md`, nothing in `src/` mentions it
+  at all because it never reaches a screen, and every other hit is either this
+  document explaining the correction or the log recording it. Then the team's own
+  Google Form export was read — 52 responses between 21 Aug and 9 Sept 2026, 47
+  students, 4 employed, 1 NS — and written up as §11b. The reason it earns a
+  section rather than a footnote is methodological: Singlife's gap is the
+  distance between two different questions, and calling that a value–action gap
+  needs the assumption that the 3 who act sit inside the 7 who value, whereas our
+  survey asked both halves of the same 52 people. 46 of them (88.5%) have never
+  taken part in a community or ground-up sustainability initiative, and those same
+  respondents score the app's three aims 4.35 to 4.44 out of 5 and their society's
+  civic engagement 2.54. Values high, action low, one group, no subtraction. The
+  barrier ratings also order the brief's two root causes for us — cost 4.37 with
+  28 of 52 giving it the maximum, no dedicated community 4.23, lack of information
+  3.85 — so cost is the figure to quote for root cause 2. Six limitations are
+  recorded rather than smoothed over, and the sharpest is ours to own: every one
+  of the 52 said yes to "would you be interested in using such an app?", which in
+  a sample of mostly classmates being asked about our own project is what a
+  leading question and social desirability look like, not evidence of demand. It
+  is reported and discounted in the same breath, because a marker who finds that
+  unprompted reads it far worse than one we flag first. The other limitations are
+  the convenience sample (which is why the national sentence still rests on
+  Singlife and our survey only corroborates it locally, never "our survey found
+  that Singaporeans…"), self-selection, ceiling effects that make the 4.44/4.40/
+  4.35 ordering of the three aims meaningless, small n, and one genuine gap: the
+  export carries the numbers 1 to 5 but not the words they were labelled with, so
+  somebody needs to open the Form and write the anchors into §11b before those
+  means can be interpreted.
+- 2026-09-09 (later still) — The survey's scale anchors were confirmed from the
+  Google Form — **1 = "not at all", 5 = "very much"** — which closes the last
+  open item in §11b and makes every mean in it interpretable. Writing them down
+  immediately exposed something the numbers alone had hidden: the anchors do not
+  point the same way on every question. On the barriers (Q5–Q7) and the aims
+  (Q10–Q12) a high score is the strong result, but **Q4 asks whether society's
+  civic engagement is *sufficient***, so there a *low* score is the striking one.
+  Its 2.54 means "not really sufficient", which supports our problem statement
+  rather than contradicting it. The earlier write-up had compressed this to
+  "score their society's civic engagement at 2.54", which reads as though we had
+  measured how much engagement exists — a question we never asked. That is now
+  corrected in §11b and the phrasing to use is spelled out: *"rated the
+  sufficiency of civic engagement at 2.54 out of 5"*. Small wording point, but it
+  is exactly the kind of slip that turns a supporting figure into one a marker
+  can dispute, and it only became visible once the anchors were written next to
+  the means. §11b now has nothing outstanding.
+- 2026-09-09 (verification pass) — Henrison opened the Edinburgh Tool Library
+  page and the Horme listing and confirmed all three on-screen drill figures:
+  6.165 kg CO2e per kg of tool (§4), and the $134.06 price and 0.99 kg weight
+  including the battery (§4b). All three are now properly ticked, which matters
+  because this document had them ticked once before on Claude's word alone and
+  had to un-tick them. Every figure that reaches a screen has now been read off
+  its source by a person. What is left unverified is §5 and §6 — seven numbers
+  across four web pages, none of them on screen — and §4d, which is different in
+  kind: not a page to open but a four-step derivation to re-do. He also found
+  Bosch selling the same drill for $140 on their own site against Horme's
+  $134.06, and asked whether we should switch. That decision is left open here
+  pending his call, but the analysis is recorded: the two prices agree within
+  4.4%, which is corroboration rather than conflict, and switching would move the
+  water figure as well as the money one because §4d derives the litres FROM the
+  price. CO2 would not move, being mass-based — which is exactly the property
+  that made us keep Edinburgh as the headline carbon figure in the first place.
+- 2026-09-09 (correction to the entry above) — The Bosch price question is
+  settled, and the entry immediately above this one gets a figure wrong that
+  needs correcting rather than quietly leaving. It records the two drill prices
+  as agreeing "within 4.4%, which is corroboration rather than conflict", and
+  suggested keeping the Bosch price as a cross-check on Horme's. That was wrong
+  on both counts. Henrison went back to the two listings and found two separate
+  problems sitting inside the same comparison. Bosch's $140 EXCLUDES tax, so the
+  comparable Singapore figure is $152.60 once 9% GST goes on, while Horme's
+  $134.06 already includes it; and the two boxes do not hold the same thing,
+  because Bosch bundles a 23-piece bit set while the Horme listing explicitly
+  says batteries and charger only. The real gap is therefore about 14% for more
+  equipment, not 4% for the same equipment, and the comparison is not a
+  cross-check at all — it is two different products quoted on two different tax
+  bases. Both errors happened to point the same way, which is what made the
+  false agreement look convincing: a quick glance would have returned a
+  reassuring 4% and hidden both. Horme stays, and the ordering of the reasons is
+  worth keeping because the obvious one is the weakest. First, the app models
+  borrowing a drill, and a bit set is not a drill but a consumable you would buy
+  either way, so bundling it would charge the bits to the tool and overstate the
+  money saved. Second, Horme is a real Singapore retail transaction in SGD with
+  GST in it, which is the quantity the card claims. Only third, and only once the
+  first two have established that the two prices describe the same object, does
+  "it is lower so it claims less" apply. That is the project's stated tie-break
+  but it is not a licence to compare a kit against a bundle. The consequence of
+  getting it wrong would have reached further than the money tile, because §4d
+  derives the water figure from this price: the card would have shown 399 L
+  instead of 350 L, a 14% overstatement of a number already only good to an
+  order of magnitude. Recorded in §4b as the fourth instance of the same failure
+  in this project — after the wheat-versus-bread water figure, the two
+  incompatible price bases in §3 and the bare-tool-versus-with-battery weights —
+  every one of which was a qualifier going unread rather than a digit being
+  mistyped.
+- 2026-09-09 (§4d closed) — Henrison verified the water derivation, which had to
+  be verified differently from every other section because §4d is not a page to
+  open but a four-step calculation to re-do. He went to Ingwersen et al. (2022)
+  and checked the two load-bearing assumptions directly: Equation 10 defines
+  Phi as producer price divided by purchaser price, and the paper states that
+  purchaser price is producer price plus sale and transportation margins, which
+  confirms the direction of the adjustment and the margins explanation the whole
+  step rests on. He also confirmed the deflator input on FRED independently,
+  PCU333991333991 at June 2025 = 288.571. Three documentation fixes followed, none
+  of which move the number. First, the wording: this project had been calling Phi
+  a "purchaser-to-producer" ratio while every source — Eq. 10 and useeior's format
+  spec both — uses the opposite word order, producer:purchaser. The arithmetic was
+  never wrong, since producer divided by purchaser is a number below 1 and 0.4565
+  is what we multiply by, but a checker searching for the source's phrase would
+  have found ours reversed and concluded we had the direction backwards. Corrected
+  in both factors.js and the checklist, along with a note that the model actually
+  intends Phi for the opposite journey — converting its own coefficients rather
+  than the spend — which is mathematically the same single multiplication and
+  gives the same 350.4 L either way, but is the reverse of the documented use case
+  and should not be presented as following the manual. Second, and more important
+  for honesty about sources: the claim "per 2012 producer-price dollar" is
+  evidenced in two different places and only one of them is the workbook. The
+  dollar year is in the file, on the General Information sheet, and Rho being
+  exactly 1 for 2012 corroborates it. The producer-price basis is NOT in the
+  workbook anywhere — it comes from the paper. Both files now say so explicitly,
+  because claiming the workbook states something it does not is precisely the
+  overstatement this checklist exists to catch. Third, the Rho question, which a
+  marker who knows USEEIO would ask: the model ships its own deflator, so using a
+  BLS series looks like ignoring it. We could not use it — Rho spans 2002 to 2018
+  and stops eight years short of a 2026 price. Going outside the model was forced
+  rather than chosen, and that is now documented instead of merely being true.
+  Henrison also tested the deflator input itself, considering January 2012
+  (183.400) against the 2012 annual average (184.44): 348.45 L against 350.43 L,
+  a 0.56% difference of about two litres that both round to 350 at the precision
+  we store. He kept the annual average on the argument rather than the arithmetic,
+  since USEEIO's dollar year is the whole of 2012 and a single month would import
+  a seasonal wobble the model does not have. Recorded as a considered-and-rejected
+  decision, because "we checked and it did not matter" is itself a finding: it
+  establishes the figure is not sensitive to that choice. With §4d ticked, every
+  figure that reaches a screen has now been read off its source by a person.
+  Only §5 and §6 remain, and neither is on screen.
+- 2026-09-09 (§5, §6 and a hole in §8) — Henrison verified the last two sourcing
+  sections, §5's four Singapore national figures and §6's two Green Plan targets,
+  which means every figure in factors.js is now both sourced and read off its
+  source by a person. The job this checklist was created to track is finished.
+  Asked what §7 to §11 needed next, the honest answer turned out to be that most
+  of them cannot be "verified" at all: §7's assumptions, §9's design parameters
+  and §10's mock scenario data are not claims about the world but our own choices
+  and inventions, and they are closed by being written into the report's
+  methodology, not by opening a page. That is now stated at the top of the
+  document so nobody works down the list expecting sources that do not exist.
+  §8 is the exception and it turned out to be worse than recorded. It listed one
+  EV charger tariff and missed a second — "4 bays, level 5. Roughly $0.55 per
+  kWh" at Clementi Mall — along with a dozen other invented specifics attached to
+  real, named, findable Clementi addresses: the community centre's opening hours,
+  a Bloobox collection schedule, a claim that two real blocks belong to the real
+  SolarNova programme, and "roughly 60 spaces" of bicycle parking at NUS High,
+  which is our own school and therefore the most embarrassing of the set. The
+  file header disclaims whether each facility EXISTS but says nothing about
+  tariffs, hours or schedules, which read as researched detail rather than
+  scene-setting. The table has been rebuilt from the file and ranked by how fast
+  a marker could catch each one. A gap register that under-counts is worse than
+  no register, because it reads as though the gap has been measured. The fix is
+  recorded as one decision covering all twelve rather than twelve small ones,
+  with the cheapest option recommended: extend the file header to cover the
+  detail text as well. What must not happen is leaving a specific number attached
+  to a real address with no disclaimer, which is the only option with no defence.
+- 2026-09-09 (§7) — Bread and portion size. `breadLoafKg` stops being an
+  assumption and becomes a product spec: 0.4 kg is the exact stated net weight of
+  Gardenia Enriched White Bread 400 g, a real named product on Gardenia's own
+  Singapore site, whose nutrition panel corroborates itself at 7 servings x 57 g
+  = 399 g, with Sunshine's 400 g loaf on the same shelf confirming it as a
+  standard size rather than a one-off. Same upgrade the drill's mass got in §4b.
+  It is a Claude-found lead and stays unticked until a person opens the page.
+  `weeksPerYear` and `monthsPerYear` are arithmetic and need nothing. Candidate
+  sources offered for the meat portion were evaluated and did not survive: the
+  general lesson, which is §4b's in another costume, is that a source can be
+  perfectly reputable and still not state the quantity you need, so check it
+  states YOUR quantity before citing it. On the portion itself a correction was
+  needed to something said earlier in this session: HPB does NOT decline to give
+  gram figures. HealthHub states one plainly — "1 palm-sized piece of meat, fish
+  or poultry (90g)" — and what My Healthy Plate declines to dictate is how many
+  servings a person needs, not what one weighs. That makes our 150 g about 1.7
+  HPB servings, so it cannot be called a serving in the report. The method for
+  settling it is now written into §7 in order: fix the basis first (our factors
+  are all per kg as purchased, since the price is a shop price per kg of raw
+  meat, so the portion must be raw weight), anchor to the one Singapore authority
+  available, then resolve cooked versus raw — which is the open question, because
+  HealthHub does not say which its 90 g is and "palm-sized piece" reads like the
+  cooked piece on the plate. A cooking-loss conversion stays unapplied because we
+  have no sourced figure for it and inventing one is precisely what this project
+  forbids. The leverage is what makes this matter: both swap cards scale linearly
+  with this number, so 150 g to 90 g cuts every CO2, water and money figure on
+  them by 40%, from 1,398 kg to 839 kg and $134.94 to $80.96 on the beef-to-
+  chicken card at two meals a week. Three options are recorded with 90 g cited to
+  HPB recommended, being the only one with a Singapore authority behind it and no
+  invented conversion, erring downward if the 90 g turns out to be cooked. The
+  tension is stated rather than hidden: HPB's figure is what a health authority
+  recommends while the app models what somebody actually eats, and nobody
+  publishes observed Singapore main-meal portion masses on a purchased-weight
+  basis, so no option is both sourced and observational. The value is unchanged
+  at 0.15 pending the team's decision.
+- 2026-09-09 (portionKg resolved) — Standardising the cards to 1 kg was considered
+  and rejected, and the reasoning is worth keeping because the idea was a good
+  one. It would have dissolved the problem rather than solved it: every factor is
+  already per kg, so removing the portion multiplier would have left the swap
+  cards fully traceable with no unsourced arithmetic at all. It was rejected on
+  product grounds rather than sourcing grounds. The feature is specified as "what
+  if I replace beef with chicken twice a week", so meals a week is not the
+  packaging but the feature itself, and this app exists to close a value-action
+  gap by making a payoff personally visible — nobody plans to swap one kilogram
+  of beef. It also could not have applied to the drill card, which counts objects,
+  or the bread card, which is now properly sourced in loaves, so it would have
+  made the app less internally consistent rather than more. The old layout stays.
+  What did change is the portion itself. The blocker had been that converting
+  HPB's serving to a raw weight meant inventing a cooking-loss factor, which this
+  project forbids. Henrison verified the loss — meat loses 25 to 30% of its mass
+  in cooking — so the conversion became legitimate and portionKg moved from an
+  invented 0.15 to a derived 0.12: HPB's 90 g palm-sized serving divided by 0.75,
+  taking the low end of the verified range because it yields the smaller portion
+  and therefore the smaller claim. The interesting part is why we corrected at
+  all instead of just adopting HPB's 90 g, which would have been the more
+  conservative number and briefly looked like the right answer. Using it would
+  have set a COOKED weight against factors that are all RAW — the price is a shop
+  price per kg of raw meat, and Poore & Nemecek and Mekonnen & Hoekstra are per kg
+  of primary product. That is a basis mismatch, the single error class that has
+  now caught this project four times, and deliberately introducing a fifth in the
+  name of caution would have been the wrong lesson to draw from those four.
+  Matching the basis outranks claiming less. Because the cards scale linearly with
+  this number the effect is a flat 20% cut across both swap cards: beef to chicken
+  at two meals a week goes from 1,398 kg CO2, 173,004 L and $134.94 to 1,118 kg,
+  138,403 L and $107.95. Two things stay open and are recorded as such. HPB does
+  not state whether its 90 g is cooked or raw — the Nutrition Hub page, the Know
+  Your Servings photo guide and the Recommended Dietary Allowances page were all
+  checked and none of them says — so the cooked reading is an interpretation
+  resting on "palm-sized piece" describing the plate portion and on 90 g matching
+  the international 3 oz cooked convention. If that reading is wrong the figure
+  overstates by 33%, and that is now the weakest link in the chain. Separately,
+  the 25-30% cooking loss still needs a named source for the bibliography: it was
+  verified rather than invented, but this checklist records where a figure came
+  from and that reference is not yet written down.
+- 2026-09-09 (mass-for-mass swap recorded) — The swap cards use ONE kgPerYear for
+  both sides, modelling the replacement of X kg of one food with X kg of another.
+  That had never been written down in the code or the checklist, and it is fine
+  for beef to chicken — same place on the plate, similar protein density — but
+  not for beef to tofu, where tofu carries roughly half the protein per gram and
+  a real portion swap would use about twice the mass of tau kwa. What makes it
+  worth recording rather than shrugging at is that the assumption is not neutral:
+  it flatters us. Crediting the swap for replacing beef with less tofu than a
+  person would actually eat makes the saving look bigger, so correcting it lowers
+  our own numbers — CO2 barely moves at 3% because tofu's carbon is tiny either
+  way, but water and money each fall about a fifth, from 160,892 L and $182.83 to
+  129,405 L and $143.52 at two meals a week. Three solutions are recorded in §7 in
+  order of preference. Best is serving-for-serving using HPB's own equivalence,
+  because HPB already supplies the 90 g meat serving and treats tofu as a protein
+  alternative in the same group, so a one-serving-for-one-serving swap is exactly
+  what the card already claims and needs no source beyond the one we cite; we
+  could not find HPB's tofu gram figure but did not exhaust their material, and
+  the schools programme guidelines are the likeliest place to look. Failing that,
+  equal protein, with the densities themselves sourced from HPB's own Energy and
+  Nutrient Composition of Food database rather than the rough 13-against-26 grams
+  per 100 g used illustratively in the checklist table, which is explicitly marked
+  as not yet sourced and not for the report. Third, keep equal mass and declare
+  it, which costs nothing and is a legitimate stated limitation rather than a
+  hidden one. Options 1 and 2 share the same code change — portionKg stops being
+  one shared number and becomes per-food so the mass given up and the mass taken
+  on are computed separately — which is contained to impact.js and factors.js with
+  no UI change, but it is still a change to the calculator's core arithmetic with
+  under two weeks to the deadline. For now the assumption is declared in both the
+  checklist and a comment on foodSwap, and the decision is left to the team.
+- 2026-09-09 (§7 settled, §9 and §10 closed) — Option 1 was chosen for the swap
+  problem and it turned out to answer two open questions at once, from a document
+  we had already half-read. HPB publishes a full serving list, and extracting it
+  properly gave both a meat serving of 90 g and, crucially, the tofu equivalences
+  we had been missing: 170 g for soft tofu and 200 g for taukwa. portionKg is
+  deleted. Each food now carries its own serving in a new SERVING_KG table and a
+  swap is one serving for one serving, which is what the cards always claimed and
+  which needs no source beyond the one already cited. The same list also reversed
+  the 120 g figure set a few hours earlier. That number came from treating HPB's
+  90 g as a cooked weight and dividing by the verified cooking loss, and the full
+  list shows the reading was wrong for two reasons visible in the list itself:
+  HPB writes "cooked" explicitly where it means cooked, in the pulses and soy
+  bean entries, and does not in the meat, fish, poultry, prawn, egg or tofu ones;
+  and "3 eggs (150g)" is 50 g an egg, the standard raw edible weight of an egg
+  without its shell, which a cooked-weight list could not produce. "Edible
+  portion" is a refuse adjustment, not a cooking one, so these are as-purchased
+  weights and match our factors exactly. No cooking correction is applied. The
+  verified 25-30% loss was not wasted — it is what sent us back to the full list
+  — but it is not needed and no longer needs a bibliography entry. Taukwa's 200 g
+  was chosen over tofu's 170 g on two arguments pointing the same way: the tofu
+  price is sourced from Fortune Tau Kwa so 200 g matches the price basis, and the
+  larger serving means more tofu bought and a smaller claimed saving. Beef to
+  chicken now reads 839 kg CO2, 103,802 L and $81; beef to tofu reads 865 kg,
+  91,806 L and $101, verified by running the real estimate() over every habit
+  rather than recalculating by hand. Worth noticing that the tofu card changed
+  shape and not just size: it now saves more carbon than the chicken swap but
+  less water, because you buy twice the mass of tau kwa and tofu's water
+  footprint is not negligible even though its carbon is. The old equal-mass model
+  hid that crossover entirely. §9 was closed by writing all nine design
+  parameters up with report-ready justifications, mostly harvested from prose
+  already in pairing.js, nudges.js and impact.js rather than rewritten; the taper
+  is flagged as the one to lead with, being the only parameter that encodes an
+  ethical decision rather than a display choice, and the rejected alternative of
+  detecting families or shared addresses is on the record as profiling. §10 was
+  closed by adding the missing word to recipes.js, which disclaimed its times and
+  its lack of CO2 claims but never actually said the recipes were invented while
+  every other mock file said so. §8 is deliberately left last at the team's
+  request, being the only item that means engaging with real-world data.
+- 2026-09-09 (serving sizes corrected against the photo guide) — Henrison pointed
+  at HPB's "Know Your Servings: Photo Guide", the current page for this, last
+  reviewed 25 July 2025. Its serving figures live inside images, so a text fetch
+  returned nothing and the page had to be opened in a browser and read visually.
+  Doing that produced two corrections, and neither came from new reasoning —
+  both came from reading more of the source instead of working from a related
+  document. First, tofu was 200 g, taken from "2 square pieces of taukwa (200g)"
+  in a DIFFERENT HPB document; the photo guide lists only "2 blocks of soft tofu
+  (170g)" and carries no taukwa line at all, so tofu is now 0.17. Second, a 40 g
+  cheese serving had been added from that same other document, and the photo
+  guide's Meat/Others group contains no cheese, so it is removed rather than
+  sourced from a second place — nothing in the app swaps cheese anyway. The
+  citation had also been conflating two separate HPB documents under a single
+  URL, which is exactly the failure this checklist exists to catch and was ours.
+  The full Meat/Others group is now quoted verbatim in both the code and the
+  checklist so nobody has to trust that we took the whole list rather than one
+  convenient line. The cooked-or-raw question is reopened rather than closed,
+  because the photo guide supplies evidence both ways: HPB writes "cooked"
+  explicitly for lentils and noodles and not for meat, which argues raw, but the
+  photographs beside the 90 g line show a grilled fish fillet and a griddled
+  chicken breast, which argues cooked. An argument made earlier today is
+  withdrawn: we had claimed the eggs line settled it because "3 eggs (150g)" is
+  50 g of raw shelled egg, but the photo shows boiled eggs and a boiled egg
+  weighs about what a raw one does, so eggs cannot distinguish the readings and
+  that reasoning must not reach the report. We keep the published 90 g with no
+  cooking correction, since a correction could only increase the claim and we
+  cannot evidence it. One new open item is recorded: the tofu price is sourced
+  from Fortune Tau Kwa, firm pressed beancurd, while the serving is now HPB's
+  soft tofu — different products at different prices per kg. Tau kwa costs more,
+  so the mismatch overstates the tofu's cost and understates the money saved,
+  which is conservative but is still the fifth basis mismatch this project has
+  hit. Closing it means either re-sourcing the price to soft tofu or returning to
+  the taukwa serving and keeping the current price. The tofu card now reads 875
+  kg CO2, 99,678 L and $111 at two meals a week, verified by running the real
+  estimate() rather than by hand; the chicken, bread and drill cards are
+  unchanged.
+- 2026-09-09 (provenance of the withdrawn serving figures) — Asked which website
+  the earlier serving sizes had actually come from, and the answer was neither
+  the page Henrison supplied nor the page factors.js cited. Re-extracting the
+  downloaded file confirmed that taukwa 200 g, cheese 40 g, tofu 170 g, poultry
+  90 g and eggs 150 g all came from a PDF at
+  ch-api.healthhub.sg/api/public/content/57f166e599504aedaf7d06e7323b0065 —
+  HealthHub's content-delivery API rather than a page — reached from a
+  search-result listing titled "Examples of 1 serving are: What's on My Healthy
+  Plate". No HealthHub page showing taukwa or cheese was ever opened. What
+  factors.js cited instead was healthhub.sg/programmes/nutrition-hub/eat-more,
+  which was genuinely fetched but supplied only the 90 g meat line; the rest of
+  the list was attached to it. The figure itself may well be real, since the PDF
+  is on an HPB domain and is unmistakably a My Healthy Plate infographic, but it
+  carries no extractable date so we cannot say whether it is current or
+  superseded, and it was published in our code under another document's address.
+  That is worse than a wrong number: a source is a claim about where a figure
+  came from, and that claim was false. Anyone checking would have opened the
+  cited URL, found no taukwa line, and reasonably concluded we invented it. The
+  exact provenance is now written into §7 rather than being left as "a different
+  HPB document", along with the rule it yields — cite the page you actually
+  opened, and if you cannot give it a date and a human-readable URL, treat it as
+  a lead rather than a source. Worth noting for the report that this happened
+  while writing the very section that warns about this failure mode.
+- 2026-09-09 (tofu price re-sourced, cheese not found on the page) — The tofu
+  basis mismatch is closed. FOOD_PRICE_SGD.tofu was a tau kwa price while the
+  serving is HPB's soft tofu, so it was re-sourced from a fresh FairPrice search
+  and is now $3.17/kg from Fortune Silken Tofu (Japanese), 300 g at $0.95,
+  corroborated by three further 300 g/$0.95 lines. The mismatch turned out to be
+  worth about 1%: firm tau kwa sits at $3.13-3.16/kg, within a cent of the soft
+  product. That is worth a sentence in the report, and not the obvious one — the
+  point is not that we worried about nothing, it is that we only know it was
+  nothing because we checked. The same instinct applied to the drill's price
+  found a 14% gap hiding behind an apparent 4% one, and applied to the bread
+  water figure found the number for raw wheat instead of bread. A mismatch
+  costing 1% and a mismatch costing 33% look identical until somebody opens the
+  page. The card is unchanged at $111 after rounding. Separately, the photo guide
+  was re-opened and its "1 Serving of Meat/Others" group stepped through in small
+  increments with no gaps, to check a suggestion that 40 g of cheese is also one
+  serving. It is not on that page. The complete group is: 1 palm-sized piece
+  fish, lean meat or poultry (90g); 2 blocks of soft tofu (170g); 3/4 cup cooked
+  lentils, peas or beans (120g); 3 eggs (150g); 1 handful of almonds (28g); 2
+  glasses of milk (500ml). The 40 g cheese line does exist, but in the undated
+  ch-api PDF we agreed to stop relying on, so adding it would reintroduce exactly
+  the source we just removed. Nothing in the app swaps cheese in any case, so no
+  cheese serving is defined and none is needed. Also noted while scrolling: HPB
+  labels cooking state wherever it matters — "uncooked oatmeal", "raw non-leafy
+  vegetables", "cooked lentils", "cooked wholegrain noodles" — and the meat line
+  still says neither, which keeps the cooked-or-raw question genuinely open
+  rather than resolved in either direction.
+- 2026-09-09 (cards relabelled to servings) — The swap cards now read "servings a
+  week" rather than "meals a week". This is a copy change and no number moved:
+  HPB's guidance is that a quarter plate of protein at each meal meets the daily
+  2-3 servings, so a meal already carried exactly one serving and the arithmetic
+  was already correct. Saying "servings" makes the screen agree with SERVING_KG
+  and removes the question of whether a meal might hold two. The slider max stays
+  at 14, which is 2 servings a day and the lower end of HPB's range; the ceiling
+  HPB implies would be 21, and 14 was kept deliberately as the conservative bound
+  since nobody swaps every serving they eat. Making the change surfaced a
+  copy/data mismatch that had been created earlier the same day: the tofu card
+  still read "Tau kwa, tau pok, or a plain block - all count", which stopped
+  being true the moment the serving moved to HPB's soft tofu and the price was
+  re-sourced to soft tofu. The words named the firm product while every number
+  described the soft one. It now reads "Two blocks of soft tofu - one HPB
+  serving." That is the same failure as the rest of this section, one layer up:
+  we had been checking that factors matched their sources and missed that the
+  copy describing those factors had stopped matching them. The rule for the
+  report is that a data change is not finished until the copy describing it has
+  been re-read.
+- 2026-09-09 (meat serving converted to raw, 90 g -> 120 g) — The NHS's meat
+  nutrition page was supplied as evidence on the cooked-or-raw question and it
+  shifted the balance, so the meat servings are now converted from HPB's
+  published 90 g to 120 g raw using a 25% cooking loss, the low end of the
+  verified 25-30% band. Two things the NHS page genuinely establishes, and one it
+  does not. It establishes a convention: dietary authorities state meat portions
+  in cooked weight and say so, the NHS writing "more than 90g (cooked weight) of
+  red or processed meat a day", which is what makes the cooked reading of HPB
+  plausible. It also supplies a citable cooking-loss ratio we previously lacked,
+  because its own worked example "grilled 8oz beef steak - 163g" is 227 g raw
+  yielding 163 g cooked, a loss of 28.1%, independently inside the range the team
+  verified. What it does NOT establish is anything about HPB's intent, and there
+  is a trap worth naming: the NHS 90 g and the HPB 90 g are not the same
+  quantity at all. The NHS figure is a daily cap on red and processed meat while
+  HPB's is one serving of any protein, of which HPB recommends two or three a
+  day. The numbers coinciding is a coincidence and must not be written up as two
+  authorities agreeing. The evidence against the cooked reading still stands and
+  is kept in both files rather than deleted: HPB labels cooking state everywhere
+  else in the same guide, writing cooked rice, uncooked oatmeal, raw non-leafy
+  vegetables and cooked lentils, and says neither for meat. An earlier argument
+  that the eggs line settled it as raw is withdrawn, since the photo shows boiled
+  eggs and a boiled egg weighs about what a raw one does. The conversion applies
+  to meat only; tofu, eggs and milk are already as-purchased weights and scaling
+  them would invent a correction. This is now the most-revised number in the
+  project, having been 150 g, 120 g, 90 g and 120 g again in a single day, every
+  move driven by new evidence rather than new opinion, and the checklist now says
+  plainly that the report must present it as a judgement under uncertainty with
+  the sensitivity quoted rather than buried: both swap cards scale linearly with
+  it, so if the 90 g was already raw every food figure is overstated by 33%.
+  Beef to chicken moves from 839 kg to 1,118 kg CO2 and beef to tofu from 875 kg
+  to 1,186 kg at two servings a week.
+- 2026-09-09 (checklist and brief cleaned up) — The checklist was cut from 1,501
+  lines to 629 and CLAUDE.md from 299 to 244, on the principle that the document
+  should carry the numbers, where they came from and why we used them, and not
+  the story of what we considered and rejected along the way. Removed: the two
+  candidate sources that failed, the Bosch-versus-Horme comparison, the deflator
+  alternative that was tested and rejected, the "why not Rho" section, the
+  revision history of the meat serving, the withdrawn eggs argument, the Source
+  needed chip narrative, and the mass-for-mass problem now that it is solved.
+  Kept, because they describe what a number means or how far it can be trusted:
+  the withdrawn-versus-consumptive distinction on the drill's water, the 33%
+  sensitivity on the meat serving, the green-water dominance in the food figures,
+  the basket-not-a-crop caveat on the vegetable aggregates, and the survey's six
+  limitations. Every source URL is preserved and the sources index is intact. §8,
+  §9 and §10 are all marked unverified at the team's instruction, including §9
+  and §10 which are read-throughs rather than lookups — nobody has done the
+  read-through yet, so the boxes stay empty. Two figures were also demoted to
+  unverified in the process because they changed after the team last checked
+  them: the tofu price, re-sourced from tau kwa to soft tofu on 9 Sept, and
+  everything in §7. CLAUDE.md now ends with a "Next task" section pointing at §8,
+  and the sourcing rules it carries are reduced to the three the project actually
+  learned: cite the page you opened, check the qualifier rather than the number,
+  and treat a data change as unfinished until the copy describing it has been
+  re-read.

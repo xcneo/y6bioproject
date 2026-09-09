@@ -4,6 +4,16 @@
 // with no claim, the app stops trying to give it away and instead helps you use
 // it up, so it still does not end up in the bin.
 //
+// ⚠️ THE RECIPES BELOW ARE INVENTED, like every other file in this directory
+//    except factors.js. They were written for the demo, not taken from a
+//    cookbook, tested in a kitchen, or checked by anyone who cooks. Do not
+//    present them in the report as sourced or as tested.
+//
+//    The risk here is lower than elsewhere in src/data — a recipe is not a claim
+//    about Singapore, and nothing on this screen feeds the Impact Calculator —
+//    but "invented" was the one word this header was missing while every other
+//    mock file said it, so it is said now.
+//
 // These are ordinary home recipes, deliberately short and low-effort — the point
 // is to remove an excuse, not to teach cooking. Times are rough estimates, not
 // measured, and no nutritional or CO2 figures are claimed here.

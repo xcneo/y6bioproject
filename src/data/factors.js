@@ -217,7 +217,16 @@ export const FOOD_PRICE_SGD = {
   // Also observed: Fortune Pasar Tau Kwa 3x150g $1.41 ($3.13/kg), Fortune
   // Silken / Chinese Tofu 300g $0.95 ($3.17/kg). Tau kwa is what the habit card
   // describes, so it is the right line to price.
-  tofu: { value: 3.15, unit: 'SGD per kg', source: `${FAIRPRICE_ONLINE} Consistent with Fortune Tau Kwa 450g at $1.42 ($3.16/kg) and Fortune Pasar Tau Kwa 3x150g at $1.41 ($3.13/kg).` },
+  // SOFT TOFU, to match the SERVING_KG basis. Re-sourced 9 Sept 2026 from a
+  // fresh FairPrice search, because the serving is HPB's "2 blocks of soft tofu
+  // (170g)" and the price was previously a TAU KWA price — a different product.
+  //
+  // The mismatch turned out to be worth almost nothing, which is worth saying in
+  // the report rather than hiding: four soft/silken/Chinese tofu products all
+  // sit at 300 g for $0.95 = $3.17/kg, and tau kwa sits at $3.13-3.16/kg. About
+  // 1% apart. We flagged this as a basis mismatch and it was one — it just did
+  // not move the answer. Checking is what established that; assuming would not.
+  tofu: { value: 3.17, unit: 'SGD per kg', source: `${FAIRPRICE_ONLINE} Re-read 9 September 2026 for soft tofu specifically, to match HPB's soft-tofu serving. Fortune Silken Tofu (Japanese) 300g at $0.95 = $3.17/kg, corroborated by three further 300g/$0.95 lines — Fortune Japanese Silken Tofu Omega 3 DHA, Fortune Silken Tofu Extra Smooth (Box) and Fortune Chinese Tofu Traditional. Firm tau kwa is within 1%: Fortune Tau Kwa 450g at $1.42 = $3.16/kg, Fortune Pasar Tau Kwa 3x150g at $1.41 = $3.13/kg.` },
 
   // WHITE bread, deliberately — neither the CO₂ nor the water source
   // distinguishes white from wholemeal (Poore & Nemecek give a generic "Bread",
@@ -393,6 +402,19 @@ export const ITEM_MASS_KG = {
 //   price has to be walked back to that basis. Three steps, each with its own
 //   justification:
 //
+//   ⚠️ WHERE THAT BASIS IS DOCUMENTED — the two halves are NOT in the same place,
+//      and only one of them is in the workbook:
+//        - The 2012 DOLLAR YEAR is in the file. Sheet "General Information",
+//          row 2: "The US dollar (USD) year for the model data, where USD is
+//          used, is 2012." (Corroborated by Rho, which is exactly 1 for 2012.)
+//        - The PRODUCER-PRICE basis is NOT in the workbook. It comes from the
+//          model paper — Ingwersen et al. (2022), Scientific Data 9:194: "The
+//          2012 BEA Detail Make and Use Tables Before Redefinitions in
+//          Producer's Price are used as the underlying IO tables", and "Model
+//          coefficient matrices may be obtained in purchaser's price through
+//          adjustment of values from producer's price".
+//      Cite the paper for the price type. Do not claim the workbook says it.
+//
 //     SGD 134.06  the shelf price in ITEM_PRICE_SGD
 //   ÷ 1.09        remove 9% GST. A Singapore consumption tax is not revenue to
 //                 a US manufacturer, so it cannot carry that sector's water.
@@ -410,6 +432,22 @@ export const ITEM_MASS_KG = {
 //                 margin, wholesale margin and freight, which belong to other
 //                 sectors with their own water use.
 //                 = USD 28.33 in 2012 PRODUCER prices
+//
+//                 ⚠️ CALL THIS A "producer:purchaser" RATIO, NOT
+//                    "purchaser-to-producer". This comment used to say the
+//                    latter; every source uses the opposite word order. Paper
+//                    Eq. 10 and useeior's format spec both define it as
+//                    producer price / purchaser price — a number below 1, which
+//                    0.4565 is. Corrected 9 Sept 2026. The arithmetic was always
+//                    right; the label was backwards, and anyone checking would
+//                    have searched for the source's phrase and concluded we had
+//                    the direction wrong.
+//                    Note also that the model INTENDS Phi for the opposite
+//                    journey — converting its own coefficients from producer to
+//                    purchaser basis. We apply it to the SPEND instead. Both are
+//                    one multiplication by Phi and give the same 350.4 L; it was
+//                    checked both ways round. Valid, but the reverse of the
+//                    documented use case, so do not imply we followed the manual.
 //
 //   12.36917396026797 x 28.33 = 350.4 litres, stored as 350.
 //
@@ -429,6 +467,22 @@ export const ITEM_MASS_KG = {
 // Leaving GST in would give 382 L instead of 350 L. We take the lower figure:
 // it is the better-argued one, and where two readings are defensible this
 // project takes the one that claims less.
+//
+// WHY NOT USEEIO'S OWN DEFLATOR? The model ships Rho, a currency-year adjustment
+// matrix ("commodity-specific deflation ratios"), so using a BLS series instead
+// looks like ignoring the model's own tooling. We could not use it: Rho only
+// spans 2002-2018, checked in the workbook, so it cannot deflate a 2026 price.
+// Going outside the model was forced, not chosen. The substitute is the producer
+// price index for this exact BEA industry, which is the closest stand-in
+// available. (Rho for 333991/US in 2012 is exactly 1, which is a useful
+// independent confirmation that 2012 is the model's base year.)
+//
+// THE DEFLATOR INPUT WAS ALSO TESTED. January 2012 (183.400) instead of the 2012
+// annual average (184.44) gives 348.45 L against 350.43 L — 0.56%, about two
+// litres, and both round to 350 at the precision we store. The annual average is
+// kept on the argument, not the arithmetic: USEEIO's dollar year is the whole of
+// 2012, so an annual average is the matching basis and a single month would
+// import a seasonal wobble the model does not have.
 
 const USEEIO =
   'US EPA, USEEIO v2.0.1 (model USEEIOv2.0.1-411), sheet N, column 333991/US ("Power tools" — BEA "Power-driven handtool manufacturing"), row "Freshwater withdrawals" = 12.36917396026797 kg per USD of 2012 producer-price output. Converted from the SGD 134.06 shelf price by removing 9% GST, converting at 0.78942 USD/SGD, deflating 2026 to 2012 dollars with BLS producer price index series PCU333991333991 (2012 annual average 184.44 / 288.571 at June 2025), and applying USEEIO\'s own Phi price-type adjustment for 333991/US in 2012 (0.456537). Dataset creators: Ingwersen, Wesley; Li, Mo; Young, Ben; Vendries, Jorge; Birney, Catherine.'
@@ -532,16 +586,135 @@ export const GREEN_PLAN_TARGETS = {
 // written down is defensible; one you have hidden is not. Say these out loud in
 // the report's methodology paragraph.
 
+// ─── One serving of each food, from HPB's own list ───────────────────────────
+//
+// Added 9 Sept 2026, replacing the single `portionKg` assumption that used to
+// serve both sides of every swap.
+//
+// Why it had to change: one shared portion modelled swapping X kg of one food
+// for X kg of another. That is fair for beef → chicken, but wrong for
+// beef → tofu — nobody eats 90 g of tofu in place of 90 g of beef — and it was
+// wrong in the direction that FLATTERED us, because crediting the swap for less
+// tofu than a person really eats makes the saving look bigger.
+//
+// The fix is to swap SERVING FOR SERVING, which is what the cards have always
+// claimed ("same number of meals"), using HPB's own published equivalences.
+//
+// SOURCE: HPB's "Know Your Servings: Photo Guide" on HealthHub, last reviewed
+// 25 July 2025. Its "1 Serving of Meat/Others" group is quoted in full in
+// HPB_SERVING_GUIDE below. Quoting it in full is deliberate — it is what lets
+// anyone check that we did not take one line out of a longer list.
+//
+// ⚠️  CORRECTED 9 SEPT 2026, TWICE IN ONE DAY. Both corrections came from
+//     reading MORE of the source rather than from new reasoning:
+//
+//     1. Tofu was 200 g, from "2 square pieces of taukwa (200g)" in a DIFFERENT
+//        HPB document. The photo guide — the current, dated page — lists only
+//        "2 blocks of soft tofu (170g)" and has no taukwa line at all. Now 170 g.
+//     2. A cheese serving of 40 g was here, also from that other document. The
+//        photo guide's Meat/Others group contains no cheese. Removed.
+//
+//     The citation was also conflating two separate HPB documents under one URL,
+//     which is exactly the sort of thing this project exists to catch.
+//
+// ⚠️  THE MEAT SERVING IS CONVERTED FROM COOKED TO RAW. 90 g -> 120 g.
+//     This is the most-revised number in the project — it has been 150 g, 120 g,
+//     90 g and now 120 g again, all on 9 Sept 2026 — so the reasoning is set out
+//     in full rather than summarised, and the report should present it as a
+//     JUDGEMENT UNDER UNCERTAINTY, not a settled fact.
+//
+//     WHY CONVERT AT ALL: every factor this is multiplied by is per kg of food
+//     AS PURCHASED. FOOD_PRICE_SGD is a shop price per kg of raw meat; Poore &
+//     Nemecek and Mekonnen & Hoekstra are per kg of primary product. If HPB's
+//     90 g is a COOKED weight, using it directly is a basis mismatch.
+//
+//     EVIDENCE THAT THE 90 g IS COOKED:
+//       - The photographs beside the line show a GRILLED fish fillet and a
+//         griddled chicken breast. Not raw meat.
+//       - "Palm-sized piece" describes a portion as served.
+//       - Dietary authorities state meat portions in cooked weight and say so:
+//         the NHS writes "more than 90g (COOKED WEIGHT) of red or processed
+//         meat a day". See NHS_MEAT below.
+//     EVIDENCE AGAINST — still standing, do not delete it:
+//       - HPB labels cooking state everywhere else in the same guide: "1/2 bowl
+//         COOKED rice", "2/3 bowl UNCOOKED oatmeal", "100g RAW non-leafy
+//         vegetables", "3/4 cup COOKED lentils". The meat line says neither.
+//       - A possible explanation is that the distinction is dramatic for rice
+//         and oats, which roughly triple, and only ~25% for meat. That is an
+//         explanation, not evidence.
+//
+//     WITHDRAWN ARGUMENT: an earlier comment claimed "3 eggs (150g)" settled it
+//     as raw, being 50 g of raw shelled egg. The photo shows BOILED eggs, and a
+//     boiled egg weighs about what a raw one does, so eggs cannot separate the
+//     two readings. Do not put that argument in the report.
+//
+//     THE CONVERSION: 90 / 0.75 = 120 g, using 25% — the LOW end of a verified
+//     25-30% range, because it yields the smaller portion and the smaller claim.
+//     28.1% would give 125 g and 30% would give 129 g.
+//
+//     ⚠️ SENSITIVITY, AND IT IS LARGE. If the cooked reading is wrong and the
+//        90 g was already raw, this overstates every food-swap figure by 33%.
+//        Both swap cards scale linearly with it. The report should quote the
+//        alternative, not bury it.
+//
+// ✅  THE TOFU BASIS MISMATCH IS CLOSED (9 Sept 2026). The price was a TAU KWA
+//     price while the serving is soft tofu; FOOD_PRICE_SGD.tofu is now sourced
+//     from soft tofu instead. Worth recording that the mismatch was real but
+//     immaterial — soft tofu is $3.17/kg across four products, tau kwa
+//     $3.13-3.16/kg, about 1% apart. It was still right to fix: we found that
+//     out by checking, not by assuming, and the next mismatch may not be so
+//     forgiving.
+//
+// Foods with no serving here (rice, bread, vegetables, bananas, tomatoes) are
+// not in HPB's "meat and others" group. A swap involving them returns
+// 'unsourced' rather than a guess — see foodSwap in lib/impact.js.
+const HPB_SERVING_GUIDE =
+  'Health Promotion Board, "Know Your Servings: Photo Guide", HealthHub, https://www.healthhub.sg/well-being-and-lifestyle/food-diet-and-nutrition/know-your-servings-photo-guide (article last reviewed 25 July 2025). The complete "1 Serving of Meat/Others" group reads: "1 palm-sized piece fish, lean meat or poultry (90g)"; "2 blocks of soft tofu (170g)"; "3/4 cup cooked lentils, peas or beans (120g)"; "3 eggs (150g)"; "1 handful of almonds (28g)"; "2 glasses of milk (500ml)".'
+
+// NHS guidance, used ONLY for two narrow things: to show that dietary
+// authorities state meat portions in cooked weight and say so, and to give a
+// citable raw-to-cooked ratio. It is NOT the source of our serving size.
+//
+// ⚠️ NHS's 90 g and HPB's 90 g ARE NOT THE SAME QUANTITY. The NHS figure is a
+//    DAILY CAP on red and processed meat; HPB's is ONE SERVING of any protein,
+//    of which HPB recommends 2-3 a day. The numbers coinciding is a coincidence,
+//    and must not be written up as agreement between two authorities.
+const NHS_MEAT =
+  'NHS, "Meat in your diet", https://www.nhs.uk/live-well/eat-well/food-types/meat-nutrition/ — "If you currently eat more than 90g (cooked weight) of red or processed meat a day, it is recommended that you cut down to 70g." Its worked examples are cooked weights, and one of them gives a raw-to-cooked ratio: "grilled 8oz beef steak - 163g", i.e. 227 g raw yielding 163 g cooked, a loss of 28.1% — independently inside the 25-30% range verified by the team on 9 Sept 2026. Used here as corroboration of the cooking loss and of the convention, NOT as the serving size: the NHS 90 g is a daily cap on red and processed meat, a different quantity from HPB\'s one-serving figure.'
+
+// The COOKED-TO-RAW conversion applies to MEAT ONLY. The other servings in this
+// table are already as-purchased weights and must not be scaled:
+//   tofu   sold and weighed uncooked; HPB's photo shows plain raw blocks
+//   eggs   a boiled egg weighs about what a raw shelled one does
+//   milk   not cooked
+// Applying a meat cooking loss to any of them would invent a correction.
+export const SERVING_KG = {
+  beef: { value: 0.12, unit: 'kg raw, as purchased, in one HPB serving', source: `${HPB_SERVING_GUIDE} Converted from the published 90 g to 120 g raw on the reading that HPB's figure is a cooked weight, using a 25% cooking loss — the low end of a verified 25-30% range. ${NHS_MEAT}` },
+  lamb: { value: 0.12, unit: 'kg raw, as purchased, in one HPB serving', source: `${HPB_SERVING_GUIDE} Converted from 90 g cooked at 25% loss. ${NHS_MEAT}` },
+  pork: { value: 0.12, unit: 'kg raw, as purchased, in one HPB serving', source: `${HPB_SERVING_GUIDE} Converted from 90 g cooked at 25% loss. ${NHS_MEAT}` },
+  chicken: { value: 0.12, unit: 'kg raw, as purchased, in one HPB serving', source: `${HPB_SERVING_GUIDE} Converted from 90 g cooked at 25% loss. ${NHS_MEAT}` },
+  // ⚠️ SOFT TOFU, 170 g. Corrected from 200 g on 9 Sept 2026 — see the note
+  //    above. The price this is multiplied by is sourced from TAU KWA, a firmer
+  //    and pricier product, which is a basis mismatch we have not closed.
+  tofu: { value: 0.17, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
+  eggs: { value: 0.15, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
+  // 500 ml of milk, taken as 0.5 kg.
+  milk: { value: 0.5, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
+  // NO CHEESE ENTRY. A "2 slices of low-fat cheese (40g)" line was here until
+  // 9 Sept 2026, taken from a different HPB document. The photo guide's
+  // "Meat/Others" group does not contain cheese, and nothing in the app swaps
+  // cheese, so it is removed rather than sourced from a second place.
+}
+
 export const ASSUMPTIONS = {
-  portionKg: {
-    value: 0.15,
-    unit: 'kg of meat or tofu in one portion',
-    source: 'Our assumption, not a measurement. 150 g per person per main meal.',
-  },
   breadLoafKg: {
     value: 0.4,
     unit: 'kg in one standard loaf',
-    source: 'Our assumption, not a measurement. A supermarket sandwich loaf.',
+    // No longer "a supermarket sandwich loaf" in the abstract: 0.4 kg is the
+    // stated net weight of a real, named Singapore product. Same upgrade the
+    // drill's mass got in §4b — an assumption became a product spec.
+    source:
+      "Gardenia Enriched White Bread, 400 g — https://www.gardenia.com.sg/gardenia-enriched-white-bread-400g/ (Gardenia's own Singapore site). The pack's nutrition panel corroborates the weight internally: 7 servings x 57 g = 399 g. Sunshine Enriched White Bread is a second 400 g loaf on the same shelf, so 400 g is a standard Singapore sandwich loaf rather than a one-off.",
   },
   weeksPerYear: {
     value: 52,

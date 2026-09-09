@@ -25,8 +25,17 @@ export const HABITS = [
     id: 'beef-to-chicken',
     kind: 'foodSwap',
     title: 'Swap beef for chicken',
-    detail: 'Same number of meals, different meat.',
-    unit: 'meals a week',
+    detail: 'Same number of servings, different meat.',
+    // "servings a week", not "meals a week", since 9 Sept 2026. The arithmetic
+    // did not change — one HPB serving is one quarter-plate of protein, and HPB
+    // says a quarter plate at each meal meets the daily 2-3 servings, so a meal
+    // already carried one serving. The word "serving" just says out loud what
+    // the maths was already doing, and matches SERVING_KG in factors.js.
+    //
+    // max 14 is 2 servings a day, the LOWER end of HPB's 2-3 a day. The ceiling
+    // implied by HPB would be 21. Left at 14 deliberately: it is the
+    // conservative bound and nobody swaps every serving they eat.
+    unit: 'servings a week',
     defaultAmount: 2,
     max: 14,
     from: 'beef',
@@ -36,8 +45,14 @@ export const HABITS = [
     id: 'beef-to-tofu',
     kind: 'foodSwap',
     title: 'Swap beef for tofu',
-    detail: 'Tau kwa, tau pok, or a plain block — all count.',
-    unit: 'meals a week',
+    // ⚠️ This used to read "Tau kwa, tau pok, or a plain block — all count."
+    //    That became WRONG on 9 Sept when the serving moved to HPB's "2 blocks
+    //    of soft tofu (170g)" and the price was re-sourced to soft tofu. The
+    //    copy was still naming the firm product while the numbers described the
+    //    soft one — a card saying one thing and its data saying another. Say
+    //    what we actually costed.
+    detail: 'Two blocks of soft tofu — one HPB serving.',
+    unit: 'servings a week',
     defaultAmount: 2,
     max: 14,
     from: 'beef',

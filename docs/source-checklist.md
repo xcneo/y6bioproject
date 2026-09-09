@@ -1,783 +1,629 @@
-# Source checklist — every figure in `src/data/factors.js`
+# Source checklist — every figure the app shows
 
-Generated 7 Sept 2026. Tick a box when you have **opened the source and seen the
-number with your own eyes**. Claude wrote most of these from memory; memory is
-not a citation.
+**The rule: a box is ticked only when a team member has opened the source and
+read the number with their own eyes.** Claude finding a source is a lead, not a
+verification. That rule exists because when the team first checked Claude-sourced
+figures, four were wrong.
 
-Sections 1–7 cover `factors.js`. **Sections 8–11 cover everything else** —
-numbers on screen that bypass the sourcing mechanism, design parameters, mock
-scenario data, and the claims in the written brief.
-
-"On screen?" means the figure actually reaches a rendered screen through
-`src/lib/impact.js`. A figure that is **not** on screen still matters for the
-written report, but it cannot be wrong in the demo — so verify the on-screen
-ones first.
+**"On screen?"** means the figure reaches a rendered screen through
+`src/lib/impact.js`. Off-screen figures still matter for the report, but they
+cannot be wrong in the demo.
 
 ---
 
-## Status at 8 Sept 2026
+## Status
 
-**Two different things, kept in two different columns.** "Has a source" means the
-figure is no longer invented. "Seen with our own eyes" means a person opened that
-source and read the number off it. Claude can do the first. Only you can do the
-second, and the top of this document is explicit about why: *memory is not a
-citation.* A figure Claude sourced is a lead, not a verification.
-
-| Section | Has a real source | Seen with our own eyes |
+| Section | Sourced | Verified by a person |
 |---|---|---|
-| 1. Food greenhouse gas — `FOOD_CO2` | ✅ | ✅ **team, 7 Sept** |
-| 2. Food water — `FOOD_WATER` | ✅ | ✅ **team, 7 Sept** — three figures corrected |
-| 3. Food prices — `FOOD_PRICE_SGD` | ✅ | ✅ **team, 7 Sept** — one source, matched cuts |
-| 4. Manufacturing — `MANUFACTURING_CO2` | ✅ Claude, 8 Sept | ⬜ **nobody has opened it** |
-| 4b. Drill price and mass — `ITEM_PRICE_SGD`, `ITEM_MASS_KG` | ✅ Claude, 8 Sept | ⬜ **nobody has opened it** |
-| 4d. Drill water — `ITEM_WATER_L` | ✅ Claude, 8 Sept — EPA USEEIO, team supplied the file | ⬜ **check the derivation, not just the source** |
-| 5. Singapore national figures | ✅ Claude, 7 Sept | ⬜ **nobody has opened it** |
-| 6. Green Plan targets | ✅ Claude, 7 Sept | ⬜ **nobody has opened it** |
-| 7. Stated assumptions | n/a — they are choices, not measurements | ⬜ Tick when written into the methodology |
+| 1. Food CO₂ — `FOOD_CO2` | ✅ | ✅ **team, 7 Sept** |
+| 2. Food water — `FOOD_WATER` | ✅ | ✅ **team, 7 Sept** |
+| 3. Food prices — `FOOD_PRICE_SGD` | ✅ | ✅ **team, 7 Sept** — except `tofu`, re-sourced 9 Sept |
+| 4. Manufacturing CO₂ | ✅ | ✅ **Henrison, 9 Sept** |
+| 4b. Drill price and mass | ✅ | ✅ **Henrison, 9 Sept** |
+| 4d. Drill water | ✅ | ✅ **Henrison, 9 Sept** |
+| 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
+| 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
+| 7. Servings and assumptions | ✅ | ⬜ **not yet** |
+| 8. On-screen numbers outside `factors.js` | ⚠️ invented | ⬜ **not yet** |
+| 9. Design parameters | n/a — our choices | ⬜ **not yet** |
+| 10. Mock scenario data | n/a — invented | ⬜ **not yet** |
+| 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
+| 11b. Our own survey | ✅ our own data | ⬜ **not yet** |
 
-⚠️ **An earlier version of this table said sections 5 and 6 were "done", and
-ticked 4 and 4b.** That was wrong by this document's own rule. Four sections have
-a source and no human check: **4, 4b, 5 and 6**. Their tick-boxes below are
-therefore `☐`, and they stay `☐` until one of you opens the URL.
+### Outstanding
 
-The good news is that this is a short job. §5 and §6 are **seven numbers across
-four web pages**, none of which reach a screen — they are report material, so
-they cannot embarrass you in the demo, only in the bibliography. §4 and §4b are
-**three numbers on two pages**, and those *are* on screen.
-
-### ✅ Settled — nothing further needed
-
-Sections 1, 2 and 3 are done: sourced *and* checked by a person. Three things in
-them are recorded as **stated limitations** rather than open problems — write
-them into the methodology paragraph and they stop being weaknesses:
-
-- Beef is **chilled**, chicken **frozen**. Fresh boneless breast (~$19/kg) would
-  erase the money saving. CO₂ and water are unaffected.
-- `bread` at $5.50/kg is a **representative mid-range** white-loaf figure, not a
-  single product's shelf price. Say so; don't call it a shelf price.
-- `otherVegetables` and `rootVegetables` are **aggregate categories**, not
-  specific crops. Word them as baskets, never as "carrots".
-
-### ⬜ Still to do
-
-| # | Item | Section | Notes |
-|---|---|---|---|
-| 1 | **Open the sources for §4, §4b, §5 and §6** | §4–6 | Ten numbers, six web pages. Claude found them; nobody has read them. Do §4 and §4b first — those three are on screen. |
-| 2 | **"4 in 10 Singaporeans"** in the brief | §11 | Unsourced, and it's the opening line of the problem statement. The only number in the project with **no source at all**. |
-| 3 | **Walk times and the EV charger tariff** | §8 | Invented facts about real Clementi addresses. Official datasets exist for most facility types. |
-| 4 | **Design parameters** — points, taper, thresholds | §9 | Nothing to source; state them in the methodology. |
-| 5 | **§7 assumptions → methodology paragraph** | §7 | Tick when each is written up. |
-
-⚠️ **Don't read item 1 as a formality.** Sections 1–3 were Claude-sourced too, and
-when the team actually opened those papers it found **four wrong numbers** —
-`bread` was the figure for raw wheat, `bananas` was the aggregate "Fruits" row,
-`rootVegetables` was a copy-paste of `otherVegetables`, and the prices rested on
-two incompatible bases. Every one of those was in a figure that already had a
-confident-looking citation beside it. That is the base rate for this job.
-
-✅ **`factors.js` now has no missing values.** Every entry has a number, a unit
-and a named source. The last `null` — the power drill — was filled on 8 Sept.
-
-✅ **The drill card is now entirely inside the sourcing mechanism (8 Sept).** Its
-price and mass used to be typed into `habits.js` with no `source` field, so
-nothing was watching them. They now live in `ITEM_PRICE_SGD` and `ITEM_MASS_KG`
-and go through `isSourced()` like every other figure. **Both numbers moved, in
-opposite directions** — see §4b. That closes the first row of §8, which was the
-biggest hole in this document.
-
-⚠️ **"Inside the mechanism" is not the same as "sourced", and the drill card
-still shows a "Source needed" chip.** Its **water** tile is deliberately
-unsourced and always will be — see §4c. An earlier version of this document
-called the "4 in 10" claim "the only unsourced number left anywhere", which was
-simply wrong: it is the only one with no source *and* no reason for not having
-one.
-
-✅ **Fixed 7 Sept:** the brief said home recycling was "around 20%"; corrected to
-**11% (2025, NEA)**. The real figure makes the problem bigger, not smaller.
+| # | Item | Section |
+|---|---|---|
+| 1 | **The `detail` strings and walk times** — invented facts on real Clementi addresses | §8 |
+| 2 | Read through the design parameters | §9 |
+| 3 | Read through the mock-data warnings | §10 |
+| 4 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
+| 5 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 
 ---
 
-## 1. Food greenhouse gas emissions — `FOOD_CO2`
+## 1. Food greenhouse gas — `FOOD_CO2`
 
-**Source name:** Poore, J. & Nemecek, T. (2018), "Reducing food's environmental
+**Source:** Poore, J. & Nemecek, T. (2018), "Reducing food's environmental
 impacts through producers and consumers", *Science* 360(6392), pp. 987–992 — as
 tabulated by Our World in Data, "Environmental Impacts of Food Production".
+https://www.science.org/doi/10.1126/science.aaq0216 ·
+open access https://ora.ox.ac.uk/objects/uuid:b0b53649-5e93-4415-bf07-6b0b1227172f ·
+erratum https://pubmed.ncbi.nlm.nih.gov/30792276/
 
-**URL:** https://www.science.org/doi/10.1126/science.aaq0216 (DOI
-`10.1126/science.aaq0216`, verified 7 Sept 2026)
-**Open-access copy:** https://ora.ox.ac.uk/objects/uuid:b0b53649-5e93-4415-bf07-6b0b1227172f
-**Erratum — check this too:** https://pubmed.ncbi.nlm.nih.gov/30792276/
+**Why this source:** one study for every food, so the numbers are comparable with
+each other — which matters, because the calculator works on the *difference*
+between two foods. Mixing sources here would be worse than slightly stale data.
 
-**Year:** 2018 study; figures are global averages for 2005–2015 farm data.
+**Basis:** global averages, farm to retail, per kg of food as purchased.
 
-| ☑ | Key | Value | Unit | On screen? |
-|---|---|---|---|---|
-| ☑ | `beef` | 99.48 | kg CO₂e per kg | **Yes** — both swap cards |
-| ☑ | `lamb` | 39.72 | kg CO₂e per kg | No |
-| ☑ | `cheese` | 23.88 | kg CO₂e per kg | No |
-| ☑ | `pork` | 12.31 | kg CO₂e per kg | No |
-| ☑ | `chicken` | 9.87 | kg CO₂e per kg | **Yes** — swap card 1 |
-| ☑ | `eggs` | 4.67 | kg CO₂e per kg | **Yes** — "since January" panel |
-| ☑ | `rice` | 4.45 | kg CO₂e per kg | No |
-| ☑ | `milk` | 3.15 | kg CO₂e per kg | **Yes** — "since January" panel |
-| ☑ | `tofu` | 3.16 | kg CO₂e per kg | **Yes** — swap card 2 |
-| ☑ | `tomatoes` | 2.09 | kg CO₂e per kg | **Yes** — "since January" panel |
-| ☑ | `bread` | 1.57 | kg CO₂e per kg | **Yes** — food-saved card + panel |
-| ☑ | `bananas` | 0.86 | kg CO₂e per kg | **Yes** — "since January" panel |
-| ☑ | `otherVegetables` | 0.53 | kg CO₂e per kg | **Yes** — "since January" panel |
-| ☑ | `rootVegetables` | 0.43 | kg CO₂e per kg | **Yes** — "since January" panel |
+| ☑ | Key | Value (kg CO₂e/kg) | On screen? |
+|---|---|---|---|
+| ☑ | `beef` | 99.48 | **Yes** — both swap cards |
+| ☑ | `lamb` | 39.72 | No |
+| ☑ | `cheese` | 23.88 | No |
+| ☑ | `pork` | 12.31 | No |
+| ☑ | `chicken` | 9.87 | **Yes** — swap card 1 |
+| ☑ | `eggs` | 4.67 | **Yes** — "since January" panel |
+| ☑ | `rice` | 4.45 | No |
+| ☑ | `milk` | 3.15 | **Yes** — panel |
+| ☑ | `tofu` | 3.16 | **Yes** — swap card 2 |
+| ☑ | `tomatoes` | 2.09 | **Yes** — panel |
+| ☑ | `bread` | 1.57 | **Yes** — food-saved card + panel |
+| ☑ | `bananas` | 0.86 | **Yes** — panel |
+| ☑ | `otherVegetables` | 0.53 | **Yes** — panel |
+| ☑ | `rootVegetables` | 0.43 | **Yes** — panel |
 
-> **Re-entered to two decimal places, and it settled a flag.** At one decimal
-> place `milk` and `tofu` were both "3.2" and looked like a copy-paste error.
-> They are actually **3.15** and **3.16** — genuinely near-identical, which is a
-> better fact for the report than a typo would have been.
->
-> **Which phone you are on changes what appears.** The "since January" panel reads
-> that resident's own history in `activity.js`. `eggs`, `milk`, `tomatoes`,
-> `bananas` and `rootVegetables` only appear on **Henrison's** phone;
-> `otherVegetables` only appears on **Mr Lim's** (his one bag of long beans).
-> `bread` appears on Henrison's. If you are screenshotting the panel to show a
-> figure, check you are on the right phone.
+**Limitations to state:**
+
+- Global averages. Singapore imports over 90% of its food, so a Singapore figure
+  would differ.
+- `milk` 3.15 and `tofu` 3.16 are genuinely near-identical, not a copy-paste
+  error. Quoting them to two decimals is what shows that.
+- **The panel differs by phone.** `eggs`, `milk`, `tomatoes`, `bananas` and
+  `rootVegetables` appear only on Henrison's; `otherVegetables` only on Mr Lim's.
+  Check which phone you are on before screenshotting.
 
 ---
 
 ## 2. Food water footprint — `FOOD_WATER`
 
-✅ **Verified by the team.** These come from **two different papers**, now split
-into two constants in `factors.js` so each figure points at the right one. Both
-papers were opened and the totals re-added from their green/blue/grey columns on
-7 Sept 2026.
+**Two papers, not one** — split into two constants in `factors.js` so each figure
+points at the right one.
 
-**Crops paper** — Mekonnen & Hoekstra (2011), *Hydrology and Earth System
-Sciences* 15, pp. 1577–1600, doi:10.5194/hess-15-1577-2011
+**Crops** — Mekonnen & Hoekstra (2011), *Hydrology and Earth System Sciences* 15,
+pp. 1577–1600, doi:10.5194/hess-15-1577-2011
 https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf
 
-**Animals paper** — Mekonnen & Hoekstra (2012), "A Global Assessment of the Water
+**Animals** — Mekonnen & Hoekstra (2012), "A Global Assessment of the Water
 Footprint of Farm Animal Products", *Ecosystems* 15, pp. 401–415,
 doi:10.1007/s10021-011-9517-8
 https://waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf
 
-**Year:** 2011 for crops, 2012 for animals. Both are the journal versions. (The
-Value of Water *report series* numbers 47 and 48 are the 2010 pre-journal
-versions of the same work — cite the journal papers and there is no ambiguity.)
+**Basis:** total **consumptive** footprint — green (rain) + blue (irrigation) +
+grey (dilution), per kg of product. Cite the journal papers, not the Value of
+Water report-series versions, and there is no ambiguity.
 
-### Animal products — from the 2012 paper
+### Animal products — 2012 paper
 
-| ☑ | Key | Value | Green + blue + grey | Table | On screen? |
-|---|---|---|---|---|---|
-| ☑ | `beef` | 15,415 | 14,414 + 550 + 451 | T1, weighted avg | **Yes** — both swap cards |
-| ☑ | `pork` | 5,988 | 4,907 + 459 + 622 ("Pig meat") | T3, p. 409 | No |
-| ☑ | `cheese` | 5,060 | 4,264 + 439 + 357 | T1, weighted avg | No |
-| ☑ | `chicken` | 4,325 | 3,545 + 313 + 467 | T3, p. 409 | **Yes** — swap card 1 |
-| ☑ | `eggs` | 3,265 | 2,592 + 244 + 429 | T3, p. 409 | No |
-| ☑ | `milk` | 1,020 | 863 + 86 + 72 | T3, p. 409 | No |
-
-### Crop products — from the 2011 paper
-
-Three of these were corrected on 7 Sept 2026. All are now **specific product
-lines**, not aggregate categories — two of them previously were, and were wrong
-for it.
-
-| ☑ | Key | Value | Table entry (green + blue + grey) | On screen? |
+| ☑ | Key | Value (L/kg) | Green + blue + grey | Table |
 |---|---|---|---|---|
-| ☑ | `tofu` | 2,523 | **"Soya curd"** 2397 + 83 + 44 | **Yes** — swap card 2 |
-| ☑ | `rice` | 2,172 | **"Rice, husked (brown)"** 1488 + 443 + 242 | No |
-| ☑ | `bread` | 1,608 | **"Wheat bread"** 1124 + 301 + 183 | **Yes** — food-saved card |
-| ☑ | `bananas` | 790 | **"Bananas"** 660 + 97 + 33 | No |
+| ☑ | `beef` | 15,415 | 14,414 + 550 + 451 | T1, weighted avg |
+| ☑ | `pork` | 5,988 | 4,907 + 459 + 622 ("Pig meat") | T3, p. 409 |
+| ☑ | `cheese` | 5,060 | 4,264 + 439 + 357 | T1, weighted avg |
+| ☑ | `chicken` | 4,325 | 3,545 + 313 + 467 | T3, p. 409 |
+| ☑ | `eggs` | 3,265 | 2,592 + 244 + 429 | T3, p. 409 |
+| ☑ | `milk` | 1,020 | 863 + 86 + 72 | T3, p. 409 |
 
-### Aggregate categories — from the 2012 paper's Table 3
+### Crop products — 2011 paper
 
-| ☑ | Key | Value | Table entry | On screen? |
-|---|---|---|---|---|
-| ☑ | `otherVegetables` | 322 | "Vegetables" 194 + 43 + 85 | No |
-| ☑ | `rootVegetables` | 387 | "Starchy roots" 327 + 16 + 43 | No |
+| ☑ | Key | Value (L/kg) | Table entry |
+|---|---|---|---|
+| ☑ | `tofu` | 2,523 | "Soya curd" 2397 + 83 + 44 |
+| ☑ | `rice` | 2,172 | "Rice, husked (brown)" 1488 + 443 + 242 |
+| ☑ | `bread` | 1,608 | "Wheat bread" 1124 + 301 + 183 |
+| ☑ | `bananas` | 790 | "Bananas" 660 + 97 + 33 |
 
-> ### What the corrections actually were
->
-> | Key | Was | Now | Why the old one was wrong |
-> |---|---|---|---|
-> | `bread` | 1,827 | **1,608** | 1,827 is **"Wheat"** — the raw grain, not bread |
-> | `bananas` | 962 | **790** | 962 is the aggregate **"Fruits"** category |
-> | `rootVegetables` | 322 | **387** | 322 was a copy of `otherVegetables`; this is "Starchy roots" |
-> | `rice` | 2,497 | **2,172** | 2,497 is **"Rice, broken"**; 2,172 is husked/brown |
->
-> The `rice` change is a **choice**, not a fix — the table lists paddy 1,673,
-> husked (brown) 2,172, broken 2,497, flour 2,628. Brown rice is a defensible
-> pick; just say which one if the number is quoted.
->
-> ⚠️ `otherVegetables` and `rootVegetables` are **baskets of produce, not
-> specific crops**. `activity.js` uses `rootVegetables` for a bag of carrots, so
-> word it as "root vegetables" in the report, never "carrots".
+### Aggregates — 2012 paper, Table 3
+
+| ☑ | Key | Value (L/kg) | Table entry |
+|---|---|---|---|
+| ☑ | `otherVegetables` | 322 | "Vegetables" 194 + 43 + 85 |
+| ☑ | `rootVegetables` | 387 | "Starchy roots" 327 + 16 + 43 |
+
+**Limitations to state:**
+
+- **Green water dominates every food figure** — 70% to 95% of each. That matters
+  when comparing against the drill's water in §4d, which has none.
+- `rice` is a **choice** among four table lines (paddy 1,673 / husked 2,172 /
+  broken 2,497 / flour 2,628). We use husked brown. Say which one if quoted.
+- `otherVegetables` and `rootVegetables` are **baskets, not specific crops**.
+  `activity.js` uses `rootVegetables` for a bag of carrots — word it as "root
+  vegetables", never "carrots".
 
 ---
 
-## 3. Prices — `FOOD_PRICE_SGD`
+## 3. Food prices — `FOOD_PRICE_SGD`
 
-✅ **One source, one date, comparable cuts.** All four are NTUC FairPrice online
-listings read **7 September 2026** (https://www.fairprice.com.sg/), and the two
-meats are both plain raw boneless meat sold for cooking.
+**Source:** NTUC FairPrice online store, https://www.fairprice.com.sg/ — listings
+read **7 September 2026** (tofu re-read 9 September).
 
-| ☑ | Key | Value | Product | Per kg |
-|---|---|---|---|---|
-| ☑ | `beef` | 17.80 | Tasty Food Affair Beef Shin Shank Cube, 500g @ $8.90 | $17.80 |
-| ☑ | `chicken` | 9.15 | Hego Frozen Boneless Chicken Breast (Skinless), 1kg @ $9.15 | $9.15 |
-| ☑ | `tofu` | 3.15 | Fortune Tau Kwa — Original, 450g @ $1.42 | $3.16 |
-| ☑ | `bread` | 5.50 | White bread — representative mid-range figure (decided) | $5.17–$5.64 band |
+**Why this source:** one retailer on one date, so the foods are priced on a
+comparable basis. Both meats are plain raw boneless meat sold for cooking.
 
-### The beef figure is corroborated
-
-GlobalProductPrices.com gave **SGD 17.60/kg** for Singapore, January 2026, for
-*"raw cubed beef meat for cooking"*. FairPrice beef shin shank cube is
-**$17.80/kg**. Two independent sources within 1%.
-
-**Put this in the report.** Agreement between independent sources is evidence,
-and it is the only such cross-check anywhere in the file.
-
-### The chicken change reversed an assumption — worth writing up
-
-The old price was a **whole bird, bones included**, at $13.70/kg. The concern was
-that correcting to boneless would make chicken *dearer* and shrink the saving.
-
-The opposite happened. Frozen boneless breast is **$9.15/kg** — well below the
-whole-bird figure — so matching the cuts made the saving **bigger**, not smaller.
-
-| | Beef | Chicken | Saving per kg |
+| ☑ | Key | Value (SGD/kg) | Product |
 |---|---|---|---|
-| Before (mixed sources, mismatched cuts) | 17.60 | 13.70 | $3.90 |
-| **Now (one source, matched cuts)** | **17.80** | **9.15** | **$8.65** |
+| ☑ | `beef` | 17.80 | Tasty Food Affair Beef Shin Shank Cube, 500g @ $8.90 |
+| ☑ | `chicken` | 9.15 | Hego Frozen Boneless Chicken Breast (Skinless), 1kg @ $9.15 |
+| ⬜ | `tofu` | 3.17 | Fortune Silken Tofu (Japanese), 300g @ $0.95 |
+| ☑ | `bread` | 5.50 | White bread, representative mid-range figure |
 
-At 2 meals a week that moves the card's headline from roughly **$61/year to
-about $135/year**. Know that before you demo it.
+**Why the tofu figure changed (9 Sept).** It was a **tau kwa** price while the
+serving in §7 is HPB's **soft tofu** — different products. Re-sourced to soft
+tofu, corroborated by three further 300 g / $0.95 lines (Japanese Silken Omega 3
+DHA, Silken Extra Smooth Box, Chinese Tofu Traditional). Firm tau kwa is within
+1% at $3.13–3.16/kg, so the correction moved almost nothing — but that was only
+knowable by checking. ⬜ **This one figure is Claude-sourced and unverified.**
 
-The evaluation-section point: *the direction of a data problem is not obvious
-until you check it.* We reasoned our way to the wrong prediction and the data
-corrected us.
+**Limitations to state:**
 
-### ⚠️ Remaining limitation — state it, don't hide it
-
-The beef is **chilled**; the chicken is **frozen**. Fresh boneless chicken breast
-runs around **$19/kg**, which would erase the saving entirely.
-
-So the money figure is far more sensitive to fresh-vs-frozen than to which
-website the price came from. CO₂ and water savings are unaffected — different
-sources, per kg of food.
-
-### Three products agree on the chicken
-
-| Product | Pack | Price | Per kg |
-|---|---|---|---|
-| Betagro IQF Frozen Skinless Boneless Breast | 1kg | $8.95 | $8.95 |
-| **Hego Frozen Boneless Breast (Skinless)** | 1kg | $9.15 | **$9.15** ← used |
-| CP Selection Raw Frozen Breast — Boneless Skinless | 1kg | $10.95 | $10.95 |
-
-Marinated and organic lines were excluded deliberately — a different product, not
-a different price for the same one.
+- **Beef is chilled, chicken frozen.** Fresh boneless breast (~$19/kg) would
+  erase the money saving. CO₂ and water are unaffected.
+- `bread` at $5.50/kg is a **representative mid-range white-loaf figure** across a
+  $5.17–$5.64 band, not one product's shelf price. Say so.
 
 ---
 
-## 4. Manufacturing — `MANUFACTURING_CO2`
+## 4. Manufacturing CO₂ — `MANUFACTURING_CO2`
 
-✅ **Sourced 8 Sept 2026**, after three earlier searches failed. ⬜ **Claude found
-it; nobody has opened the page.** Box stays empty until one of you does — and
-this one is on screen, so it is worth ten minutes.
-
-| ☑ | Key | Value | Unit | Source |
-|---|---|---|---|---|
-| ☐ | `powerDrill` | 6.165 | kg CO₂e **per kg of tool** | Edinburgh Tool Library |
-
-**Source:** Edinburgh Tool Library, "Carbon Data for Sharing Libraries"
+**Source:** Edinburgh Tool Library, "Carbon Data for Sharing Libraries",
 https://edinburghtoollibrary.org.uk/carbon-data-for-sharing-libraries/
 
-**Note the unit** — per kilogram of tool, not per drill, which is how the source
-states it. `ASSUMPTIONS.drillMassKg` (1.5 kg) converts it, so at present the card
-works on **6.165 × 1.5 ≈ 9.25 kg CO₂e per drill**.
+| ☑ | Key | Value | Unit | On screen? |
+|---|---|---|---|---|
+| ☑ | `powerDrill` | 6.165 | kg CO₂e **per kg of tool** | **Yes** — drill card |
 
-### ⚠️ This is a derived estimate, not a measurement — say so
+**Why this source:** it is per kilogram of tool rather than per dollar, which
+means a drill bought on sale does not "emit" less.
 
-Edinburgh Tool Library built it from reputable underlying sources:
+**What it is built from — quote the derivation, not just the number.** It is
+**derived, not measured**: the ICE database (Circular Ecology / University of
+Bath), the UK Government GHG Reporting Conversion Factors 2020 (battery value
+12.119, as ICE carries no battery figure) and Climate Impact Forecast (motors
+under 500 W), combined on a stated composition of 30% battery, 15% motor, 15%
+solid metal, 40% plastic/rubber.
 
-- **ICE database** (Circular Ecology / University of Bath)
-- **UK Government GHG Reporting Conversion Factors 2020** — battery value 12.119,
-  used because ICE carries no battery figure
-- **Climate Impact Forecast** — motors under 500W
+**Cross-check that holds:** USEEIO's spend-based model gives 8.72 kg for the same
+drill against Edinburgh's 6.10 — a factor of 1.4. For a spend-based model against
+a process LCA that is agreement, not conflict. Keeping the two on separate bases
+is what preserves the cross-check.
 
-…but the composition split is **their assumption**: 30% battery, 15% motor, 15%
-solid metal, 40% plastic/rubber. Quote the derivation, not just the number.
-
-Second limitation: it's a **UK** figure. Manufacturing carbon travels a global
-supply chain so it transfers reasonably, but say that you're applying a UK figure
-to Singapore.
-
-### ✅ Now independently cross-checked — and it holds
-
-The USEEIO model used for the water figure (§4d) also carries a greenhouse gas
-coefficient for the same sector: `0.30794485525397181` kg CO₂e per USD, row 10.
-Run through the identical price chain (USD 28.33 in 2012 producer prices):
-
-| Method | kg CO₂e per drill |
-|---|---|
-| Edinburgh Tool Library — process-based, per kg of tool | **6.10** |
-| EPA USEEIO — spend-based, whole supply chain | **8.72** |
-
-**1.4× apart, and that is a good result.** Spend-based input-output models
-normally run *higher* than process LCAs, because they sweep in the entire
-supply chain — the accountants, the marketing, the office heating — where a
-process LCA draws a boundary and stops. A factor of 1.4 between two completely
-independent methods is agreement, not conflict.
-
-**We are keeping the Edinburgh figure**, for three reasons worth stating:
-
-- It is **anchored to mass**, not price. The USEEIO number would change if the
-  drill went on sale, which is nonsense as physics.
-- It is **specific to power tools**, with a published composition split. USEEIO
-  gives a whole-sector average.
-- Keeping them separate **preserves the cross-check**. Adopt USEEIO for both CO₂
-  and water and we would have one method and no corroboration.
-
-⚠️ The consequence, which must be stated: the drill card's CO₂ and water now come
-from **different methods**. That is defensible — each is the best available for
-its own quantity, and there is no consumptive-water equivalent of Edinburgh, nor
-a mass-based water figure anywhere — but it is a mixed basis and the report
-should say so plainly rather than let a marker find it.
-
-### Why this is a good story for the report
-
-Three searches failed because **no drill manufacturer publishes an EPD**, and the
-LCA literature covers buildings and IT hardware, not hand tools. The figure that
-finally worked came from a **tool library** — a sharing organisation of exactly
-the kind this app models, which had to derive its own number for the same reason
-we couldn't find one.
-
-And the mechanism did its job: the card showed a "Source needed" chip for three
-weeks rather than a plausible guess. That's the sourcing discipline working, and
-it's evidence of method — screenshot the before and after.
+**Limitations:** a UK factor applied to a drill bought in Singapore and probably
+made in China; and it is an estimate built from databases, not a measurement.
 
 ---
 
 ## 4b. The drill's price and mass — `ITEM_PRICE_SGD`, `ITEM_MASS_KG`
 
-✅ **Sourced 8 September 2026 from one listing**, which is the point: the price
-and the weight have to describe the same object.
-
-⬜ **Claude read the listing; nobody on the team has.** Both boxes stay empty
-until one of you loads the page. Retail listings also *move* — a price read in
-September may not hold in a report submitted later, so re-check this one near the
-deadline and note the date you last saw it.
-
 **Source:** Horme Hardware Singapore, "BOSCH 12V 2X2.0AH LI-ION DRILL DRIVER
-GSR120-LI" — https://www.horme.com.sg/product.aspx?id=8991 (read 8 Sept 2026)
+GSR120-LI" — https://www.horme.com.sg/product.aspx?id=8991 (read 8 Sept, confirmed
+9 Sept 2026)
 
 | ☑ | Key | Value | Unit | On screen? |
 |---|---|---|---|---|
-| ☐ | `ITEM_PRICE_SGD.powerDrill` | 134.06 | SGD for one drill, incl. GST | **Yes** — drill card, **money** |
-| ☐ | `ITEM_MASS_KG.powerDrill` | 0.99 | kg, drill with battery | **Yes** — drill card, **CO₂ and waste** |
+| ☑ | `ITEM_PRICE_SGD.powerDrill` | 134.06 | SGD, incl. GST | **Yes** — money |
+| ☑ | `ITEM_MASS_KG.powerDrill` | 0.99 | kg, **with battery** | **Yes** — CO₂ and waste |
 
-### Both numbers moved, in opposite directions — this is the write-up
+**Why one listing for both:** the price and the weight have to describe the same
+object. This is the cheapest drill on the shelf whose stated weight unambiguously
+includes the battery.
 
-The card previously ran on a hand-authored **$89** and an assumed **1.5 kg**.
+**Why the battery must be in the weight:** §4's factor assumes a tool that is 30%
+battery by mass, so multiplying it by a bare-tool weight would value the
+battery's carbon at nothing — about a third of the figure, missing silently.
 
-| | Was | Now | Effect on the card |
-|---|---|---|---|
-| Price | $89 (invented) | **$134.06** | money saved got **bigger** |
-| Mass | 1.5 kg (assumed) | **0.99 kg** | CO₂ and waste got **smaller** |
+**Limitations to state:**
 
-At the default of one drill a year the card goes from *9.2 kg CO₂ / $89 / 1.5 kg*
-to **6.1 kg CO₂ / $134 / 1.0 kg**. We were under-claiming the money and
-over-claiming the physics, and no amount of thinking about it would have told us
-which way round that was.
-
-**This is the second such case** — the chicken price was the first. Two
-independent examples is enough to state it as a finding rather than an anecdote:
-*you cannot reason out the direction of a data error; you have to go and look.*
-
-### The qualifier mattered more than the number
-
-The mass **must include the battery**. Edinburgh's factor (§4) is built on a tool
-assumed to be **30% battery by mass**, so multiplying it by a bare-tool weight
-would value the battery's carbon at nothing — roughly a third of the figure,
-missing silently. Two of the four listings quote a bare-tool weight.
-
-### The four drills priced, so the choice is on the record
-
-| Drill (Horme, 8 Sept 2026) | Price | Weight | Battery in the weight? |
-|---|---|---|---|
-| **Bosch GSR120-LI** | **$134.06** | **0.99 kg** | **Yes** ← used |
-| Stanley SCD10D2K-B1 | $103.55 | 1 kg | Unclear, and out of stock |
-| Hikoki DS12DA | $160.98 | 1.2 kg | Yes |
-| Stanley SCD12S2 | $168.95 | 1 kg | **No** |
-
-The Bosch is the cheapest whose weight unambiguously includes the battery.
-Nothing entry-level in Singapore is anywhere near $89 — that was the error.
-
-### ⚠️ Two limitations to state
-
-- The price is the **kit** — tool, two batteries, charger, case. That is what a
-  person who doesn't borrow actually pays, so it is the right figure for a
-  money-*saved* claim, but say that it is a kit.
+- The price is the **kit** — tool, two batteries, charger, case. That is what
+  somebody who does not borrow actually pays, so it is right for a money-saved
+  claim, but call it a kit.
 - The mass is the tool **with one battery**, while the buyer takes home two
-  batteries, a charger and a case. So the material saved is **larger** than we
-  claim. Under-claiming, same direction as the beef shin cut.
-
----
-
-## 4c. The drill's water figure — a chip, then a search, then a number
-
-**Superseded on 8 Sept 2026 — read this for the story, then read §4d for the
-figure.** It is a good story and it should go in the report roughly as told here.
-
-For weeks `src/lib/impact.js` set the drill's water saving to `UNSOURCED` on
-purpose, and the card showed a "Source needed" chip:
-
-> *Borrowing a drill does not save water in any way we can evidence, and an
-> unevidenced zero is still a claim. Say we do not know.*
-
-That was the right call at the time. Writing `0` would have claimed borrowing
-saves no water, which is almost certainly false and which we had no evidence for
-either way. The Edinburgh Tool Library data covers carbon only.
-
-**Then somebody went and looked**, with the EPA's USEEIO input-output model, and
-the answer turned out to be findable after all — see §4d. The sequence is the
-point: the chip held the place open, nobody filled it with a guess, and when a
-real figure arrived it went in with its derivation attached.
-
-⚠️ **No card shows a "Source needed" chip any more.** If you want a screenshot of
-the mechanism working — and you should, it is evidence of method — take it from
-the 21 Aug progress update, or check out an earlier commit. The chip is still in
-the code and still fires; there is just nothing left for it to fire on.
-
-### ⚠️ The mechanism cannot tell two different things apart — say this in the report
-
-A "Source needed" chip currently means either of two quite different things, and
-the screen renders them identically:
-
-| | What it means | Example |
-|---|---|---|
-| **A job not yet done** | A figure exists in the world; we haven't found it | Tofu water, before 7 Sept |
-| **A considered position** | We don't believe we can evidence this at all | The drill's water, permanently |
-
-This is a **real limitation of our own design**, found on 8 Sept, and it is
-better raised by us than by a marker. It is currently dormant rather than solved:
-nothing on screen shows a chip today, so nothing is being misread — but the
-ambiguity is still in the code, waiting for the next unsourced figure.
-
-Note what actually resolved the drill's case: **not** a second chip wording, but
-going and finding the number. Worth remembering before designing a nicer way to
-say "we don't know". Whether to distinguish the two meanings in the UI is still a
-**design decision the team should make**, not a bug to quietly patch:
-
-- **Leave it as one chip.** Simpler, and it never lets us quietly downgrade "we
-  couldn't be bothered" into "unknowable". One chip keeps the pressure on.
-- **Split it in two.** More honest on screen, and stops a demo viewer reading a
-  deliberate position as an unfinished one. Costs a second state in
-  `ImpactStats.jsx` and a reason field on the factor.
+  batteries, a charger and a case. The material saved is therefore **larger** than
+  we claim.
+- Retail listings move. Re-check near the deadline and note the date.
+- When comparing prices anywhere, **check the tax basis and the contents of the
+  box before comparing the digits.** This has caught the project four times.
 
 ---
 
 ## 4d. The drill's water — `ITEM_WATER_L` = 350 L withdrawn
 
-✅ **Sourced 8 September 2026** from the **EPA's USEEIO v2.0.1** model, from the
-workbook a team member downloaded (`USEEIOv2.0.1-411.xlsx`, 50 MB).
-
-**Source:** US EPA, USEEIO v2.0.1, model `USEEIOv2.0.1-411`, sheet `N`, column
+**Source:** US EPA, USEEIO v2.0.1 (`USEEIOv2.0.1-411.xlsx`), sheet `N`, column
 `333991/US` — "Power tools", BEA *Power-driven handtool manufacturing* — row
 **Freshwater withdrawals** = `12.36917396026797` kg per USD.
 Creators: Ingwersen, W.; Li, M.; Young, B.; Vendries, J.; Birney, C.
+Model paper: Ingwersen et al. (2022), *Scientific Data* 9:194,
+https://www.nature.com/articles/s41597-022-01293-7
 
-| ☐ | Key | Value | Unit | On screen? |
+| ☑ | Key | Value | Unit | On screen? |
 |---|---|---|---|---|
-| ☐ | `ITEM_WATER_L.powerDrill` | 350 | litres **withdrawn** per drill | **Yes** — drill card, tile labelled **"Water withdrawn"** |
+| ☑ | `ITEM_WATER_L.powerDrill` | 350 | litres **withdrawn** per drill | **Yes** — tile reads "Water withdrawn" |
 
 ### ⚠️ This is not the same quantity as the food water figures
 
-Mekonnen & Hoekstra (§2) give a **consumptive** footprint: water evaporated,
-transpired, or needed to dilute pollution. USEEIO gives **withdrawals**: water
-taken out of a river or aquifer, most of which is power-station cooling water
-that goes straight back. **Same unit, different physical quantity.**
+The food figures (§2) are **consumptive** — water evaporated, transpired or
+needed to dilute pollution, and 70–95% of each is green water, rain
+evapotranspired by a crop. USEEIO gives **withdrawals** — water taken from a
+river or aquifer, most of it power-station cooling water that goes straight back.
 
-That is why the drill card's tile is labelled **"Water withdrawn"** and the food
-cards keep "Water". Letting them share a label would repeat the exact error this
-project has already made twice — the wheat-vs-bread water figure, and the
-index-vs-shelf-price basis. Say this in the report; it is the strongest single
-piece of evaluation on the whole card.
+A drill factory grows nothing, so it has **no green water at all**, and the
+figure contains **no grey water either** (checked in the model's characterisation
+matrix `C`: the indicator is built from exactly two flows, fresh surface and
+fresh groundwater, both at factor 1.0 — a pure volume-in count).
 
-### We checked whether a better-matched figure existed. It does not.
-
-Worth writing up, because a negative result found by looking is still a finding:
-
-1. **No blue/consumptive water anywhere in the model.** USEEIO contains exactly
-   **four** water flows — fresh surface, fresh subterranean, saline surface,
-   saline subterranean. All withdrawals, all kg. No blue-water, green-water,
-   consumptive or evapotranspiration row exists. (The only "blue" in the 2,722
-   flows is Trypan blue and Direct Blue 218. They are dyes.)
-2. **Going below the summary indicator returns the same number.** In matrix `M`
-   the two fresh-water flows are `10.814731453113991` and `1.554442507153987`.
-   They sum to `12.369173960267978` — the `N` row 9 value to fourteen decimal
-   places. Row 9 *is* those two flows added up.
-3. **Matrix `B` is a trap.** It holds only `2.73` kg/$ for this sector, which
-   looks like a more conservative figure but is not a comparable one: `B` is
-   **direct** flows — the drill factory alone, no supply chain. It is 22% of the
-   total. Using it would have understated by **4.5×**.
-
-### ⬜ Does the 350 L include grey water? **No.** Checked 8 Sept 2026.
-
-Asked directly, and answered from the model's own characterisation matrix `C`
-rather than from assumption:
-
-| Indicator | Flows with a non-zero factor | What they are |
-|---|---|---|
-| **Freshwater withdrawals** | **2**, both at factor 1.0 | `Water, fresh` from a surface body; `Water, fresh` from underground |
-| Freshwater Ecotoxicity | 1,282 | chemicals emitted to water |
-| Eutrophication | 10 | nitrogen, ammonia, BOD, COD |
-
-`WATR` characterises **exactly two resource-extraction flows at factor 1.0**. It
-is a pure volume-in count and **no pollutant ever enters it**.
-
-The pollution *is* in the model — 1,282 chemical flows feed ecotoxicity — but it
-comes out as **CTUe** and **kg N eq**, which are impact potentials. A grey water
-footprint is the *volume of clean water needed to dilute pollutants to ambient
-quality standards*; USEEIO never performs that conversion, so there is no grey
-figure in the file to extract.
-
-### This is the sharpest version of the mismatch — put it in the report
-
-The food figures are green + blue + grey **consumed**. Here is what they are
-actually made of:
-
-| Food | Green | Blue | Grey | Total | Green share |
-|---|---|---|---|---|---|
-| beef | 14,414 | 550 | 451 | 15,415 | **93.5%** |
-| chicken | 3,545 | 313 | 467 | 4,325 | **82.0%** |
-| tofu | 2,397 | 83 | 44 | 2,524 | **95.0%** |
-| bread | 1,124 | 301 | 183 | 1,608 | **69.9%** |
-
-**Green water — rain evapotranspired by the crop — dominates every one of them.**
-A drill factory has no green water at all; nothing is grown.
-
-So the drill's 350 L and the beef card's 15,415 L/kg have **no component in
-common**:
-
-- **Food:** green + blue + grey, *consumed* — evaporated, transpired, or polluted
-- **Drill:** freshwater *withdrawn*, largely power-station cooling water, most of
-  which returns to the river
-
-Not even the blue component lines up, because blue is consumptive and `WATR` is
-withdrawal. This is why the tile is labelled **"Water withdrawn"** and why that
-label must never be merged with the food cards' "Water". If a marker asks one
-question about the water figures, it will be this one.
+**The drill's 350 L and beef's 15,415 L/kg share no component.** Not even blue,
+because blue is consumptive and this is withdrawal. That is why the tile is
+labelled **"Water withdrawn"** and why that label must never be merged with the
+food cards' "Water".
 
 ### The derivation — check this, not just the source
 
-The coefficient is per **2012 producer-price** dollar, so the shelf price has to
-be walked back to that basis. Each step and why:
-
 | Step | Factor | Result | Why |
 |---|---|---|---|
-| Shelf price (§4b) | — | SGD 134.06 | What a person pays |
-| Remove GST | ÷ 1.09 | SGD 122.99 | A Singapore consumption tax is not revenue to a US manufacturer |
-| To USD | × 0.78942 | USD 97.09 | Rate on 8 Sept 2026 |
-| **Deflate to 2012 USD** | × 0.639155 | USD 62.06 | BLS PPI **PCU333991333991**, this exact industry: 2012 annual average **184.44** ÷ **288.571** (June 2025) |
-| **Price type** | × 0.456537 | **USD 28.33** | USEEIO's own `Phi` matrix for 333991/US, 2012 |
-| Apply coefficient | × 12.369174 | **350.4 L** | Stored as **350** |
+| Shelf price (§4b) | — | SGD 134.06 | what a person pays |
+| Remove GST | ÷ 1.09 | SGD 122.99 | a Singapore tax is not revenue to a US manufacturer |
+| To USD | × 0.78942 | USD 97.09 | rate on 8 Sept 2026 |
+| Deflate to 2012 USD | × 0.639155 | USD 62.06 | BLS PPI **PCU333991333991**, this exact industry: 2012 annual average 184.44 ÷ 288.571 (June 2025) |
+| Price type | × 0.456537 | **USD 28.33** | USEEIO's own `Phi` matrix for 333991/US, 2012 |
+| Apply coefficient | × 12.369174 | **350.4 L** | stored as **350** |
 
-**The two adjustments matter enormously.** Naively multiplying the retail price
-by the coefficient gives **1,309 L** — 3.7× too high. `Phi` alone removes 54% of
-it (retail margin, wholesale margin and freight belong to *other* sectors), and
-the deflator removes another third.
+**Why each correction is needed:** the coefficient is per **2012 producer-price
+dollar**, and the shelf price is a 2026 Singapore retail dollar. The largest
+correction is the last: **only about 46% of a retail dollar is the manufacturer's
+output**, the rest being retail margin, wholesale margin and freight, which belong
+to other industries. Skipping all four would give 1,658 L — 4.7× too high.
 
-### ⚠️ Four limitations — all of them go in the report
+**`Phi` is a producer:purchaser ratio** — producer price ÷ purchaser price, per
+the model paper's Equation 10 and useeior's format spec. Use that word order; the
+value is below 1 (0.45653746022562908 for this sector, checkable in the `Phi`
+sheet).
 
-1. **Spend-based.** The same drill bought on sale would "use" less water. That is
-   an artefact of the method, not physics.
-2. **A US model** applied to a drill bought in Singapore and probably made in
-   China. Bigger transfer assumption than the UK carbon figure.
-3. **The deflator ends at June 2025**, the last observation in the BLS series.
-   There is no 2026 index yet.
-4. **Sector averages.** USEEIO knows "power tools", not a Bosch GSR120-LI.
+**The BLS index is used because USEEIO's own deflator (`Rho`) stops at 2018** and
+cannot reach a 2026 price. The substitute is the producer price index for the
+same BEA industry.
+
+**Where the basis is documented** — the two halves are in different places:
+
+| Claim | Where |
+|---|---|
+| Dollar year is **2012** | ✅ in the workbook — `General Information` sheet: *"The US dollar (USD) year for the model data, where USD is used, is 2012."* |
+| Basis is **producer price** | ❌ **not in the workbook** — in the paper: *"The 2012 BEA Detail Make and Use Tables Before Redefinitions in Producer's Price are used as the underlying IO tables."* |
+
+**Limitations — all four go in the report:**
+
+1. **Spend-based.** The same drill bought on sale would "use" less water. An
+   artefact of the method, not physics.
+2. **A US model** applied to a drill bought in Singapore, probably made in China.
+3. **The deflator ends June 2025**, the last observation in the BLS series.
+4. **Sector averages** — USEEIO knows "power tools", not a Bosch GSR120-LI.
 
 Treat it as an order-of-magnitude screening estimate. **Write "roughly 350
 litres", never "350 litres".**
-
-Leaving GST in would give **382 L**. We took 350 — the better-argued figure, and
-where two readings are defensible this project takes the one that claims less.
 
 ---
 
 ## 5. Singapore national figures — `SINGAPORE`
 
-Sourced 7 Sept 2026 from primary publications **by Claude. Nobody on the team has
-opened these four pages** — that is why every box below is empty, and it is open
-item 1. **None of these reach a screen** — they are report material, so they
-cannot break the demo, only the bibliography. Each is republished yearly, so
-always quote the year, and check you are reading the same year's page.
+None of these reach a screen — they are report material. Each is republished
+yearly, so always quote the year.
 
-| ☐ | Key | Value | Unit | Year | Source | URL | On screen? |
-|---|---|---|---|---|---|---|---|
-| ☐ | `gridEmissionFactor` | 0.402 | kg CO₂ per kWh | 2024 | EMA, via NCCS "Power" | https://www.nccs.gov.sg/singapores-climate-action/mitigation-efforts/power/ | No |
-| ☐ | `householdWaterPerPerson` | 141 | L per person per day | 2025 | PUB press release, 17 Mar 2026 | https://www.pub.gov.sg/Resources/News-Room/PressReleases/2026/03/Its-Everyones-Business-to-Make-Every-Drop-Count | No |
-| ☐ | `domesticWasteGeneratedPerPerson` | 0.83 | kg per person per day | 2025 | NEA, Waste Statistics and Overall Recycling | https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling | No |
-| ☐ | `domesticRecyclingRate` | 11 | per cent | 2025 | NEA, Waste Statistics and Overall Recycling | https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling | No |
+| ☑ | Key | Value | Unit | Year | Source |
+|---|---|---|---|---|---|
+| ☑ | `gridEmissionFactor` | 0.402 | kg CO₂/kWh | 2024 | EMA via NCCS "Power" — https://www.nccs.gov.sg/singapores-climate-action/mitigation-efforts/power/ |
+| ☑ | `householdWaterPerPerson` | 141 | L/person/day | 2025 | PUB press release, 17 Mar 2026 — https://www.pub.gov.sg/Resources/News-Room/PressReleases/2026/03/Its-Everyones-Business-to-Make-Every-Drop-Count |
+| ☑ | `domesticWasteGeneratedPerPerson` | 0.83 | kg/person/day | 2025 | NEA, Waste Statistics and Overall Recycling — https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling |
+| ☑ | `domesticRecyclingRate` | 11 | per cent | 2025 | NEA, same page |
 
-> ⚠️ **Two things to carry into the report:**
->
-> 1. `domesticWasteGeneratedPerPerson` is waste **generated**, not **disposed**.
->    NEA stopped publishing disposed-per-capita after 2015. Generated = disposed
->    + recycled, so it is a larger number. Never call it "waste sent to the
->    incinerator".
-> 2. `domesticRecyclingRate` is **11%**, but our own problem statement in
->    `CLAUDE.md` says "around 20%". The 20% figure is stale. Using the current
->    11% makes our problem look *bigger*, so this correction is in our favour —
->    but the brief still needs fixing.
+⚠️ **`domesticWasteGeneratedPerPerson` is waste *generated*, not *disposed*.** NEA
+stopped publishing disposed-per-capita after 2015. Generated = disposed +
+recycled, so it is the larger number. **Never call it "waste sent to the
+incinerator".**
 
 ---
 
 ## 6. Green Plan 2030 targets — `GREEN_PLAN_TARGETS`
 
-Targets, not measurements. **Not on any screen.** ⬜ **Claude read the targets
-page; nobody on the team has.** Both boxes stay empty until one of you does.
-Targets are also revised — confirm these are still the current ones.
+Targets, not measurements. Not on any screen. Targets get revised, so quote the
+date you read them.
 
-**Source name:** Singapore Green Plan 2030, "Our Targets"
-**URL:** https://www.greenplan.gov.sg/targets/
+**Source:** Singapore Green Plan 2030, "Our Targets" —
+https://www.greenplan.gov.sg/targets/ (read 9 Sept 2026)
 
-| ☐ | Key | Value | Unit | On screen? |
-|---|---|---|---|---|
-| ☐ | `householdWaterPerPerson` | 130 | L per person per day by 2030 | No |
-| ☐ | `wasteToLandfillReduction` | 30 | % cut by 2030 (interim 20% by 2026) | No |
+| ☑ | Key | Value | Unit |
+|---|---|---|---|
+| ☑ | `householdWaterPerPerson` | 130 | L/person/day by 2030 |
+| ☑ | `wasteToLandfillReduction` | 30 | % cut by 2030 (interim 20% by 2026) |
 
 ---
 
-## 7. Stated assumptions — `ASSUMPTIONS`
+## 7. Servings and assumptions — `SERVING_KG`, `ASSUMPTIONS`
 
-Not measurements and not pretending to be — they are our choices, so there is
-nothing to *verify*. Instead, tick when the assumption is **written into the
-report's methodology paragraph**, which is where it earns its keep.
+⬜ **Not yet verified by a person.**
 
-| ☐ | Key | Value | Unit | Source | On screen? |
-|---|---|---|---|---|---|
-| ☐ | `portionKg` | 0.15 | kg per portion | Our assumption — 150 g per main meal | **Yes** — both swap cards |
-| ☐ | `breadLoafKg` | 0.4 | kg per loaf | Our assumption — supermarket sandwich loaf | **Yes** — food-saved card |
-| ☐ | `weeksPerYear` | 52 | weeks | Arithmetic | **Yes** — both swap cards |
-| ☐ | `monthsPerYear` | 12 | months | Arithmetic | **Yes** — food-saved card |
+### `SERVING_KG` — one HPB serving of each food
 
-✅ **`drillMassKg` has left this section.** On 8 Sept it stopped being an
-assumption and became a spec — a real drill's stated weight — so it moved out of
-`ASSUMPTIONS` and into `ITEM_MASS_KG`. See §4b. The three above are the only
-assumptions left in the app, and all three are arithmetic or portion sizes.
+**Source:** Health Promotion Board, "Know Your Servings: Photo Guide", HealthHub,
+last reviewed 25 July 2025 —
+https://www.healthhub.sg/well-being-and-lifestyle/food-diet-and-nutrition/know-your-servings-photo-guide
+
+Its **"1 Serving of Meat/Others"** group in full: *"1 palm-sized piece fish, lean
+meat or poultry (90g)"* · *"2 blocks of soft tofu (170g)"* · *"¾ cup cooked
+lentils, peas or beans (120g)"* · *"3 eggs (150g)"* · *"1 handful of almonds
+(28g)"* · *"2 glasses of milk (500ml)"*.
+
+**Why serving-for-serving:** the cards claim "same number of servings, different
+food". A single shared portion would model swapping a mass of one food for the
+same mass of another — fine for beef → chicken, wrong for beef → tofu, where a
+real portion is about twice the mass, and wrong in the direction that flatters
+us.
+
+| ⬜ | Key | Value (kg) | From |
+|---|---|---|---|
+| ⬜ | `beef`, `lamb`, `pork`, `chicken` | 0.12 | 90 g cooked ÷ 0.75 — see below |
+| ⬜ | `tofu` | 0.17 | "2 blocks of soft tofu (170g)" |
+| ⬜ | `eggs` | 0.15 | "3 eggs (150g)" |
+| ⬜ | `milk` | 0.5 | "2 glasses of milk (500ml)" |
+
+Foods outside HPB's "meat and others" group (rice, bread, vegetables) have no
+serving, and a swap involving them returns `unsourced` rather than a guess.
+
+### ⚠️ The meat conversion, and its sensitivity
+
+Our factors are all per kg of food **as purchased**, so the serving must be a raw
+weight. We read HPB's 90 g as a **cooked** weight and convert: **90 ÷ 0.75 = 120
+g**, using 25% — the low end of a verified 25–30% cooking loss, because it gives
+the smaller claim.
+
+**Why the cooked reading:** the photographs beside the line show a grilled fish
+fillet and a griddled chicken breast; "palm-sized piece" describes a portion as
+served; and dietary guidance states meat portions in cooked weight and says so —
+the NHS writes *"more than 90g **(cooked weight)** of red or processed meat a
+day"* (https://www.nhs.uk/live-well/eat-well/food-types/meat-nutrition/).
+
+**Against it, and still standing:** HPB labels cooking state everywhere else in
+the same guide — *"½ bowl **cooked** rice"*, *"⅔ bowl **uncooked** oatmeal"*,
+*"100g **raw** non-leafy vegetables"* — and says neither for meat.
+
+⚠️ **NHS's 90 g is not HPB's 90 g.** The NHS figure is a **daily cap** on red and
+processed meat; HPB's is **one serving** of any protein, of which HPB recommends
+2–3 a day. The numbers coinciding is a coincidence — do not write it up as two
+authorities agreeing. The NHS page is used for two narrow things only: the
+convention, and a citable cooking-loss ratio (*"grilled 8oz beef steak – 163g"* =
+227 g raw → 163 g cooked, **28.1%**, inside the verified band).
+
+**⚠️ Quote this sensitivity, do not bury it.** Both swap cards scale linearly, so
+if the 90 g was already raw every food figure is overstated by a third:
+
+| beef → chicken, 2 servings/wk | kg CO₂ | litres | money |
+|---|---|---|---|
+| 90 g — if already raw | 839 | 103,802 | $81 |
+| **120 g — shipped** | **1,118** | **138,403** | **$108** |
+
+The honest sentence: *we read HPB's 90 g as a cooked weight and converted it to
+120 g raw to match our factors; on the alternative reading the figures are a
+third lower, and HPB does not state which applies.*
+
+**The conversion is meat only.** Tofu is sold uncooked, a boiled egg weighs what a
+raw shelled one does, and milk is not cooked. Scaling those would invent a
+correction.
+
+### `ASSUMPTIONS`
+
+| ⬜ | Key | Value | Source |
+|---|---|---|---|
+| ⬜ | `breadLoafKg` | 0.4 | **Gardenia Enriched White Bread, 400 g** — https://www.gardenia.com.sg/gardenia-enriched-white-bread-400g/ The pack's own nutrition panel corroborates it: 7 servings × 57 g = 399 g. Sunshine sells a second 400 g loaf, so it is a standard Singapore size. |
+| ✅ | `weeksPerYear` | 52 | arithmetic |
+| ✅ | `monthsPerYear` | 12 | arithmetic |
 
 ---
 
 ## 8. Numbers on screen that are **not** in `factors.js`
 
-⚠️ **This is the real gap.** These reach a rendered screen and read as factual
-claims, but they sit outside the sourcing mechanism entirely — no `source` field,
-no "Source needed" chip if they're wrong. On screen they look exactly as
-authoritative as the Poore & Nemecek numbers.
+⬜ **Not verified. This is the remaining gap.** These reach a rendered screen and
+read as factual claims, but sit outside the sourcing mechanism — no `source`
+field, no "Source needed" chip if they are wrong. On screen they look exactly as
+authoritative as the Poore & Nemecek figures.
 
-| ☐ | Where | Value | What it claims | On screen |
-|---|---|---|---|---|
-| ➡️ | ~~`habits.js` → `borrow-drill.priceSgd`~~ | ~~89~~ | **Moved 8 Sept** — now `ITEM_PRICE_SGD.powerDrill` = 134.06, inside the mechanism and sourced. Not a ☑: nobody has opened the listing yet. See §4b. | Drill card — **money saved** |
-| ☐ | `facilities.js` → `walkMinutes` | 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 11, 12, 14, 16 | Walking time from Blk 442 to each facility | Every facility card + sheet |
-| ☐ | `facilities.js` → EV charger `detail` | "2 bays … free for the first 30 minutes" | Bay count and charging tariff | Facility sheet |
-| ☐ | `listings.js` → `price` | 8, 12 | Rental asking prices in SGD | Listing cards |
+| ⬜ | Where | Value | What it claims |
+|---|---|---|---|
+| ⬜ | `facilities.js` → `walkMinutes` | 2, 3, 4, 4, 5, 6, 6, 7, 7, 8, 9, 11, 12, 14, 16 | Walking time from Blk 442 to each facility |
+| ⬜ | `listings.js` → `price` | 8, 12 | Rental asking prices in SGD |
 
-**How to close each:**
+**The `detail` strings are the larger part.** Each attaches an invented specific
+to a **real, named, findable Clementi address**, ranked by how fast a marker could
+check one:
 
-- ~~**Drill price**~~ — ✅ **done 8 Sept.** One Horme listing settled the price
-  and the mass together, and both now sit in `factors.js` with a `source`, so the
-  drill card has no number left outside the mechanism. §4b has the write-up.
-- **Walk times** — invented. `facilities.js` already warns that the facilities
-  themselves are invented, so the walk times inherit that. Lowest-effort fix is
-  one sentence in the report: distances are illustrative. Higher-effort: walk it,
-  or measure on a map.
-- **EV charger detail** — a specific tariff claim about a real location. Either
-  check it or soften the wording.
-- **Rental prices** — these are a *neighbour's asking price* in a made-up
-  scenario, not a claim about the world. Lowest risk on this list; no action
-  needed beyond the general "all listings are mock" statement.
+| ⬜ | Address | The claim |
+|---|---|---|
+| ⬜ | Clementi Mall car park | "4 bays, level 5. Roughly **$0.55 per kWh**." |
+| ⬜ | Blk 445 Clementi Ave 3 car park | "2 bays, ground level. **Free for the first 30 minutes**." |
+| ⬜ | Clementi Community Centre | "**Open 9am to 9.30pm**." |
+| ⬜ | Blk 301 Clementi Ave 4 | "Part of the same **SolarNova** cluster as Blk 330." |
+| ⬜ | Blk 330 Clementi Ave 4 | "Powers the lifts and corridor lighting for the block." |
+| ⬜ | Blk 443 Clementi Ave 3 | "Emptied every **Tuesday and Friday**." |
+| ⬜ | NUS High School | "Roughly **60 spaces**." |
+| ⬜ | Blk 352 Clementi Ave 2 | "Open plot, **14 beds**. Volunteers weed **Saturday mornings**." |
+| ⬜ | Sunset Way allotment | "Waiting list is usually **a few months**." |
+| ⬜ | Clementi MRT bicycle hub | "Usually full before **9am on weekdays**." |
+| ⬜ | Blk 726 Clementi West St 2 | "Often overflowing on **Sunday nights**." |
+| ⬜ | Off West Coast Road | "Mature trees, **noticeably cooler** at midday." |
+
+⚠️ **The file header does not cover these.** `facilities.js` disclaims whether each
+facility *exists*; it says nothing about tariffs, opening hours or collection
+schedules, which read as researched detail rather than scene-setting.
+
+**Three ways to close it, cheapest first:**
+
+1. **Extend the file header** to say the `detail` text is illustrative too.
+2. **Soften the specifics** — "roughly $0.55 per kWh" → "paid charging".
+3. **Check them** against real data. If only some, do the two EV tariffs and the
+   CC opening hours.
+
+Whichever you pick, **do not leave a specific number attached to a real address
+with no disclaimer.**
 
 ---
 
 ## 9. Design parameters — decisions, not measurements
 
-Nothing here needs a source. They need **stating** in the report, the same way
-§7's assumptions do: a parameter you've written down is a design choice, one you
-haven't is a magic number.
+⬜ **Not yet read through.** Nothing here needs a source; it needs **stating** in
+the report. A parameter you have written down is a design choice; one you have
+not is a magic number.
 
-| ☐ | Where | Values | What it sets |
+| ⬜ | Where | Values | The justification |
 |---|---|---|---|
-| ☐ | `events.js` → `pointsForAttending` | 20, 30, 40, 50, 60 | Points per event, scaled by effort |
-| ☐ | `foodShelf.js` → `points` | 30 (all six) | Points for rescuing food |
-| ☐ | `listings.js` → `points` | 0, 15, 20, 25, 40 | Points by listing type |
-| ☐ | `residents.js` → `points` | 1240 (Henrison), 860 (Mr Lim) | Opening balances for the demo |
-| ☐ | `pairing.js` → `TAPER` | [1, 1, 0.5, 0.25, 0] | Repeat-exchange taper |
-| ☐ | `nudges.js` → `REPEAT_THRESHOLD` | 3 | Borrows before "consider buying" fires |
-| ☐ | `nudges.js` → `END_OF_MONTH_DAY` | 25 | Day a share counts as "end of month" |
-| ☐ | `nudges.js` → late-share ratio | 0.6 | Share of items that must be late to fire |
-| ☐ | `impact.js` → rounding thresholds | 10, 100, 1000 | Where the display rounds harder |
+| ⬜ | `pairing.js` → `TAPER` | 1, 1, 0.5, 0.25, 0 | Full rate twice because real neighbours do exchange twice, then half, quarter, nothing — a colluding pair earns zero within a week while a generous one is barely touched. **Cap the points, never the sharing**: nothing blocks an exchange, only the reward tapers. |
+| ⬜ | `nudges.js` → `REPEAT_THRESHOLD` | 3 | "Three is a pattern; two is a coincidence." |
+| ⬜ | `nudges.js` → `END_OF_MONTH_DAY` | 25 | A month ends in its last five or six days. |
+| ⬜ | `nudges.js` → late-share ratio | 0.6 | Most of them, not just some — a couple of late entries is just a month passing. |
+| ⬜ | `events.js` → `pointsForAttending` | 20–60 | Scaled by effort. Credited **only once attendance is confirmed**, never for signing up. |
+| ⬜ | `foodShelf.js` → `points` | 30, flat | Flat on purpose. Varying it would imply we can rank how much waste each rescue avoids, which we cannot. |
+| ⬜ | `listings.js` → `points` | 0, 15, 20, 25, 40 | By type, and **who earns differs by type**: for lend/giveaway/swap/food the poster earns, for repair the helper earns, and for **rent nobody earns — money already changed hands.** |
+| ⬜ | `residents.js` → `points` | 1240, 860 | Demo opening balances so the redemption screen has something to spend. Not earned; they mean nothing. |
+| ⬜ | `impact.js` → rounding thresholds | 10, 100, 1000 | **Rounding is a claim about precision.** The factors are one or two significant figures, so the display rounds hard. Below 10 kg a decimal is kept, because "0 kg" beside a real saving reads as a bug. |
 
-The taper and the rounding thresholds are already argued for in comments in their
-own files — reuse that prose in the report rather than rewriting it.
+⚠️ **Lead with the taper.** It is the only parameter here encoding an *ethical*
+decision: the alternative — detecting families, flatmates or shared addresses —
+was rejected as profiling, because a phone cannot distinguish a colluding pair
+from a generous one and the app has no business holding identity data.
 
 ---
 
 ## 10. Mock scenario data — plausibility only
 
-No sourcing applies. These are the invented world the demo runs in. Two files
-already carry warnings; the point of listing them here is so nobody mistakes one
-for a finding.
+⬜ **Not yet read through.** No sourcing applies; these are the invented world the
+demo runs in. Every file carries a header saying so.
 
-| ☐ | Where | What | Already flagged in-file? |
-|---|---|---|---|
-| ☐ | `neighbourhoods.js` | Scores 81 / 76 / 68 / 64 / 59 / 52 | ✅ "EVERY SCORE BELOW IS INVENTED" |
-| ☐ | `facilities.js` | Whether each facility exists at that spot | ✅ header warning |
-| ☐ | `facilities.js` | `x` / `y` map positions | ✅ "not real coordinates" |
-| ☐ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended | ✅ "ALL INVENTED" |
-| ☐ | `events.js` | Event titles, dates, venues | ✅ "All invented" |
-| ☐ | `listings.js` | Items, prices, owners | ✅ "ALL INVENTED" |
-| ☐ | `foodShelf.js` | Items, expiry dates, owners | ✅ "ALL INVENTED" |
-| ☐ | `recipes.js` | Recipes, times, ingredient tags | ⚠️ partial — disclaims the *times* and says no CO₂ is claimed, but does not say the recipes are invented. Lowest risk on this list: a recipe is not a claim about Singapore. |
-| ☐ | `residents.js` | Names and block numbers | ✅ added 8 Sept — was the last mock file with no warning |
-
-**Corrected 8 Sept 2026.** Three rows above used to say "no warning"; those
-warnings have since been added, and this table had not kept up. `residents.js`
-was the genuine remaining gap and is now closed — it is the riskiest of the set,
-being invented people attached to real Clementi addresses.
+| ⬜ | Where | What |
+|---|---|---|
+| ⬜ | `neighbourhoods.js` | Scores 81 / 76 / 68 / 64 / 59 / 52 |
+| ⬜ | `facilities.js` | Whether each facility exists at that spot; `x`/`y` map positions |
+| ⬜ | `activity.js` | Food weights (0.3–2.0 kg), borrow counts, events attended |
+| ⬜ | `events.js` | Titles, dates, venues |
+| ⬜ | `listings.js` | Items, prices, owners |
+| ⬜ | `foodShelf.js` | Items, expiry dates, owners |
+| ⬜ | `recipes.js` | Recipes, times, ingredient tags |
+| ⬜ | `residents.js` | Names and block numbers |
 
 ⚠️ **Real block numbers, invented facts.** The blocks and streets are real
-Clementi addresses. Don't let the report imply anyone surveyed them, and don't
+Clementi addresses. Do not let the report imply anyone surveyed them, and do not
 attach an invented resident to a real address in a way that reads as real.
 
 `activity.js` drives the "since January" panel, so its weights become the CO₂
-total on screen. They're plausible, not measured — worth a line.
+total on screen. Plausible, not measured — worth a line.
 
 ---
 
-## 11. Claims in the written brief (`CLAUDE.md`)
+## 11. The value–action gap in the brief and README
 
-| ☐ | Claim | Status |
+**Source:** Singlife, *Sustainable Future Index 2024* — published 10 Feb 2025;
+online survey of **1,000 Singaporeans and PRs aged 18–64**, fielded **June–July
+2024**. Report PDF:
+https://singlife.com/content/dam/public/sg/documents/about-us/sustainability-strategy/singlife-sustainable-future-index-2024.pdf ·
+newsroom https://singlife.com/en/about-us/newsroom/2025/singlife-sustainable-future-index-2024
+
+| ☑ | Claim | Value |
 |---|---|---|
-| ☐ | **"Around 4 in 10 Singaporeans"** don't act on sustainability | ⚠️ **UNSOURCED** — find the survey or drop it |
-| ➡️ | Domestic recycling rate | **Fixed 7 Sept:** was "around 20%", now **11% (2025, NEA)**. The brief is corrected; the NEA figure behind it is still on §5's unverified list. |
+| ☑ | Feel sustainability is important | **7 in 10** |
+| ☑ | Are actively contributing | **3 in 10** |
 
-The "4 in 10" is the opening line of your problem statement, so it's the first
-number a marker meets. It reads like it came from a survey — find which one.
+**Why we quote both figures rather than one.** The brief used to say "around 4 in
+10 Singaporeans don't actively contribute despite valuing it". That number
+appears nowhere in the survey — it was 7 minus 3, our own subtraction, and it
+only lands on 4 if every one of the 3 who act comes from the 7 who value. It was
+a lower bound presented as a measurement. Quoting the two published figures needs
+no derivation to defend.
+
+*Naming quirk:* the index is titled **2024** for its fielding year and published
+**10 Feb 2025**, which is why its newsroom URL sits under `/2025/`.
+
+**Wording limitation:** the report glosses this as a gap between *awareness* and
+action; we call it a *value*–action gap. The question wording — "feel
+sustainability is important" — supports our reading, but say so once.
+
+---
+
+## 11b. Our own survey
+
+**The only source we collected ourselves**, so the method is ours to defend.
+Keep `bio proj form (Responses).xlsx` with the report.
+
+| | |
+|---|---|
+| **Fielded** | 21 Aug – 9 Sept 2026 |
+| **n** | **52** |
+| **Composition** | **47 Student, 4 Employed, 1 NS** |
+| **Instrument** | Google Form, 12 questions — 2 yes/no, 1 free text, 9 rated 1–5 |
+| **Scale anchors** | **1 = "not at all", 5 = "very much"** |
+
+| Question | Result |
+|---|---|
+| Participated in a community/ground-up sustainability initiative | **No 46 (88.5%)** · Yes 6 (11.5%) |
+| Civic engagement is *sufficient* | **mean 2.54** — 44 of 52 answered ≤3 |
+| Barrier: cost | **mean 4.37** — 28 of 52 gave the maximum |
+| Barrier: no dedicated community | mean 4.23 |
+| Barrier: lack of information | mean 3.85 |
+| Would use the app | **Yes 52 (100%)** — see limitation 1 |
+| Likely to share it | mean 4.29 |
+| Aim: encourage sustainable living | mean 4.44 |
+| Aim: civic engagement | mean 4.40 |
+| Aim: accessibility | mean 4.35 |
+
+The six who had participated named: a school environmental interest group, a HEIG
+mangrove and beach clean-up, SG Climate Rally, and a community centre workshop.
+
+**Why this is worth more than a footnote.** Singlife's gap is the distance between
+two *different questions*, and turning that into a value–action gap needs the
+assumption that the actors sit inside the valuers. **Ours does not need that
+assumption, because both halves were asked of the same 52 people.**
+
+⚠️ **Q4 runs the other way to the rest.** It asks whether civic engagement is
+*sufficient*, so its low 2.54 is the striking result. Quote it as *"rated the
+sufficiency of civic engagement at 2.54 out of 5"*, never as "rated civic
+engagement 2.54".
+
+**Limitations — write these down before a marker finds them:**
+
+1. **The 100% on "would you use this app" is not evidence of demand.** A unanimous
+   positive, about our own project, asked mostly of our own classmates, is what a
+   leading question and social desirability produce. **Report it and discount it
+   ourselves.**
+2. **Convenience sample.** 47 of 52 are students. The national claim rests on
+   Singlife and must keep resting on it. Never write "our survey found that
+   Singaporeans…".
+3. **Self-selection.** People who answer a sustainability survey care more.
+4. **Ceiling effects.** No respondent scored the three aims below 3, so the
+   4.44 / 4.40 / 4.35 ordering is not meaningful. Do not rank them.
+5. **n = 52 is small.** Quote counts alongside percentages.
 
 ---
 
 ## Sources index
 
-- Poore & Nemecek (2018), *Science* — https://www.science.org/doi/10.1126/science.aaq0216
-- Poore & Nemecek, open-access — https://ora.ox.ac.uk/objects/uuid:b0b53649-5e93-4415-bf07-6b0b1227172f
-- Poore & Nemecek erratum — https://pubmed.ncbi.nlm.nih.gov/30792276/
-- Mekonnen & Hoekstra (2011), **crops** — https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf (doi:10.5194/hess-15-1577-2011) — tofu = "Soya curd", Table 3, p. 1586
-- Mekonnen & Hoekstra (2012), **farm animals** — https://waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf (doi:10.1007/s10021-011-9517-8) — Tables 1 and 3, pp. 408–409
-- Mekonnen & Hoekstra, Report 47 (2010 report-series version of the crops paper) — https://www.waterfootprint.org/resources/Report47-WaterFootprintCrops-Vol1.pdf
-- Mekonnen & Hoekstra, Report 48 (2010 report-series version of the animals paper) — https://digitalcommons.unl.edu/wffdocs/83/
-- NCCS, "Power" (grid emission factor) — https://www.nccs.gov.sg/singapores-climate-action/mitigation-efforts/power/
+- Poore & Nemecek (2018), *Science* — https://www.science.org/doi/10.1126/science.aaq0216 · open access https://ora.ox.ac.uk/objects/uuid:b0b53649-5e93-4415-bf07-6b0b1227172f · erratum https://pubmed.ncbi.nlm.nih.gov/30792276/
+- Mekonnen & Hoekstra (2011), **crops** — https://www.waterfootprint.org/resources/Mekonnen-Hoekstra-2011-WaterFootprintCrops.pdf (doi:10.5194/hess-15-1577-2011)
+- Mekonnen & Hoekstra (2012), **farm animals** — https://waterfootprint.org/resources/Mekonnen-Hoekstra-2012-WaterFootprintFarmAnimalProducts_1.pdf (doi:10.1007/s10021-011-9517-8)
+- NTUC FairPrice online store — https://www.fairprice.com.sg/
+- Gardenia Singapore, Enriched White Bread 400 g — https://www.gardenia.com.sg/gardenia-enriched-white-bread-400g/
+- HPB / HealthHub, "Know Your Servings: Photo Guide" — https://www.healthhub.sg/well-being-and-lifestyle/food-diet-and-nutrition/know-your-servings-photo-guide
+- NHS, "Meat in your diet" — https://www.nhs.uk/live-well/eat-well/food-types/meat-nutrition/
+- Edinburgh Tool Library, "Carbon Data for Sharing Libraries" — https://edinburghtoollibrary.org.uk/carbon-data-for-sharing-libraries/
+- Horme Hardware Singapore, Bosch GSR120-LI — https://www.horme.com.sg/product.aspx?id=8991
+- US EPA, USEEIO v2.0.1 — model page https://www.epa.gov/land-research/us-environmentally-extended-input-output-useeio-models · paper https://www.nature.com/articles/s41597-022-01293-7
+- BLS Producer Price Index, Power-Driven Handtool Manufacturing, PCU333991333991 — https://fred.stlouisfed.org/series/PCU333991333991
+- NCCS, "Power" — https://www.nccs.gov.sg/singapores-climate-action/mitigation-efforts/power/
 - PUB press release, 17 Mar 2026 — https://www.pub.gov.sg/Resources/News-Room/PressReleases/2026/03/Its-Everyones-Business-to-Make-Every-Drop-Count
 - NEA, Waste Statistics and Overall Recycling — https://www.nea.gov.sg/our-services/waste-management/waste-statistics-and-overall-recycling
-- Horme Hardware Singapore, Bosch GSR120-LI listing (drill price and weight) — https://www.horme.com.sg/product.aspx?id=8991
-- US EPA, USEEIO v2.0.1 (`USEEIOv2.0.1-411.xlsx`) — sheets `N`, `M`, `B`, `Phi`, `Rho`, `flows`, `indicators`; model page https://www.epa.gov/land-research/us-environmentally-extended-input-output-useeio-models
-- BLS Producer Price Index, Power-Driven Handtool Manufacturing, series PCU333991333991 — https://fred.stlouisfed.org/series/PCU333991333991
 - Singapore Green Plan 2030, Our Targets — https://www.greenplan.gov.sg/targets/
-- Water Footprint Network product gallery — https://www.waterfootprint.org/resources/interactive-tools/product-gallery/ (no longer needed for tofu)
+- Singlife, *Sustainable Future Index 2024* — https://singlife.com/content/dam/public/sg/documents/about-us/sustainability-strategy/singlife-sustainable-future-index-2024.pdf
+- Our own survey — `bio proj form (Responses).xlsx`, n=52, 21 Aug – 9 Sept 2026
