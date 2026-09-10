@@ -24,7 +24,7 @@ cannot be wrong in the demo.
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
 | 7. Servings and assumptions | ✅ | ⬜ **not yet** |
-| 8. On-screen numbers outside `factors.js` | ✅ **rebuilt 10 Sept — 19 of 23 dataset-confirmed**; 4 illustrative by decision (water, solar) | ⚠️ partly — **recycling + Bloobox verified by Henrison, 10 Sept**; rest ⬜ |
+| 8. On-screen numbers outside `factors.js` | ✅ **rebuilt 10 Sept — 21 of 25 dataset-confirmed**; 4 illustrative by decision | ✅ **Henrison, 10 Sept** — every non-illustrative entry and travel time |
 | 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
 | 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
@@ -35,12 +35,12 @@ cannot be wrong in the demo.
 
 | # | Item | Section |
 |---|---|---|
-| 1 | **Three `detail` lines still carry an invented specific** — Blk 443's collection days, the CC's opening hours, the Sunset Way waiting list (which is a community garden, not an allotment) | §8 |
+| 1 | **Confirm one e-waste box still physically exists** — the data is 2022 and they are mostly shops | §8 |
 | 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
 | 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 | 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
-| 5 | **Measure the remaining estimated walk times** — the five gardens and the second bicycle rack. Recycling is done | §8 |
-| 6 | **Check the record dates on the other datasets** — NEA's bins turned out to be 2017 data on a 2024 page; LTA's stamps 2019 | §8 |
+| 5 | **Decide: should the map list the three school gardens the public cannot enter?** | §8 |
+| 6 | **Check the record dates on the NParks datasets** — bins are 2017, e-waste 2021–22, LTA racks 2019, all confirmed. CIB, PCN and Parks are not | §8 |
 
 ---
 
@@ -850,7 +850,7 @@ existed in the files pulled that morning.
 | `recycling` | Blk **442** (own block), 441A, 449 | NEA Recycling Bins | 441A + a hawker centre |
 | `bloobox` | Blk 443 | NEA Recycling Bins | same |
 | **`ewaste`** | Clementi Mall (POPULAR), Blk 451 FairPrice, Clementi CC | NEA E-waste | **type did not exist** |
-| `evCharger` | Clementi Mall, Blk 445 | Revolt.sg (existence only) | same |
+| `evCharger` | **Blk 442-444/442A (C17)**, **Blk 449 (C20)**, Clementi Mall, Blk 445 (C19M) | Revolt.sg — Henrison, 10 Sept | two were missing |
 | `waterRefill` | Clementi MRT, Clementi CC | ⚠️ none — our assumption | same |
 | `garden` | Swimming Complex, Clementi Pri, Clementi Town Sec, Clementi Heights RC, NUS High | NParks Community in Bloom | 1 real + 1 invented |
 | `solar` | Blk 330, Blk 301 | ⚠️ none — our assumption | same |
@@ -972,6 +972,133 @@ was a de-duplication step that collapsed 441A and 441B as if they were one block
 they are two buildings with two bins. The five shown are now the five nearest, and
 the sixth is 105 m away — a clear gap, so the cut is defensible rather than
 arbitrary.
+
+### ✅ E-waste verified — Henrison, 10 Sept 2026, and a third dataset trap
+
+All three e-waste points confirmed, both remaining walk times checked, and the
+record-date question answered. ☑ ☑ ☑
+
+| Entry | Ours | Henrison | Outcome |
+|---|---|---|---|
+| `clementimall-ewaste` | 4 min walk | **4 min walk, 5 min drive** | ✅ correct |
+| `blk451-ewaste` | 5 min walk *(estimated)* | **3 min walk** | ⚠️ **corrected to 3** |
+| `cc-ewaste` | 15 min walk | **15 min walk, 8 min drive** | ✅ correct |
+
+The estimate that was wrong was the only one still computed rather than measured,
+which is the pattern the whole exercise predicted: **÷40 overstated a short hop**,
+the same direction as every other short-range error we have hit.
+
+#### ⚠️ `FMEL_UPD_D` does not mean the same thing in every dataset
+
+Henrison read `"FMEL_UPD_D" : "20220204175023"` on an e-waste record and asked
+"2022???". Checking all 718 records against all 12,578 bin records gives a sharper
+answer than either date alone:
+
+| Dataset | Record dates | What the field is doing |
+|---|---|---|
+| NEA **Recycling Bins** | **every one of 12,578** = 2 Jun 2017 | A single bulk stamp. The whole file was processed at once; there is no per-record history at all |
+| NEA **E-waste** | **spread across Dec 2021 – Jun 2022** (602 on 4 Feb 2022, latest 2 Jun 2022) | Genuinely per-record. Points were edited individually as they were added or changed |
+
+**So the same field name means two different things in two files from the same
+agency.** In one it is a processing timestamp; in the other it is an edit history.
+Reading "2017" and "2022" as comparable ages would be wrong — and this is the
+check-the-qualifier rule reaching a *metadata field*, one level further out than
+the dataset date we caught this morning.
+
+⚠️ **The e-waste list is 3½ years old and is mostly shops.** Retail collection
+points close, move, and change operator far faster than a void-deck bin does. The
+bins being 2017 matters less than the e-waste being 2022. ⬜ **Worth confirming one
+box still physically exists** before the demo — the Clementi CC one is the safest
+bet, and Clementi Mall the easiest to walk past.
+
+### ✅ Everything else verified — Henrison, 10 Sept 2026
+
+Every non-illustrative facility now has a travel time measured by a team member,
+and every open claim was answered. **Nothing in `facilities.js` is a Claude
+estimate any more** except the four illustrative entries.
+
+| Entry | Ours | Henrison — walk / other | Outcome |
+|---|---|---|---|
+| `blk442-ev` | 1 | **1 walk, 1 drive** | ✅ |
+| `blk449-ev` | 3 | **2 walk, 4 drive** | corrected → 2 |
+| `clementi-mall-ev` | 4 | **6 walk, 4 drive** | corrected → 6 |
+| `blk445-ev` | 1 | **1 walk, 1 drive** | ✅ |
+| `swimcomplex-garden` | 4 *(est)* | **7 walk, 7 drive** | corrected → 7 |
+| `clementipri-garden` | 6 *(est)* | **4 walk, 2 drive** | corrected → 4 |
+| `clementitownsec-garden` | 8 *(est)* | **6 walk, 3 drive** | corrected → 6 |
+| `clementiheights-garden` | 9 *(est)* | **7 walk, 6 drive** | corrected → 7 |
+| `nushigh-garden` | 29 | **21 walk, 7 drive** | corrected → 21 |
+| `clementi-mrt-bicycle` | 6 | **5 walk, 4 cycle** | corrected → 5 |
+| `clementi-mrt-bicycle-2` | 4 *(est)* | **7 walk, 5 cycle** | corrected → 7 |
+| `ulupandan-pcn` | 22 | **~21 walk, 7 drive** | corrected → 21 |
+| `clementi-woods` | 36 | **~35 walk** | corrected → 35 |
+
+⚠️ **The ÷40 estimates were wrong in BOTH directions** — 4→7 and 9→7, 6→4 and
+8→6. Earlier we said the straight-line method understated systematically; on this
+larger sample it does not, it just scatters. **The honest conclusion is weaker
+than the one we drew this morning:** straight-line ÷ 40 is not a biased estimator,
+it is an imprecise one, and six readings were not enough to tell those apart. That
+correction belongs in the report — it is a case of us over-reading a small sample,
+which is the same error the survey limitations warn about.
+
+#### ✅ The Clementi Woods distance question is settled
+
+Henrison: *"about right, 36 min walk and 7 min drive to entrance (car can't enter
+the park)."* The centroid figure was defensible after all. The entry is set to 35
+from the direct reading, and the point worth keeping is that **you cannot drive
+into the park**, so the driving time is to the entrance and the walk is the real
+number for a visitor.
+
+#### ⚠️ Three of the five gardens are NOT open to the public
+
+Henrison: *"The ones inside schools are not open to the public. The rest, maybe."*
+
+That is **Clementi Primary, Clementi Town Secondary and NUS High** — three of five.
+They are now labelled on the card: *"Inside the school — not open to the public."*
+The swimming complex and the RC garden are unconfirmed.
+
+**They were labelled rather than deleted**, because they are real registered
+gardens and the neighbourhood score counts green infrastructure that exists, not
+only what a stranger can walk into. ⬜ **But this is a live design question, not a
+settled one:** should a "facilities near you" map list a place you cannot enter?
+An argument each way — showing them overstates what is available to a resident;
+hiding them makes the map claim less green infrastructure exists than really does.
+**The team should decide and say which, because a marker will ask.**
+
+#### ✅ EV bay counts and levels removed
+
+Henrison: *"Can't confirm the level and stuff, so we should just remove this
+feature."* Both `"4 bays, level 5"` and `"2 bays"` are gone. All four EV cards now
+say only **"Paid charging."**
+
+**The HDB car park numbers were dropped too.** We had matched the block ranges to
+HDB's list (C17, C19M, C20) and called it a corroboration; Henrison did not think
+the mapping held for Blk 442. A tidy-looking correspondence nobody can check is
+exactly what this project keeps deleting, so it went — including from the
+`facilities.js` comment where it was recorded as a finding.
+
+⚠️ **That correspondence is now a withdrawn claim**, like the eggs argument in §7.
+It should not reach the report.
+
+### ⚠️ We were showing 2 of the 4 nearest EV chargers — fixed 10 Sept
+
+Henrison checked Revolt.sg and found the four nearest are **Clementi Mall, Blk
+449, Blk 442-444/442A, and Blk 445**. We had only Clementi Mall and Blk 445, so
+**the two closest of the four were missing** — including one at the resident's own
+block.
+
+**A corroboration worth noting.** The block ranges Revolt lists match HDB's own
+car park names *exactly*: **C17 = "BLK 442-444,442A"**, **C19M = "BLK 445"**,
+**C20 = "BLK 449-451"**. That is a good sign the charger listing is keyed to HDB
+car parks rather than to addresses somebody typed, and it lets us cross-check an
+aggregator against an official file even though no open EV dataset exists.
+
+⚠️ **One thing to watch:** HDB's C20 spans **449-451**, so "Blk 449" is our
+reading of which block the charger actually sits at. On the worksheet.
+
+⚠️ **This one rests on a single human reading of an aggregator**, with no file we
+can re-run. Every other facility type here can be re-derived from a dataset; this
+one cannot. Worth a second look before the report, and worth saying plainly in it.
 
 ### Report-a-problem made type-specific
 

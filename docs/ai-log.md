@@ -1251,3 +1251,114 @@ appends a one-line summary of each task it completes.
   as one block when they are two buildings with two bins. It has been added, the
   five shown are now genuinely the five nearest, and the sixth is 105 metres away,
   so the cut is a clear gap rather than an arbitrary line.
+- 2026-09-10 (verification checklist as a Word document) — Produced
+  docs/Eco SG verification checklist.docx, a landscape Word file with 26 tickable
+  rows grouped by facility type, each carrying the claim, where it lives in the
+  code, what evidence would settle it, a live hyperlink to the actual data.gov.sg
+  dataset page or Google Maps route, and an empty notes column. The machine had no
+  python-docx, pandoc, LibreOffice or Word, so python-docx was installed into the
+  session scratchpad rather than into the project, keeping the repo free of a
+  dependency it does not need. Two choices worth recording. The already-verified
+  items — the Blk 442 and Blk 449 bins, the Bloobox question, the corrected
+  recycling walk times and the added Blk 441B — are kept in the document as a
+  short ticked section rather than deleted, so the record shows what was checked
+  and not only what is left. And the water refill and solar entries are given
+  their own closing section headed "do not chase", stating that they are a
+  decision rather than an outstanding task, since no dataset can confirm or refute
+  them and listing them would put an unanswerable question on a deadline. The two
+  traps found earlier in the day are repeated at the top of the document because
+  they apply to almost every row: that a dataset page's last-updated date is when
+  the file was posted rather than when anyone looked at the thing, and that Google
+  Maps will not route through an HDB void deck and so overstates short walks
+  inside an estate. The file is in docs/ but has not been committed, since a binary
+  in a shared repo is the team's call rather than Claude's.
+- 2026-09-10 (two missing EV chargers added; checklist v2 with a travel-time
+  column) — Henrison checked Revolt.sg and found the four nearest EV points are
+  Clementi Mall, Blk 449, Blk 442-444/442A and Blk 445, of which we were showing
+  only two — and the two missing were the closest of the four, including one at
+  the resident's own block. Both were added, taking the app to 25 facilities. A
+  corroboration came out of it that is worth the report: the block ranges Revolt
+  lists match HDB's own car park names exactly, C17 being BLK 442-444,442A, C19M
+  being BLK 445 and C20 being BLK 449-451, which is a good sign the charger
+  listing is keyed to HDB car parks rather than to addresses somebody typed, and
+  which lets an aggregator be cross-checked against an official file even though
+  no open EV dataset exists. Two cautions are recorded rather than smoothed over:
+  HDB's C20 spans 449 to 451, so calling it Blk 449 is our reading of which block
+  the charger actually sits at, and this whole facility type now rests on a single
+  human reading of an aggregator with no file anyone can re-run, unlike every
+  other type here. The Word checklist was regenerated as v2 with the column the
+  team asked for, "Travel time — ours → yours", showing the figure the app
+  currently claims in bold followed by a blank to write the measured value in, so
+  a verifier can correct the number in the same pass as confirming the facility.
+  Rows that are not about a specific place, such as the dataset-date checks, show
+  a dash rather than a spurious blank. The four EV rows and a new row asking
+  whether these really are the nearest were added, and the already-verified
+  section was extended to record the recycling and Bloobox outcomes. One thing
+  could not be done: the team said they had highlighted verified rows in yellow,
+  but the copy in docs/ is untouched and no edited copy was found in Downloads,
+  Desktop or Documents, so the highlighting was not visible and v2 was generated
+  from the conversation record instead. If the edited file is saved over the one
+  in docs/ the highlights can be read back and merged.
+- 2026-09-10 (e-waste verified; FMEL_UPD_D means different things in different
+  files) — Henrison verified all three e-waste points and both remaining walk
+  times, highlighting the rows in the Word checklist and typing the measurements
+  in. Clementi Mall came back 4 min walk and 5 min drive, matching ours, and
+  Clementi CC 15 min walk and 8 min drive, also matching. Blk 451 came back 3
+  minutes against our 5, and it was the only e-waste time still estimated rather
+  than measured, so the divide-by-40 rate overstated a short hop in exactly the
+  direction every other short-range error has gone. Corrected in facilities.js.
+  The more useful outcome came from Henrison reading FMEL_UPD_D on an e-waste
+  record as 20220204 and asking "2022???". Checking all 718 e-waste records
+  against all 12,578 bin records answers it better than either date alone: the
+  bins file carries one identical 2 June 2017 stamp on every single record, which
+  is a bulk processing timestamp with no per-record history at all, while the
+  e-waste file spreads from December 2021 to June 2022 with 602 records on 4
+  February 2022, which is a genuine edit history. So the same field name means two
+  different things in two files from the same agency, and reading 2017 and 2022 as
+  comparable ages would be wrong. That is the check-the-qualifier rule reaching a
+  metadata field, one level further out than the dataset-page date caught earlier
+  today. The practical consequence is recorded too: the e-waste list is three and
+  a half years old and is mostly shops, which close and change operator far faster
+  than a void-deck bin does, so the bins being 2017 matters less than the e-waste
+  being 2022, and confirming that one box still physically exists is now the
+  weakest link in those entries rather than their coordinates. That is the one
+  e-waste row left open. A note on process: the team had the checklist open in
+  Word while Claude regenerated the file underneath them, which was caught only by
+  spotting the ~$ lock file in docs/ afterwards. Nothing was lost because they
+  saved theirs as v.1, but the lesson is to check for a lock file before writing
+  to a document the user may have open. The checklist is now v.2, with a separate
+  green ticked table for completed items so the record shows what was checked
+  rather than only what remains.
+- 2026-09-10 (every facility verified; three findings and one withdrawn claim) —
+  Henrison worked through checklist v.2 and highlighted almost every remaining
+  row, supplying walking times plus driving or cycling times for each. Eleven walk
+  times were corrected: the Clementi Mall charger from 4 to 6, Blk 449 from 3 to
+  2, the five gardens from 4/6/8/9/29 to 7/4/6/7/21, both bicycle racks from 6 and
+  4 to 5 and 7, Ulu Pandan from 22 to 21 and Clementi Woods from 36 to 35. Every
+  non-illustrative entry in facilities.js now carries a time measured by a team
+  member and nothing is a Claude estimate any more. The first finding is a
+  correction to something we asserted this morning: the divide-by-forty estimates
+  turned out wrong in BOTH directions, 4 to 7 and 9 to 7 but also 6 to 4 and 8 to
+  6, so the earlier claim that straight-line arithmetic understates systematically
+  does not survive the larger sample. It is not a biased estimator, it is an
+  imprecise one, and six readings were not enough to tell those apart. That is us
+  over-reading a small sample, the same error our own survey limitations warn
+  about, and it belongs in the report as such. The second is that three of the
+  five community gardens are inside schools and are not open to the public, which
+  Henrison confirmed; they are now labelled on the card rather than deleted,
+  because they are real registered gardens and the neighbourhood score counts
+  green infrastructure that exists rather than only what a stranger can walk into,
+  but whether a facilities-near-you map should list a place you cannot enter is
+  recorded as a live design question with an argument each way and left for the
+  team. The third is a withdrawn claim of our own. We had matched the EV car park
+  block ranges to HDB's car park list, C17, C19M and C20, and written it up as a
+  corroboration that the charger listing was keyed to HDB car parks; Henrison did
+  not think the mapping held for Blk 442, so it was removed from both the code
+  comment and the checklist. A tidy-looking correspondence nobody can check is
+  exactly the kind of thing this project keeps deleting, and it should not reach
+  the report. The EV bay counts and level went the same way on Henrison's
+  instruction — four bays, level 5 and two bays could not be confirmed against an
+  operator, so all four EV cards now say only that charging is paid. Also settled:
+  the Clementi Woods distance, where Henrison confirmed the centroid figure was
+  about right and added that a car cannot enter the park, so the driving time is
+  to the entrance and the walk is the real number for a visitor.
