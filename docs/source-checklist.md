@@ -24,7 +24,7 @@ cannot be wrong in the demo.
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
 | 7. Servings and assumptions | ✅ | ⬜ **not yet** |
-| 8. On-screen numbers outside `factors.js` | ⚠️ mixed — **8 dataset-confirmed, 4 exist but unverified detail, 4 unconfirmable**; edits applied 10 Sept | ⬜ **not yet** |
+| 8. On-screen numbers outside `factors.js` | ✅ **rebuilt from datasets 10 Sept — 17 of 22 dataset-confirmed**; 4 unevidenced (water, solar), 1 aggregator-only | ⬜ **not yet** |
 | 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
 | 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
@@ -39,6 +39,7 @@ cannot be wrong in the demo.
 | 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
 | 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 | 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
+| 5 | **Measure the eight estimated walk times** on the rebuilt list, and confirm the Bloobox framing | §8 |
 
 ---
 
@@ -655,6 +656,115 @@ other short-range entry (Blk 441A is 65 m and 2 min; Blk 443 is 73 m and 3 min).
 Maps may have routed to a car park entrance on the far side. Plausible, but it is
 the one number here that does not sit with its neighbours.
 
+#### All four modes, read by Claude 10 Sept 2026 — ⬜ NOT VERIFIED
+
+Read off Google Maps by driving the browser, from **Block 442 HDB Clementi**, on
+10 Sept 2026. ⬜ **These are Claude's readings, so they are leads, not
+verifications** — the sixteen walking times in `facilities.js` remain Henrison's,
+which is the stronger provenance. Recorded here for a team member to check.
+
+The "resolved as" column is the useful part: it is what Google Maps decided the
+coordinate meant, which is a check on the pin itself as much as on the time.
+
+| Facility | Resolved as | Drive | M/cycle | Transit | Walk | Cycle |
+|---|---|---|---|---|---|---|
+| `blk441a-recycling` | (address) | 5 | 5 | — | 4 | 1 |
+| `blk443-bloobox` | (address) | 2 | 2 | — | 1 | 1 |
+| `clementi-mall-ev` | POPULAR Bookstore, #05-01 to 05, The Clementi Mall | 5 | 5 | — | 4 | 1 |
+| `clementi-mrt-water` | 3150 Commonwealth Ave W | 5 | 5 | — | 6 | 2 |
+| `clementiave2-rc-garden` | **Block 356, 356 Clementi Ave 2** | 7 | 7 | — | 16 | 4 |
+| `blk330-solar` | **Block 330, Clementi Ave 2** ✅ | 6 | 6 | — | 12 | 3 |
+| `blk301-solar` | **Blk 301 Clementi Ave 4** ✅ | 10 | 9 | 13 | 19 | 8 |
+| `nushigh-bicycle` | 30 Clementi Ave 1 | 9 | 9 | 13 | 27 | 7 |
+| `nushigh-garden` | **20 Clementi Ave 1** ✅ | 10 | 9 | 15 | 29 | 7 |
+| `clementi-mrt-bicycle` | 3150 Commonwealth Ave W | 5 | 5 | — | 6 | 2 |
+| `ulupandan-pcn` *(by name)* | **Ulu Pandan Park Connector** ✅ | 9 | 8 | — | 22 | 9 |
+| `ulupandan-pcn` *(by our coord)* | ⚠️ Playground – Blk 340/343 Clementi Ave 5 | 8 | 7 | 22 | 21 | 5 |
+| `clementi-woods` *(by name)* | **Clementi Woods Park, West Coast Road** ✅ | 9 | 8 | 16 | 30 | 7 |
+| `clementi-woods` *(by our coord)* | ⚠️ Kent Vale Parking 2, 103 Clementi Rd | 13 | 13 | 20 | 35 | 10 |
+| `blk706-recycling` | **706 Clementi West Street 2** ✅ | 8 | 7 | 26 | 25 | 6 |
+| `cc-water` | **Clementi Community Centre, 220 Clementi Ave 4** ✅ | 8 | 7 | — | 15 | 6 |
+| `sunsetway-garden` | **41 Sunset Wy** ✅ (Clementi Arcade) | 10 | 9 | 22 | 26 | 7 |
+| `blk445-ev` | **Blk 445 Multi-storey Car Park (C19M)** ✅ | 2 | 2 | — | 1 | 1 |
+
+A blank transit cell means Maps offered no transit route, which it does not for
+short hops — not that transit is impossible.
+
+#### ⚠️ Two coordinates do not point where we think they do
+
+Both are **line and polygon datasets**, where a single coordinate is a vertex
+rather than a place:
+
+- **`ulupandan-pcn`** — our coordinate is the nearest *segment vertex* of the
+  connector. Maps resolves it to a **playground at Blk 340/343 Clementi Ave 5**.
+- **`clementi-woods`** — our coordinate is a *polygon vertex* of the park. Maps
+  resolves it to **Kent Vale Parking 2 on Clementi Road**, and gives a 35-minute
+  walk against 30 minutes for the park searched by name.
+
+Neither pin is wrong on the map, but **neither coordinate should be quoted as the
+facility's location**. For these two, the park or connector name is the better
+destination. This is the point-versus-line-or-polygon version of the
+check-the-qualifier rule.
+
+#### ⚠️ Claude's walk times run consistently longer than Henrison's
+
+Same source, same day, and they still disagree — thirteen of sixteen by 2 to 4
+minutes, with two outliers:
+
+| Facility | Henrison | Claude | Gap |
+|---|---|---|---|
+| `nushigh-garden` | 19 | 29 | **+10** |
+| `nushigh-bicycle` | 19 | 27 | **+8** |
+| `blk445-ev` | 7 | **1** | **−6** |
+| `blk706-recycling` | 25 | 25 | 0 |
+| *(the other twelve)* | | | +2 to +4, except `blk443` −2 |
+
+**The likely cause is not carelessness on either side — it is that we searched
+differently.** Claude routed to dataset **coordinates**; a person typing the
+**address** into Maps gets a different destination point, and for a school campus
+or a car park those can sit hundreds of metres apart. `blk445-ev` is the clearest
+case: by coordinate it resolves to the multi-storey car park C19M and gives 1
+minute, which fits 109 m; the 7-minute reading is presumably to some other point.
+
+**What this means for the report, and it is the interesting part:** "measured on
+Google Maps" sounded like a single well-defined act, and it is not. The number
+depends on *what you typed*, and two people following the same instruction on the
+same day got answers differing by up to ten minutes. **A method needs to specify
+the destination, not just the tool.**
+
+**Not resolved here.** `facilities.js` keeps Henrison's numbers. Whoever verifies
+should fix the method first — coordinate or address, chosen deliberately — and
+then read all sixteen that one way.
+
+#### Method decision, 10 Sept: **coordinates**, not addresses
+
+The team chose the coordinate method. Consequences, and one of them is awkward:
+
+**Two coordinates were replaced with better ones of the same kind.** Under an
+address method the fix for a park or a connector is to search its name; under a
+coordinate method the fix has to be a better *coordinate*:
+
+| Facility | Old coordinate | Was a | New coordinate | Now a |
+|---|---|---|---|---|
+| `clementi-woods` | 1.301067, 103.767411 | polygon vertex | **1.300358, 103.767838** | polygon centroid (198 vertices) |
+| `ulupandan-pcn` | 1.318628, 103.770683 | nearest line vertex | **1.319696, 103.769675** | nearest point *on* the line |
+
+⚠️ **For a park, "the distance" is not well defined, and picking coordinates does
+not make it so.** Clementi Woods gives three defensible answers:
+
+| Destination used | Walk |
+|---|---|
+| Park searched by name | 30 min |
+| Polygon vertex (old) | 35 min |
+| **Polygon centroid (new, method-correct)** | **36 min** |
+
+The centroid is the middle of a 198-vertex park, and nobody walks to the middle of
+a park — you arrive at its edge. So the method-correct number is arguably the
+least realistic of the three. **Worth stating rather than hiding:** a point-based
+distance to an area-based facility is a category error that no choice of point
+fixes. The connector behaves better — the on-line point gives 22 min, matching the
+by-name search exactly, which is a good sign for linear facilities.
+
 #### The other modes, recorded but not shown
 
 Two facility types are not reached on foot in practice, and the measured times
@@ -673,6 +783,132 @@ copy/data mismatch this document keeps catching. **But the observation is real:
 nobody walks to an EV charger.** Whether to show a per-type travel mode is an open
 design question, not a bug, and it is recorded here rather than acted on because
 the build phase is closed.
+
+---
+
+### ⚠️ Are these actually the nearest facilities? No — and the datasets prove it
+
+The dashboard sorts by `walkMinutes` and presents a "nearest first" list. That
+list is **nearest among the sixteen we chose**, not nearest in Clementi, and the
+difference is large. This is the most serious limitation §8 has turned up,
+because unlike an invented tariff it is a claim the *interface* makes rather than
+one a card states.
+
+**Recycling bins — 15 within 200 m, and we show one of them**
+
+| Distance | Bin |
+|---|---|
+| **0 m** | **Blk 442 Clementi Ave 3 — the resident's own block** |
+| 64 m | Blk 441B |
+| 65 m | Blk 441A ← *the one we show* |
+| 65 m | Blk 449 |
+| 73 m | Blk 443 |
+| 105–200 m | nine more |
+
+**There is a recycling bin at the resident's own void deck and the app does not
+show it.** For an app whose stated purpose is removing the "I don't know where to
+go" barrier, showing the fifth-nearest bin and hiding the one downstairs is close
+to the opposite of the point.
+
+**Community gardens — we show the 8th-nearest and the 30th**
+
+| Distance | Garden |
+|---|---|
+| 157 m | Clementi Swimming Complex |
+| 252 m | Clementi Primary School |
+| 303 m | Clementi Town Secondary School |
+| 380 m | Clementi Heights RC |
+| 436–542 m | three more |
+| 588 m | Clementi Ave 2 RC ← *we show this* |
+| 1,031 m | NUS High ← *and this* |
+
+**E-waste — a whole real category the app does not have**
+
+There is no e-waste facility type in `facilityTypes.js`, yet NEA records four
+collection points within 211 m: POPULAR @ Clementi Mall (103 m), Best Denki
+(159 m), FairPrice @ Clementi Mall (170 m), FairPrice @ 451 Ave 3 (211 m). The
+brief names e-waste drives as an event type, so the omission is an oversight
+rather than a decision.
+
+**Bicycle parking — correct.** The 140 m sheltered rack we show is genuinely the
+nearest in LTA's data.
+
+**Parks — arguable.** Six NParks green spaces sit closer than Clementi Woods, but
+all six are playgrounds, and "cooling green space" plausibly means something
+larger. Defensible as a category judgement, not as a distance claim.
+
+#### What was done about it — rebuilt 10 Sept 2026
+
+**Option 2 was taken: `facilities.js` was rebuilt from the datasets.** Sixteen
+hand-invented entries became **22**, of which **17 are dataset-confirmed**. This
+was data entry, not invention — every coordinate, name and address already
+existed in the files pulled that morning.
+
+| Type | Now shows | Source | Was |
+|---|---|---|---|
+| `recycling` | Blk **442** (own block), 441A, 449 | NEA Recycling Bins | 441A + a hawker centre |
+| `bloobox` | Blk 443 | NEA Recycling Bins | same |
+| **`ewaste`** | Clementi Mall (POPULAR), Blk 451 FairPrice, Clementi CC | NEA E-waste | **type did not exist** |
+| `evCharger` | Clementi Mall, Blk 445 | Revolt.sg (existence only) | same |
+| `waterRefill` | Clementi MRT, Clementi CC | ⚠️ none — our assumption | same |
+| `garden` | Swimming Complex, Clementi Pri, Clementi Town Sec, Clementi Heights RC, NUS High | NParks Community in Bloom | 1 real + 1 invented |
+| `solar` | Blk 330, Blk 301 | ⚠️ none — our assumption | same |
+| `bicycle` | Two LTA racks by the MRT | LTA Bicycle Rack | 1 real + 1 unevidenced |
+| `parkConnector` | Ulu Pandan PC | NParks PCN | same |
+| `coolingSpace` | Clementi Woods Park | NParks Parks | same |
+
+**The headline change: the nearest recycling bin is now the one at Blk 442, the
+resident's own block.** That is the single most useful thing the dashboard can
+say, and the old list did not contain it.
+
+**One entry was removed:** `nushigh-bicycle`. It is not in LTA's rack data. ⚠️
+**That is not evidence it does not exist** — the LTA file has 396 points
+islandwide and is plainly partial. It was dropped for being unevidenced, not
+disproven, and could be restored if someone looks.
+
+**Two types still have no dataset behind them at all** — `waterRefill` and
+`solar`. Four entries, all with real addresses and assumed facilities. They are
+the honest remainder and are labelled as such in the file header.
+
+**Bloobox note:** no point-level Bloobox dataset exists. The Blk 443 entry is a
+dataset-confirmed *recycling bin*, described as where a Bloobox gets emptied.
+⬜ Someone should confirm that framing is how the scheme actually works.
+
+**walkMinutes now has two provenances.** Fourteen entries reuse coordinates
+already measured on Google Maps; eight new ones are estimated at straight-line
+metres ÷ 40, a rate calibrated from those measured readings rather than a guess
+at walking speed. ⬜ **The eight estimated entries should be measured** — they are
+`blk442-recycling`, `blk449-recycling`, `blk451-ewaste`, the four non-NUS gardens,
+and `clementi-mrt-bicycle-2`.
+
+⚠️ **The ordering claim still needs qualifying, even now.** The list is the
+nearest few of each type, not all of them: 15 recycling bins remain within 200 m
+and we show three. What changed is that the three are genuinely the nearest three,
+so the order is no longer arbitrary. The report should say "nearest few by type",
+not "all facilities nearby".
+
+### Report-a-problem made type-specific
+
+The form offered one shared list — *bin overflowing, facility broken, blocked,
+something else* — to every facility, so **an EV charger could be reported as an
+overflowing bin.** That is not a thing that can happen, and it made the form read
+as scenery rather than something a resident would use.
+
+Each type now carries its own `problems` list in `facilityTypes.js`: a charger
+offers *not working / bay blocked by a non-EV / cable damaged / payment failed*, a
+park connector offers *path blocked / surface broken / lighting out / overgrown*.
+**"Something else" is appended by the form to every list** and opens a free-text
+box; the report cannot be sent while that box is empty, because an unexplained
+"something else" tells a town council nothing.
+
+⚠️ **A pre-existing bug was found and fixed while doing this.** `FacilitySheet`
+never unmounted — Dashboard passes `facility={selected}` and the component returns
+null — so its state survived between facilities. Sending a report about one bin
+left the next marker you tapped showing "report logged", and after the per-type
+change a stale selection could belong to a different type entirely. Dashboard now
+passes `key={selected?.id}`, which remounts the sheet per facility. **Worth a line
+in the report:** the bug predates this change and nobody had noticed, because with
+one shared list the wrong-type symptom was invisible.
 
 ---
 

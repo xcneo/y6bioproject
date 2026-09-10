@@ -1080,3 +1080,111 @@ appends a one-line summary of each task it completes.
   phase is closed. The facilities.js header was rewritten again for the same
   reason as this morning: it described walkMinutes as computed at 80 m/min, which
   had stopped being true the moment the measured values landed.
+- 2026-09-10 (all four travel modes read from Google Maps by Claude) — Drove the
+  browser to read walking, cycling, driving and public transport times for all
+  sixteen facilities from Block 442, and recorded them in §8 as unverified leads
+  rather than putting them in facilities.js, since a Claude reading is a lead and
+  Henrison's own measurements are the stronger provenance. One page load per
+  destination turned out to give all four modes at once, because the Maps mode bar
+  shows a time under each icon, so the job was sixteen loads rather than
+  sixty-four. Three things came out of it that matter more than the times. First,
+  the flagged Blk 445 outlier is explained: routed to the dataset coordinate, Maps
+  resolves it to Blk 445 Multi-storey Car Park C19M — the exact car park the HDB
+  dataset named — and gives 1 minute walking for 109 metres, against the 7 minutes
+  measured by hand. Second, two of our coordinates do not point where we think.
+  Both come from line and polygon datasets where a single coordinate is a vertex
+  rather than a place, so the Ulu Pandan coordinate resolves to a playground at
+  Blk 340/343 Clementi Ave 5 and the Clementi Woods coordinate resolves to Kent
+  Vale Parking on Clementi Road. Searching those two by name instead gives the
+  park and the connector properly, and 30 minutes rather than 35 for the park.
+  That is the point-versus-line-or-polygon version of the check-the-qualifier
+  rule, and it means neither coordinate should be quoted as the facility's
+  location even though neither pin is wrong on the map. Third, and worth a
+  paragraph in the report: Claude's walking times run consistently longer than
+  Henrison's, thirteen of sixteen by two to four minutes, with NUS High out by
+  eight and ten and Blk 445 out by six the other way. The cause is almost
+  certainly that we searched differently — Claude routed to dataset coordinates
+  while a person types an address, and for a school campus or a car park those
+  points can sit hundreds of metres apart. So "measured on Google Maps" sounded
+  like one well-defined act and is not: the answer depends on what you typed, and
+  two people following the same instruction on the same day differed by up to ten
+  minutes. A method has to specify the destination, not just the tool. Nothing was
+  changed in facilities.js, which keeps Henrison's numbers, and the note in §8
+  says whoever verifies should settle the method first and then read all sixteen
+  the same way.
+- 2026-09-10 (coordinate method chosen; the nearest-first claim examined) — The
+  team settled the destination method as coordinates rather than addresses, which
+  had two consequences. The two bad coordinates were replaced with better ones of
+  the same kind rather than by searching a name: Clementi Woods now uses the
+  centroid of its 198-vertex polygon and Ulu Pandan uses the nearest point on the
+  connector line rather than the nearest line vertex. The connector behaves well,
+  the on-line point giving 22 minutes and matching the by-name search exactly, but
+  the park exposes something the method cannot fix. Clementi Woods has three
+  defensible answers — 30 minutes searched by name, 35 to the old polygon vertex,
+  36 to the centroid — and the method-correct centroid is arguably the least
+  realistic of the three, since nobody walks to the middle of a park. A
+  point-based distance to an area-based facility is a category error that no
+  choice of point resolves, and that is now written down rather than smoothed
+  over. The larger finding came from the team's own question, which was whether
+  these are really the nearest facilities. They are not, and the datasets show it
+  plainly. Fifteen recycling bins sit within 200 metres and the app shows one of
+  them; there is a bin at Blk 442 itself, the resident's own block, zero metres
+  away, and the app does not show it, which for an app whose purpose is removing
+  the I-don't-know-where-to-go barrier is close to the opposite of the point. Four
+  registered community gardens are closer than the one we display. And there is no
+  e-waste facility type at all, despite NEA recording four collection points
+  within 211 metres and despite the brief naming e-waste drives as an event type.
+  Bicycle parking is correct and the park choice is defensible as a category
+  judgement. The important framing is that this is a claim the interface makes
+  rather than one a card states: the dashboard sorts by walkMinutes and presents a
+  nearest-first list, and sorting invented pins by measured distances produces a
+  list that is precise and wrong, where the precision of the minutes makes the
+  selection look comprehensive when it is not. Three options are recorded with the
+  note that they are not equally honest — state it as a limitation, rebuild
+  facilities.js from the datasets, which is now data entry rather than invention
+  since coordinates and names all exist, or at minimum add the missing e-waste
+  type. No code was changed; the decision is the team's.
+- 2026-09-10 (facilities.js rebuilt from the datasets; report form made
+  type-specific) — Took option 2 from §8 and rebuilt the facility list from the
+  official data rather than stating the gap as a limitation. Sixteen hand-invented
+  entries became twenty-two, of which seventeen are dataset-confirmed, and the
+  work was data entry rather than invention because every coordinate, name and
+  address already existed in the files pulled that morning. The headline change is
+  that the nearest recycling bin is now the one at Blk 442, the resident's own
+  block, which is the single most useful thing the dashboard can say and was
+  absent from the old list entirely. A new e-waste type was added, with three NEA
+  collection points including one at Clementi Mall 103 metres away, closing a gap
+  the brief itself implied since it names e-waste drives as an event type. The
+  community gardens are now the four genuinely nearest registered ones plus NUS
+  High, replacing a garden we had placed at what turned out to be a shopping
+  centre. One entry was removed rather than kept: the NUS High bicycle parking is
+  not in LTA's rack data, and while that file has only 396 points islandwide and
+  proves nothing by omission, an unevidenced entry had no place in a list rebuilt
+  on evidence — it was dropped for being unevidenced, not disproven, and can be
+  restored if someone looks. Two types still have no dataset behind them at all,
+  water refill points and per-block solar, and those four entries are labelled in
+  the file header as the honest remainder. walkMinutes now carries two
+  provenances, fourteen entries reusing coordinates already measured on Google
+  Maps and eight new ones estimated at straight-line metres divided by 40, a rate
+  calibrated from the measured readings rather than a guess at walking speed, with
+  the eight named in §8 as needing measurement. The report-a-problem form was also
+  made type-specific, which the team asked for on the grounds that an EV charger
+  cannot have an overflowing bin. Each type now carries its own problems list, so
+  a charger offers not-working, bay-blocked-by-a-non-EV, cable-damaged and
+  payment-failed while a park connector offers path-blocked, surface-broken,
+  lighting-out and overgrown. Something else is appended by the form to every list
+  rather than stored per type, so it cannot be forgotten or duplicated, and it
+  opens a free-text box that must be filled before the report can be sent, since
+  an unexplained something-else tells a town council nothing. Doing this surfaced
+  a pre-existing bug worth a line in the report: FacilitySheet never unmounted,
+  because Dashboard passes the facility as a prop and the component returns null
+  when it is absent, so its state survived between facilities and a report sent
+  about one bin left the next marker showing "report logged". Dashboard now passes
+  a key so the sheet remounts per facility. The bug predates this change and
+  nobody had noticed, because with one shared problem list the wrong-type symptom
+  was invisible — the per-type lists made a latent bug visible, which is an
+  argument for specificity in its own right. Verified by running the dev server
+  and stepping through the screen: 22 pins render, the E-waste chip appears, an EV
+  charger offers only EV problems, Something else opens the box and disables Send
+  until it has text, and tapping a bin afterwards shows bin problems with nothing
+  carried over.

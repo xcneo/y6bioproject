@@ -168,7 +168,12 @@ export default function Dashboard() {
         onConfirm={confirmAttendance}
       />
 
+      {/* key resets the sheet's own state for each facility. Without it the
+          sheet stays mounted, so a report sent about one bin still reads
+          "report logged" when you tap the next marker, and the problem list
+          could keep a selection from a different facility type. */}
       <FacilitySheet
+        key={selected?.id}
         facility={selected}
         onClose={() => setSelected(null)}
         onReportSent={() => earnPoints(10)}

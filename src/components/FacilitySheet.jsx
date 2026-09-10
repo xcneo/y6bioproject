@@ -1,31 +1,47 @@
 import { useState } from 'react'
-import { FACILITY_TYPES } from '../data/facilityTypes'
+import { FACILITY_TYPES, OTHER_PROBLEM } from '../data/facilityTypes'
 
 // The card that slides up from the bottom when you tap a map marker.
 // It also holds the "report a problem" form, because a report is almost always
 // about a specific facility — attaching it here saves the resident from having
 // to type out which bin they mean.
-
-const PROBLEMS = [
-  'Bin is overflowing',
-  'Facility is broken',
-  'Blocked or cannot access',
-  'Something else',
-]
+//
+// The problem list comes from the facility's TYPE, not from one shared list.
+// A shared list let you report an EV charger as an overflowing bin, which
+// cannot happen and made the form read as decoration. See facilityTypes.js.
+//
+// "Something else" is appended here rather than stored in each type's list, so
+// it cannot be forgotten for a new type or accidentally listed twice. Picking
+// it opens a text box and the report cannot be sent until it says something —
+// an empty "something else" tells the town council nothing at all.
 
 export default function FacilitySheet({ facility, onClose, onReportSent }) {
   const [reportOpen, setReportOpen] = useState(false)
-  const [problem, setProblem] = useState(PROBLEMS[0])
+  const [problem, setProblem] = useState(null)
+  const [otherText, setOtherText] = useState('')
   const [sent, setSent] = useState(false)
 
   if (!facility) return null
 
   const type = FACILITY_TYPES[facility.type]
+  const options = [...type.problems, OTHER_PROBLEM]
+  // Default to this type's first option, and never trust a stale selection from
+  // a different type — Dashboard keys this component per facility so it should
+  // not happen, but a list that shows nothing selected is a confusing failure.
+  const chosen = options.includes(problem) ? problem : options[0]
+  const needsText = chosen === OTHER_PROBLEM
+  const canSend = !needsText || otherText.trim().length > 0
 
   function handleSubmit(event) {
     event.preventDefault()
+    if (!canSend) return
     setSent(true)
     onReportSent()
+  }
+
+  function choose(option) {
+    setProblem(option)
+    if (option !== OTHER_PROBLEM) setOtherText('')
   }
 
   return (
@@ -85,25 +101,38 @@ export default function FacilitySheet({ facility, onClose, onReportSent }) {
                 What is wrong?
               </legend>
               <div className="mt-2 space-y-2">
-                {PROBLEMS.map((option) => (
+                {options.map((option) => (
                   <label key={option} className="flex items-center gap-2 text-sm text-stone-700">
                     <input
                       type="radio"
                       name="problem"
                       value={option}
-                      checked={problem === option}
-                      onChange={(event) => setProblem(event.target.value)}
+                      checked={chosen === option}
+                      onChange={(event) => choose(event.target.value)}
                       className="h-4 w-4"
                     />
                     {option}
                   </label>
                 ))}
               </div>
+
+              {needsText && (
+                <textarea
+                  value={otherText}
+                  onChange={(event) => setOtherText(event.target.value)}
+                  rows={3}
+                  maxLength={300}
+                  placeholder="What did you see?"
+                  aria-label="Describe the problem"
+                  className="mt-2 w-full rounded-xl border border-stone-300 p-3 text-sm text-stone-900 placeholder:text-stone-400"
+                />
+              )}
             </fieldset>
 
             <button
               type="submit"
-              className="mt-4 w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white"
+              disabled={!canSend}
+              className="mt-4 w-full rounded-xl bg-emerald-600 py-3 text-sm font-semibold text-white disabled:bg-stone-200 disabled:text-stone-400"
             >
               Send report
             </button>
