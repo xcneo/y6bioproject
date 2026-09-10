@@ -942,3 +942,112 @@ appends a one-line summary of each task it completes.
   the end of a long session, so it was applied at the end of a long session. The
   team's instruction to move on to §8 tomorrow is recorded in CLAUDE.md, which now
   says §9, §10 and §12 are done and names §7 and §11b as still open.
+- 2026-09-10 (§8 worklist built) — Turned §8 from a ranked list of twelve invented
+  details into a worklist that can be worked through. The reframe is that the
+  existing ranking, by how quickly a marker could check a claim, is not the same
+  question as what a person can actually do in a day, so the twelve are now
+  bucketed three ways. Bucket A is published somewhere and checkable at a desk:
+  the CC opening hours, the two EV tariffs, the allotment waiting list, the
+  Community in Bloom garden, and the two solar claims. Bucket B is not published
+  but is walkable — the NUS High bicycle count, which Henrison can literally go
+  and count as a student there, and the MRT hub's before-9am claim, with a note
+  that one visit is an anecdote and grounds to soften rather than to assert.
+  Bucket C is the useful part: the Blk 726 bin overflowing on Sunday nights and
+  Clementi Woods being noticeably cooler at midday cannot be verified by anybody,
+  the first because it is a claim about recurring behaviour with no source and the
+  second because it would need instruments and repetition, so chasing them wastes
+  the day and softening is the only honest close. Every row carries pre-drafted
+  fallback wording, which is the column that matters most: a lookup that fails now
+  costs nothing because the replacement text is already written, and each fallback
+  keeps the scene-setting while dropping only the falsifiable specific — "roughly
+  $0.55 per kWh" becomes "paid charging", "14 beds" becomes "raised beds", "60
+  spaces" becomes "sheltered racks near the school gate". The where-to-look column
+  is explicitly labelled as leads rather than sources, since Claude has opened
+  none of those pages and the project's own rule is that a lead becomes a source
+  when a team member opens it and can give it a date and a URL. Two field-level
+  rows are recommended for no action with reasons: the walk times because the
+  screen already hedges with "about" and the header now disclaims them, and the
+  two rental prices because an asking price is an invented neighbour's offer
+  rather than a claim about the world. If the day runs short the three worth
+  having are the CC hours, the Clementi Mall tariff and the Blk 445
+  free-for-30-minutes line, the first because it is fastest and the other two
+  because a tariff is the most plausible-looking invented figure in the file.
+- 2026-09-10 (facilities.js checked against official datasets) — Pulled seven
+  official datasets and checked all fifteen facilities.js entries against them,
+  changing nothing in the file as instructed. NEA Recycling Bins (12,578 points),
+  NEA E-waste Recycling (718), NParks Community in Bloom (1,772), NParks Park
+  Connector Loop (878), NParks Parks and Nature Reserves (462), LTA Bicycle Rack
+  (396) and HDB Carpark Information, all from data.gov.sg on 10 Sept, with Blk 442
+  Clementi Ave 3 geocoded through OneMap to 1.314123, 103.764519 as the reference
+  point. One of the four datasets the team asked for could not be pulled: LTA
+  DataMall's EV charging points require an AccountKey issued only to registered
+  subscribers, so neither EV entry can be confirmed or refuted from open data, and
+  registering is the way to close that if the team wants it. Three findings
+  matter. Blk 330 Clementi Ave 4 does not exist — Blk 330 is on Clementi Avenue 2,
+  365 m east — which also undermines the Blk 301 entry's claim of being in the
+  same SolarNova cluster, since the two are on different streets about a kilometre
+  apart. Blk 726 Clementi West St 2 is a market and hawker centre, not a housing
+  block, so "void deck bin" is wrong, and it is absent from the recycling-bin
+  dataset while its neighbours 705 to 731 are all present, which in a 12,578-point
+  file is meaningful absence rather than a gap in coverage. And there is no plain
+  Blk 441 Clementi Ave 3 at all: OneMap and the bin dataset both return only 441A
+  and 441B, Clementi Towers. Three entries came back confirmed real with
+  coordinates — the Clementi MRT bicycle racks, Ulu Pandan Park Connector and
+  Clementi Woods Park — though the racks are recorded as Single type, which
+  contradicts our "two-tier racks" wording. A distinction worth keeping is that
+  absence means different things in different files: the bin dataset covers
+  essentially every HDB block so a missing block is evidence, while the bicycle
+  rack file has 396 points islandwide and proves nothing by omission. Community in
+  Bloom was also read carefully rather than loosely: it registers community
+  gardens, not allotments, so the Sunset Way hit does not confirm the "rented
+  plots" claim, and no garden is registered at Blk 352 Clementi Ave 2, which turns
+  out to be a shopping centre. Five pins could be moved to real coordinates rather
+  than invented ones, including a genuine registered garden at NUS High School
+  that the app does not currently show. Separately, the check made the walk times
+  checkable for the first time and six of fifteen are out by more than 2.5 minutes
+  in both directions — Clementi Mall is shown as 8 minutes and is 103 metres away,
+  Ulu Pandan as 4 and is 849 — so the dashboard's nearest-first ordering is
+  currently wrong; recomputing them from real coordinates would now be arithmetic
+  rather than invention. The three decisions the team took before the check are
+  recorded in §8 as taken: the Blk 726 line reframed as aggregated resident
+  reports sourced from the app's own report-a-problem flow, which is the version
+  that connects to the argument that the app surfaces infrastructure gaps nobody
+  collects; Clementi Woods taking the plain fallback; and Bucket B closed with
+  physical verification judged unwarranted for a prototype demonstrating
+  feasibility rather than usability. Two of those three are now complicated by the
+  data, which is noted beside each rather than silently folded in.
+- 2026-09-10 (facilities.js corrected against the datasets) — Acted on the
+  dataset comparison. Four pins moved to real coordinates: Blk 441 to 441A, since
+  the plain 441 does not exist and OneMap returns only 441A and 441B; Blk 330 from
+  Clementi Ave 4, which does not exist, to Clementi Ave 2; the Blk 352 garden to
+  the registered Community in Bloom garden at 1.313711, 103.769796, since Blk 352
+  turned out to be a shopping centre with no garden registered; and Blk 726 to Blk
+  706, because 726 is a market and hawker centre with no void deck and is absent
+  from a bin dataset that lists all its neighbours. Blk 301's claim to be in the
+  same SolarNova cluster as Blk 330 was removed, since the corrected addresses put
+  them on different streets about a kilometre apart. The Clementi MRT racks are
+  now described as sheltered single-tier, which is what LTA records, correcting a
+  two-tier claim we had invented. NUS High's registered Community in Bloom garden
+  was added as a new entry — real, in the dataset, and our own school. Both EV
+  entries keep their existence, now sourced to Revolt.sg checked by Henrison on 10
+  Sept, with the tariff claims removed: the Clementi Mall card reads "paid
+  charging" and the Blk 445 card drops the free-first-30-minutes line. Revolt is
+  recorded as an aggregator, good for existence but not the citation we would use
+  for a price, where the operator's own page would be needed. Every walkMinutes is
+  now computed rather than guessed, from straight-line metres at 80 m/min with a
+  floor of one minute, which moved twelve of the sixteen entries and fixed a
+  dashboard whose nearest-first ordering had been showing the closest facilities
+  as the furthest — Clementi Mall was listed at 8 minutes and is 103 metres away.
+  The file header was rewritten because it had stopped being true: it said
+  everything in the file was invented, which is no longer the case, so it now
+  separates the eight dataset-confirmed entries from the four that exist with
+  unverified detail and the four that no public dataset can confirm or refute,
+  and it records that walkMinutes is computed and that x and y are decorative
+  rather than a projection. Two things are flagged rather than quietly fixed. The
+  bay counts on both EV cards, four bays and two bays, are still invented — Revolt
+  confirms the stations exist, not how many bays they have — and Blk 445's card
+  says ground level while HDB records C19M as a multi-storey car park. Three
+  detail lines still carry an invented specific and stay on the outstanding list:
+  Blk 443's collection days, the CC's opening hours, and the Sunset Way waiting
+  list, which is additionally suspect because the CIB dataset shows a community
+  garden there and an allotment is a different NParks scheme.

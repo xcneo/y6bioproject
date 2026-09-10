@@ -24,7 +24,7 @@ cannot be wrong in the demo.
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
 | 7. Servings and assumptions | ✅ | ⬜ **not yet** |
-| 8. On-screen numbers outside `factors.js` | ⚠️ invented, now disclaimed in the file headers | ⬜ **not yet** |
+| 8. On-screen numbers outside `factors.js` | ⚠️ mixed — **8 dataset-confirmed, 4 exist but unverified detail, 4 unconfirmable**; edits applied 10 Sept | ⬜ **not yet** |
 | 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
 | 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
@@ -35,7 +35,7 @@ cannot be wrong in the demo.
 
 | # | Item | Section |
 |---|---|---|
-| 1 | **The `detail` strings and walk times** — headers now disclaim them; decide whether to soften or check the twelve on screen | §8 |
+| 1 | **Three `detail` lines still carry an invented specific** — Blk 443's collection days, the CC's opening hours, the Sunset Way waiting list (which is a community garden, not an allotment) | §8 |
 | 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
 | 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 | 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
@@ -486,6 +486,257 @@ Whichever you pick, **do not leave a specific number attached to a real address
 with no disclaimer.** As of 9 Sept all twelve are disclaimed in the file that
 holds them, and none is disclaimed on the screen that shows them.
 
+### The worklist, 10 Sept
+
+Bucketed by **what a person can actually do**, which is not the same as how fast
+a marker could check one. Bucket C is the point: some of these cannot be verified
+by anybody, so chasing them wastes the day and softening is the only honest close.
+
+⚠️ **The "where to look" column is leads, not sources.** Claude has not opened any
+of these pages. A lead becomes a source when a team member opens it, reads the
+number, and can give it a date and a human-readable URL.
+
+**The last column matters most.** It is the softened wording pre-drafted, so a
+lookup that fails costs nothing — paste the fallback and the row is closed either
+way. Every fallback keeps the scene-setting and drops only the falsifiable
+specific.
+
+#### Bucket A — published somewhere, checkable at a desk
+
+| ☐ | Facility | The claim | Where to look (a lead) | If it does not check out |
+|---|---|---|---|---|
+| ☐ | Clementi Community Centre | "Open **9am to 9.30pm**" | PA's CC directory (onepa.gov.sg) lists opening hours per CC | "Inside the lobby. Check the CC's opening hours." |
+| ☐ | Clementi Mall car park | "4 bays, level 5. Roughly **$0.55 per kWh**" | The charging operator's public tariff page — SP Mobility, Shell Recharge, Charge+, TotalEnergies all publish per-kWh rates | "4 bays, level 5. Paid charging." |
+| ☐ | Blk 445 car park | "2 bays, ground level. **Free for the first 30 minutes**" | Two different claims: HDB's published car park charges, and the charging operator's tariff. The free-30-min line is the most falsifiable thing in the file | "2 bays, ground level." |
+| ☐ | Sunset Way allotment | "Waiting list is usually **a few months**" | NParks allotment gardens — allocation is by ballot, and NParks publishes how it works | "Rented plots, allocated by ballot." |
+| ☐ | Blk 352 garden | "Open plot, **14 beds**. Volunteers weed **Saturday mornings**" | NParks Community in Bloom registry lists registered gardens; bed counts and work days are unlikely to be published | "Open plot with raised beds, tended by resident volunteers." |
+| ☐ | Blk 330 solar | "Powers the **lifts and corridor lighting** for the block" | HDB's solar pages describe what rooftop solar feeds; block-level detail may not be public | "Feeds the block's common services." |
+| ☐ | Blk 301 solar | "Part of the same **SolarNova** cluster as Blk 330" | SolarNova is a real HDB/EDB programme, but a block-by-block list may not be published | "Rooftop panels, like Blk 330." |
+| ☐ | Blk 443 Bloobox | "Emptied every **Tuesday and Friday**" | Jurong–Clementi Town Council, or the Bloobox programme's own collection information. May need an email rather than a page | "Emptied on a regular collection round." |
+
+#### Bucket B — not published, but you can go and look
+
+| ☐ | Facility | The claim | How | If it does not check out |
+|---|---|---|---|---|
+| ☐ | NUS High School | "Roughly **60 spaces**" | You are a student there. Count them | "Sheltered racks near the school gate." |
+| ☐ | Clementi MRT bicycle hub | "Usually full before **9am on weekdays**" | One weekday morning look. One visit is an anecdote, not a measurement — treat it as grounds to soften, not to claim | "Two-tier racks. Busiest at commuting times." |
+
+#### Bucket C — nobody can verify these. Soften and move on
+
+| ☐ | Facility | The claim | Why it cannot be checked | Replace with |
+|---|---|---|---|---|
+| ☐ | Blk 726 recycling | "Often **overflowing on Sunday nights**" | A claim about recurring behaviour over time. No source exists and no single visit establishes it | "Void deck bin." |
+| ☐ | Clementi Woods | "**Noticeably cooler** at midday" | Subjective, and a measurement would need instruments and repetition. Parks being cooler is well established in general; this specific park at midday is not | "Mature trees, shade at midday. Benches and a playground." |
+
+#### The two field-level rows — recommend no action
+
+| Field | Values | Recommendation |
+|---|---|---|
+| `facilities.js` → `walkMinutes` | 2 – 16 | **Leave them.** The screen already hedges with "about", nobody reads a walk time as a measurement, and the header now disclaims them. Lowest risk in the file |
+| `listings.js` → `price` | 8, 12 | **Leave them.** A rental asking price is an invented neighbour's offer, not a claim about the world, and the file says ALL INVENTED |
+
+**If the day runs short**, the three worth having are the **CC opening hours**,
+the **Clementi Mall tariff** and the **Blk 445 free-30-minutes** line — the first
+because it is the fastest, the other two because a tariff is the most
+plausible-looking invented figure in the file. Everything else can take its
+fallback wording with nothing lost.
+
+---
+
+### Dataset check, 10 Sept 2026
+
+Official datasets pulled and every `facilities.js` entry checked against them.
+**Nothing in `facilities.js` has been changed** — this is the comparison, for the
+team to decide from.
+
+**Reference point:** Blk 442 Clementi Ave 3 = **1.314123, 103.764519**, from
+OneMap's address search. The address is real and resolves exactly.
+
+#### What was pulled
+
+| Dataset | Agency | ID | Features | Downloaded |
+|---|---|---|---|---|
+| Recycling Bins | NEA | `d_4dde14826642f49eefff48b7832b90db` | 12,578 | 10 Sept 2026 |
+| E-waste Recycling (GEOJSON) | NEA | `d_db40d004afeb5a7f0f555fdcc34934cc` | 718 | 10 Sept 2026 |
+| Community in Bloom (CIB) | NParks | `d_f91a8b057cfb2bebf2e531ad8061e1c1` | 1,772 | 10 Sept 2026 |
+| Park Connector Loop | NParks | `d_a69ef89737379f231d2ae93fd1c5707f` | 878 | 10 Sept 2026 |
+| Parks and Nature Reserves | NParks | `d_77d7ec97be83d44f61b85454f844382f` | 462 | 10 Sept 2026 |
+| LTA Bicycle Rack (GEOJSON) | LTA | `d_937424cca6d1617288a82a7aeb89f76d` | 396 | 10 Sept 2026 |
+| HDB Carpark Information | HDB | `d_23f946fa557947f93a8043bbef41dd09` | queried | 10 Sept 2026 |
+
+⚠️ **LTA DataMall EV charging points could not be pulled.** The endpoint requires
+an AccountKey issued only to registered DataMall subscribers, and we do not have
+one. **Neither EV entry can be confirmed or refuted from open data.** Registering
+for a key is free and is the way to close this if the team wants it.
+
+⚠️ **Absence from a dataset is not proof of absence, and it varies by dataset.**
+The recycling-bin file has 12,578 points and covers essentially every HDB block,
+so a missing block there means something. The LTA bicycle-rack file has **396
+points for the whole island**, which is obviously partial, so a missing rack there
+means nothing at all. Say which kind of silence you are quoting.
+
+⚠️ **Check the qualifier, again.** Community in Bloom is the register of
+**community gardens**. NParks **allotment** gardens are a different scheme with
+different allocation. A CIB hit near Sunset Way does not confirm an allotment.
+
+#### Verdict per facility
+
+| Facility | Type | Verdict | Evidence |
+|---|---|---|---|
+| `blk443-bloobox` | Bloobox | ⚠️ **Address confirmed, facility type not** | A recycling bin is recorded at Blk 443 Clementi Ave 3 (120443) at 1.314164, 103.763862. "Bloobox" is a separate NEA household scheme and is not what this dataset records |
+| `blk445-ev` | EV charger | ⚠️ **Car park confirmed, charger unknown** | HDB car park **C19M, Blk 445 Clementi Ave 3, MULTI-STOREY**. Note: our text says "ground level", and this is an MSCP. Charger itself needs the LTA key |
+| `clementi-mall-ev` | EV charger | ⚠️ **Building confirmed, charger unknown** | Clementi Mall confirmed at 3155 Commonwealth Ave West, 1.315027, 103.764716, via the e-waste dataset. Charger needs the LTA key |
+| `cc-water` | Water refill | ⚠️ **Building confirmed, cooler not** | **Clementi CC, 220 Clementi Avenue 4** confirmed at 1.318815, 103.768154. No public dataset records water coolers |
+| `clementi-mrt-bicycle` | Bicycle parking | ✅ **Confirmed real** | LTA rack at **1.315347, 103.764815** — sheltered, 10 racks — and a second at 1.315495, 103.765302, unsheltered, 25 racks. ⚠️ Both are recorded `TYP_CD: Single`, **not two-tier**, so our "two-tier racks" wording is contradicted |
+| `ulupandan-pcn` | Park connector | ✅ **Confirmed real** | **Ulu Pandan PC**, nearest segment 1.318628, 103.770683, on both the Southern Ridges Loop and the Western Adventure Loop |
+| `clementi-woods` | Cooling space | ✅ **Confirmed real** | **CLEMENTI WOODS PARK**, 1.301067, 103.767411, in the NParks parks dataset, and also appears in the connector data as "Clementi Wood Park" |
+| `blk441-recycling` | Recycling | ⚠️ **Address is wrong** | There is **no plain "Blk 441 Clementi Ave 3"**. OneMap returns only **441A and 441B (Clementi Towers)**, and the bin dataset likewise has 441A and 441B only. Nearest real bin: **441A, 1.314639, 103.764798**, 65 m away |
+| `blk330-solar` | Solar | ❌ **Address does not exist** | **There is no Blk 330 on Clementi Ave 4.** Blk 330 is on **Clementi Avenue 2**, at 1.313745, 103.767782, 365 m east. No public dataset lists rooftop solar by block either way |
+| `blk301-solar` | Solar | ⚠️ **Address real, claim unverifiable** | Blk 301 Clementi Ave 4 confirmed (Clementi Haven), 1.322176, 103.764912. No public SolarNova block list found, so the "same cluster as Blk 330" claim is unverifiable — and Blk 330 is on a different street ~1 km away, which makes "cluster" doubly invented |
+| `blk352-garden` | Garden | ❌ **Not found; and the address is a shopping centre** | Blk 352 Clementi Ave 2 is the **CLEMENTI AVENUE 2 SHOPPING CENTRE**, 1.314279, 103.771351. **No CIB garden is registered there.** Nearest registered gardens: **Clementi Avenue 2 Residents' Committee (Garden I and II)** at 1.313711, 103.769796 |
+| `sunsetway-garden` | Garden | ⚠️ **Nearby garden exists, but not an allotment** | CIB has **Sunset Way Residents' Committee** at 1.323590, 103.770437. Clementi Arcade confirmed at 41 Sunset Way. But CIB is community gardens, not allotments — the "rented plots" claim is not confirmed |
+| `blk726-recycling` | Recycling | ❌ **Not in the data, and it is not a housing block** | Blk 726 Clementi West St 2 is a **MARKET & HAWKER CENTRE**, 1.303811, 103.764251. It is **absent from the recycling-bin dataset** while its neighbours 705–731 are present — and in a 12,578-point file that absence is meaningful. Our text says "void deck bin"; **a hawker centre has no void deck** |
+| `clementi-mrt-water` | Water refill | ⬜ **No public dataset exists** | Nothing public records water coolers or refill points |
+| `nushigh-bicycle` | Bicycle parking | ⬜ **No usable dataset** | No LTA rack recorded at NUS High, but with 396 points islandwide that proves nothing. ✅ Separately: **NUS High School does have a registered CIB garden** at 1.306000, 103.769000 — a real green facility we are not showing |
+
+#### Pins worth moving rather than inventing
+
+| Instead of | Move to | Why |
+|---|---|---|
+| Blk 441 Clementi Ave 3 | **441A Clementi Ave 3** (1.314639, 103.764798) | A real bin at a real address, 65 m from home |
+| Blk 330 Clementi Ave 4 | **Blk 330 Clementi Ave 2** (1.313745, 103.767782) | Same block number, correct street |
+| Blk 352 "Clementi Community Garden" | **Clementi Ave 2 RC Garden I / II** (1.313711, 103.769796) | A really registered CIB garden 588 m away |
+| Blk 726 "void deck bin" | Any of **Blk 705–731 Clementi West St 2** | All are in the bin dataset; 726 is not, and is a hawker centre |
+| — | **NUS High School CIB garden** (1.306, 103.769) | A real registered garden we currently do not show at all |
+
+#### ⚠️ The walk times are worse than §8 assumed
+
+The team's standing decision is no action on `walkMinutes`, and this does not
+overturn it — but the dataset check has made them checkable, and several are wrong
+by a wide margin. At a normal 80 m/min pace:
+
+| Facility | Ours | Real distance | ~Real minutes |
+|---|---|---|---|
+| `clementi-mall-ev` | 8 | 103 m | **1.3** |
+| `clementi-mrt-bicycle` | 7 | 140 m | **1.8** |
+| `clementi-mrt-water` | 7 | 140 m | **1.8** |
+| `ulupandan-pcn` | 4 | 849 m | **10.6** |
+| `clementi-woods` | 12 | 1,487 m | **18.6** |
+| `blk352-garden` | 5 | 760 m | **9.5** |
+
+Six of fifteen are out by more than 2.5 minutes, in **both** directions. The
+nearest facilities are shown as far and two of the farthest as near. Now that real
+coordinates exist, recomputing every `walkMinutes` from them is arithmetic rather
+than invention, and it would make the ordered "nearest first" list on the
+dashboard actually correct — it currently is not.
+
+---
+
+### The three decisions taken on 10 Sept, before the dataset check
+
+These were settled independently of the data and stand regardless of it.
+
+**1. Blk 726, "often overflowing on Sunday nights" — reframed, not just softened.**
+As static text it does not work: if the app knows a bin overflows every Sunday,
+the right move is to tell the town council once so they add a collection, not to
+warn residents forever. It is reframed as **aggregated resident reports** —
+"frequently reported full on Sunday evenings" — sourced from the app's own
+report-a-problem flow. That makes it something the app could legitimately know,
+and it carries the argument: **the app surfaces infrastructure gaps no agency
+currently collects, because nobody asks residents systematically.** If wiring that
+to the report flow costs more than it is worth, the plain fallback "Void deck bin"
+is the agreed alternative. ⚠️ The dataset check has since found that Blk 726 is a
+**hawker centre, not a housing block**, so "void deck" is wrong in either version
+and this entry needs re-siting regardless.
+
+**2. Clementi Woods, "noticeably cooler at midday" — fallback.** A reasonable
+general claim about mature tree cover, but we cannot evidence this park at midday.
+Agreed wording: **"Mature trees, shade at midday."**
+
+**3. Bucket B — no action.** We are not counting bicycle racks or visiting the MRT
+at 9am. Both take their fallback wording. **Recorded reason: physical verification
+was judged unwarranted for a prototype demonstrating feasibility rather than
+usability.** That is a scope decision, not an oversight, and it is the honest thing
+to write in the report. ⚠️ The bicycle-rack dataset has since confirmed the MRT
+racks are real but **`Single`, not two-tier**, so that entry's wording is wrong on
+a second count.
+
+**Placement rule agreed with the team:** `facilities.js` carries **only the
+softened wording**. No justification text on the cards. All reasoning — including
+the Bucket C finding — lives in this document.
+
+### Edits applied to `facilities.js`, 10 Sept 2026
+
+The comparison above was acted on. Every `walkMinutes` is now **computed**, not
+guessed: straight-line metres from Blk 442 (1.314123, 103.764519) at 80 m/min,
+rounded, floor of 1. It is still not a routed walk, so the screen keeps "about".
+
+| Entry | Change |
+|---|---|
+| `blk441-recycling` → `blk441a-recycling` | Address to **Blk 441A**; the plain 441 does not exist. 2 → 1 min |
+| `blk330-solar` | Address to **Clementi Ave 2**; Ave 4 does not exist. 6 → 5 min |
+| `blk352-garden` → `clementiave2-rc-garden` | Re-sited to the **registered CIB garden** at 1.313711, 103.769796. "14 beds / Saturday mornings" dropped. 5 → 7 min |
+| `blk726-recycling` → `blk706-recycling` | Re-sited to **Blk 706**, a real block with a real bin; 726 is a hawker centre. 14 → 11 min |
+| `blk301-solar` | "Same SolarNova cluster as Blk 330" removed — the two are on different streets ~1 km apart. Now "Rooftop panels, like Blk 330." 9 → 11 min |
+| `clementi-mrt-bicycle` | **Single-tier**, per LTA's `TYP_CD: Single`, and sheltered per `SHLTR_IND: Yes`. "Full before 9am" → "Busiest at commuting times". 7 → 2 min |
+| `nushigh-garden` | **New entry.** NUS High's registered CIB garden, 1.306, 103.769. 13 min |
+| `nushigh-bicycle` | "Roughly 60 spaces" dropped. 11 → 14 min |
+| `clementi-mall-ev` | "Roughly $0.55 per kWh" → **"Paid charging"**. 8 → 1 min |
+| `blk445-ev` | "Free for the first 30 minutes" dropped. 4 → 1 min |
+| `ulupandan-pcn` | Now names the loops NParks records. 4 → 11 min |
+| `clementi-woods` | "Noticeably cooler" → **"shade at midday"**. 12 → 19 min |
+
+### Which entries are confirmed, unverifiable, or have no dataset
+
+**Dataset-confirmed — the facility is recorded at that location**
+
+| Entry | Dataset | Coordinates |
+|---|---|---|
+| `blk441a-recycling` | NEA Recycling Bins | 1.314639, 103.764798 |
+| `blk443-bloobox` (bin only) | NEA Recycling Bins | 1.314164, 103.763862 |
+| `blk706-recycling` | NEA Recycling Bins | 1.306764, 103.762356 |
+| `clementi-mrt-bicycle` | LTA Bicycle Rack | 1.315347, 103.764815 — sheltered, 10 racks, `Single` |
+| `ulupandan-pcn` | NParks Park Connector Loop | 1.318628, 103.770683 |
+| `clementi-woods` | NParks Parks and Nature Reserves | 1.301067, 103.767411 |
+| `clementiave2-rc-garden` | NParks Community in Bloom | 1.313711, 103.769796 |
+| `nushigh-garden` | NParks Community in Bloom | 1.306000, 103.769000 |
+
+**Exists, but the detail is unverified**
+
+| Entry | What is confirmed | What is not |
+|---|---|---|
+| `clementi-mall-ev` | **Exists** — Revolt.sg station map, checked by Henrison **10 Sept 2026**, https://revolt.sg/ev-charging/station-map-singapore | The tariff. "$0.55 per kWh" removed. ⚠️ **"4 bays, level 5" is still an invented count** |
+| `blk445-ev` | **Exists** — same source and date. Car park confirmed separately as HDB **C19M** | The tariff and the free-30-minutes claim, both removed. ⚠️ **"2 bays, ground level" is still invented**, and C19M is a *multi-storey* car park |
+| `blk443-bloobox` | A recycling bin at that block | That it is a **Bloobox** point — a separate NEA scheme no open dataset records. Collection days still unverified |
+| `cc-water` | The building — Clementi CC, 220 Clementi Ave 4, 1.318815, 103.768154 | The cooler, and the opening hours (still on the outstanding list) |
+
+⚠️ **Revolt.sg is an aggregator.** It is good enough for *existence*, which is what
+it is cited for. If the price is ever verified, **the citation must be the
+operator's own page**, not Revolt.
+
+**No public dataset exists for this facility type**
+
+| Type | Entries | Position |
+|---|---|---|
+| Water refill points | `clementi-mrt-water`, `cc-water` | Nothing public records water coolers. Unconfirmable either way |
+| Per-block rooftop solar | `blk330-solar`, `blk301-solar` | No SolarNova block list found. Both addresses are real; the panels are not evidenced |
+| Bloobox collection points | `blk443-bloobox` | Scheme is real, point-level locations are not published |
+| EV charging points (open data) | both EV entries | LTA DataMall needs a subscriber AccountKey. Closed here by Revolt.sg for existence only |
+
+**Still invented, and knowingly so:** `sunsetway-garden`. NParks CIB records a
+**Sunset Way Residents' Committee community garden**, not an allotment — a
+different scheme — so "rented plots" and the waiting list are unconfirmed. Left
+unchanged because the team has not ruled on it; it is on the outstanding list.
+
+### The Bucket C finding, for the report
+
+Of twelve location claims, **two could not be verified by any method available to
+us**: one a claim about recurring behaviour with no records kept by anyone, one
+subjective and needing instruments and repetition. **We softened both rather than
+assert them.** The value of the finding is not the two claims; it is that we can
+say which kind of claim our method could not reach, instead of leaving the reader
+to assume we checked everything equally.
+
 ---
 
 ## 9. Design parameters — decisions, not measurements
@@ -798,3 +1049,12 @@ that claims to be complete actually is.
 - Singapore Green Plan 2030, Our Targets — https://www.greenplan.gov.sg/targets/
 - Singlife, *Sustainable Future Index 2024* — https://singlife.com/content/dam/public/sg/documents/about-us/sustainability-strategy/singlife-sustainable-future-index-2024.pdf
 - Our own survey — `bio proj form (Responses).xlsx`, n=52, 21 Aug – 9 Sept 2026
+- NEA Recycling Bins — https://data.gov.sg/datasets/d_4dde14826642f49eefff48b7832b90db/view (pulled 10 Sept 2026)
+- NEA E-waste Recycling (GEOJSON) — https://data.gov.sg/datasets/d_db40d004afeb5a7f0f555fdcc34934cc/view (pulled 10 Sept 2026)
+- NParks Community in Bloom — https://data.gov.sg/datasets/d_f91a8b057cfb2bebf2e531ad8061e1c1/view (pulled 10 Sept 2026)
+- NParks Park Connector Loop — https://data.gov.sg/datasets/d_a69ef89737379f231d2ae93fd1c5707f/view (pulled 10 Sept 2026)
+- NParks Parks and Nature Reserves — https://data.gov.sg/datasets/d_77d7ec97be83d44f61b85454f844382f/view (pulled 10 Sept 2026)
+- LTA Bicycle Rack (GEOJSON) — https://data.gov.sg/datasets/d_937424cca6d1617288a82a7aeb89f76d/view (pulled 10 Sept 2026)
+- HDB Carpark Information — https://data.gov.sg/dataset/hdb-carpark-information (queried 10 Sept 2026)
+- OneMap address search — https://www.onemap.gov.sg/ (Blk 442 Clementi Ave 3 geocoded 10 Sept 2026)
+- Revolt.sg EV station map — https://revolt.sg/ev-charging/station-map-singapore (checked by Henrison 10 Sept 2026; **aggregator — existence only, not price**)
