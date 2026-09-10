@@ -13,10 +13,21 @@
 //   2. EXISTS, DETAIL UNVERIFIED — both EV points. Confirmed to exist via
 //      Revolt.sg (an aggregator), so no tariff is shown. The bay counts are
 //      still ours and are flagged in §8.
-//   3. STILL UNEVIDENCED — both water coolers and both rooftop-solar entries.
-//      No public dataset records water refill points or per-block solar, so
-//      nobody can confirm or refute these. The addresses are real; the
-//      facilities are our assumption.
+//   3. ILLUSTRATIVE — both water coolers and both rooftop-solar entries. These
+//      are MOCK DATA and the team has decided to leave them that way. Not an
+//      oversight and not a to-do: no public dataset records water refill points
+//      or per-block rooftop solar, so these cannot be confirmed OR refuted at
+//      any amount of effort. Chasing them would cost the deadline and end where
+//      it started. The addresses are real; the facilities are our assumption.
+//      Do not cite them in the report as findings, and do not put them on a
+//      verification list — there is nothing to verify against.
+//
+//      For future development, the better fix is not more research but a
+//      different facility type: REVERSE VENDING MACHINES for drink containers
+//      are a real scheme with real, findable, published locations, so they
+//      would carry the same "where is my nearest one" idea on evidence instead
+//      of assumption. Water coolers and per-block solar are the wrong things to
+//      map, not badly researched ones.
 //
 // ⚠️ THIS IS THE NEAREST FEW, NOT ALL OF THEM. There are 15 recycling bins
 // within 200 m of Blk 442 alone. The dashboard's "nearest first" list is

@@ -1188,3 +1188,28 @@ appends a one-line summary of each task it completes.
   charger offers only EV problems, Something else opens the box and disables Send
   until it has text, and tapping a bin afterwards shows bin problems with nothing
   carried over.
+- 2026-09-10 (water refill and solar closed as illustrative) — The team decided
+  not to chase the two facility types that no public dataset covers. Water refill
+  points and per-block rooftop solar are now labelled ILLUSTRATIVE in the
+  facilities.js header and excluded from the verification worksheet, with the
+  reasoning recorded rather than left implicit: unlike a tariff or an opening
+  time, these cannot be confirmed OR refuted at any amount of effort, because
+  there is no source that would settle them either way, so putting them on a
+  verification list would be putting an unanswerable question on a deadline. The
+  header now says plainly that this is a decision and not a to-do. Recorded
+  alongside it for future development is the more useful observation, which is
+  that the fix is a different facility type rather than more research: reverse
+  vending machines for drink containers are a real scheme with real published
+  findable locations, they carry exactly the same where-is-my-nearest-one idea
+  the water cooler was standing in for, and they connect to the recycling
+  behaviour the app exists to make convenient. The generalisable lesson, worth a
+  line in the report, is that water coolers and per-block solar were the wrong
+  things to map rather than badly researched ones, and that when a prototype
+  needs a data layer, choosing a category somebody actually publishes is a design
+  decision rather than a research shortcut. Also confirmed while checking: the
+  rebuild had already cleared the three detail strings that were previously on the
+  outstanding list, since Blk 443's collection days and the CC's opening hours
+  were rewritten and the Sunset Way entry no longer exists. A verification
+  worksheet covering the eight estimated walk times, the dataset-confirmed
+  facilities worth spot-checking and the Bloobox framing question was produced in
+  the chat at the team's request rather than as a file.

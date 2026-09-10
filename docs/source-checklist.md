@@ -866,9 +866,24 @@ say, and the old list did not contain it.
 islandwide and is plainly partial. It was dropped for being unevidenced, not
 disproven, and could be restored if someone looks.
 
-**Two types still have no dataset behind them at all** — `waterRefill` and
-`solar`. Four entries, all with real addresses and assumed facilities. They are
-the honest remainder and are labelled as such in the file header.
+**Two types are now labelled ILLUSTRATIVE and closed** — `waterRefill` and
+`solar`, four entries. ✅ **Decided 10 Sept: do not chase these.** No public
+dataset records water refill points or per-block rooftop solar, so they cannot be
+confirmed *or refuted* at any amount of effort — unlike a tariff or an opening
+time, there is no source that would settle them. Putting them on a verification
+list would be putting an unanswerable question on a deadline. They stay as mock
+data, labelled in the `facilities.js` header, excluded from the worksheet, and
+not cited as findings.
+
+**For future development, the fix is a different facility type, not more
+research.** **Reverse vending machines** for drink containers are a real scheme
+with real, published, findable locations. They carry exactly the same "where is
+my nearest one" idea the water cooler was standing in for, but on evidence rather
+than assumption — and they connect to the recycling behaviour the app is trying
+to make convenient. The lesson generalises and is worth a line in the report:
+**water coolers and per-block solar were the wrong things to map, not badly
+researched ones.** When a prototype needs a data layer, choosing a category that
+somebody publishes is a design decision, not a research shortcut.
 
 **Bloobox note:** no point-level Bloobox dataset exists. The Blk 443 entry is a
 dataset-confirmed *recycling bin*, described as where a Bloobox gets emptied.
