@@ -609,26 +609,70 @@ different allocation. A CIB hit near Sunset Way does not confirm an allotment.
 | Blk 726 "void deck bin" | Any of **Blk 705–731 Clementi West St 2** | All are in the bin dataset; 726 is not, and is a hawker centre |
 | — | **NUS High School CIB garden** (1.306, 103.769) | A real registered garden we currently do not show at all |
 
-#### ⚠️ The walk times are worse than §8 assumed
+#### Walk times: guessed, then computed, then measured
 
-The team's standing decision is no action on `walkMinutes`, and this does not
-overturn it — but the dataset check has made them checkable, and several are wrong
-by a wide margin. At a normal 80 m/min pace:
+Three generations of this number, and the sequence is worth a line in the report
+because each step was cheap and each one moved the answer.
 
-| Facility | Ours | Real distance | ~Real minutes |
+1. **Guessed** (Aug) — plausible figures typed by hand.
+2. **Computed** (10 Sept) — straight-line metres from real coordinates at
+   80 m/min, once the dataset check gave us coordinates to compute from.
+3. **Measured** (10 Sept) — routed walking times read off Google Maps from Blk 442
+   by a team member. **This is what the app now shows.**
+
+⚠️ **The computed step understated every single entry.** All sixteen measured
+times came out equal to or longer than the straight-line estimate, because a real
+walk bends around blocks and waits at crossings. The average was roughly double.
+That is a systematic bias, not scatter — worth saying, because it means the
+arithmetic was not merely imprecise, it was wrong in a predictable direction.
+
+| Facility | Guessed | Computed | **Measured** |
 |---|---|---|---|
-| `clementi-mall-ev` | 8 | 103 m | **1.3** |
-| `clementi-mrt-bicycle` | 7 | 140 m | **1.8** |
-| `clementi-mrt-water` | 7 | 140 m | **1.8** |
-| `ulupandan-pcn` | 4 | 849 m | **10.6** |
-| `clementi-woods` | 12 | 1,487 m | **18.6** |
-| `blk352-garden` | 5 | 760 m | **9.5** |
+| `blk441a-recycling` | 2 | 1 | **2** |
+| `blk443-bloobox` | 3 | 1 | **3** |
+| `clementi-mall-ev` | 8 | 1 | **2** |
+| `clementi-mrt-water` | 7 | 2 | **2** |
+| `clementiave2-rc-garden` | 5 | 7 | **13** |
+| `blk330-solar` | 6 | 5 | **9** |
+| `blk301-solar` | 9 | 11 | **17** |
+| `nushigh-bicycle` | 11 | 14 | **19** |
+| `nushigh-garden` | — | 13 | **19** |
+| `clementi-mrt-bicycle` | 7 | 2 | **3** |
+| `ulupandan-pcn` | 4 | 11 | **18** |
+| `clementi-woods` | 12 | 19 | **27** |
+| `blk706-recycling` | 14 | 11 | **25** |
+| `cc-water` | 6 | 13 | **13** |
+| `sunsetway-garden` | 16 | 14 | **23** |
+| `blk445-ev` | 4 | 1 | **7** |
 
-Six of fifteen are out by more than 2.5 minutes, in **both** directions. The
-nearest facilities are shown as far and two of the farthest as near. Now that real
-coordinates exist, recomputing every `walkMinutes` from them is arithmetic rather
-than invention, and it would make the ordered "nearest first" list on the
-dashboard actually correct — it currently is not.
+**Source:** Google Maps walking directions from Blk 442 Clementi Ave 3, read by
+Henrison, **10 Sept 2026**. One reading of one route each, so the screen keeps
+saying "about".
+
+⚠️ **One entry to re-check: `blk445-ev`.** Blk 445 is 109 m away in a straight
+line but measured 7 minutes on foot — a five-fold detour, far larger than any
+other short-range entry (Blk 441A is 65 m and 2 min; Blk 443 is 73 m and 3 min).
+Maps may have routed to a car park entrance on the far side. Plausible, but it is
+the one number here that does not sit with its neighbours.
+
+#### The other modes, recorded but not shown
+
+Two facility types are not reached on foot in practice, and the measured times
+for the real mode were collected alongside the walking ones:
+
+| Facility | Walk (shown) | Real mode |
+|---|---|---|
+| `clementi-mall-ev` | 2 min | **4 min drive** |
+| `blk445-ev` | 7 min | **1 min drive** |
+| `nushigh-bicycle` | 19 min | **6 min cycle** |
+| `clementi-mrt-bicycle` | 3 min | **1 min cycle** |
+
+The cards still show walking, because the field is `walkMinutes` and the screen
+says "walk" — putting a driving time behind a label that says walk would be the
+copy/data mismatch this document keeps catching. **But the observation is real:
+nobody walks to an EV charger.** Whether to show a per-type travel mode is an open
+design question, not a bug, and it is recorded here rather than acted on because
+the build phase is closed.
 
 ---
 
@@ -667,9 +711,10 @@ the Bucket C finding — lives in this document.
 
 ### Edits applied to `facilities.js`, 10 Sept 2026
 
-The comparison above was acted on. Every `walkMinutes` is now **computed**, not
-guessed: straight-line metres from Blk 442 (1.314123, 103.764519) at 80 m/min,
-rounded, floor of 1. It is still not a routed walk, so the screen keeps "about".
+The comparison above was acted on. Every `walkMinutes` was then **measured** on
+Google Maps from Blk 442 and replaced again — see the three-generation table
+above. The minute figures in the table below are the intermediate *computed*
+values, kept to show what each edit did at the time.
 
 | Entry | Change |
 |---|---|

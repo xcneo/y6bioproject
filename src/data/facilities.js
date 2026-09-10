@@ -26,10 +26,17 @@
 // every facility below, and do not quote a `detail` line as a finding unless
 // §8 says it is confirmed.
 //
-// walkMinutes is now COMPUTED, not guessed: straight-line metres from Blk 442
-// Clementi Ave 3 (1.314123, 103.764519, from OneMap) at 80 m/min, rounded, with
-// a floor of 1. It is still not a walking route — real paths bend around blocks
-// — so the screen keeps saying "about".
+// walkMinutes is MEASURED. Real routed walking times from Blk 442 Clementi Ave 3,
+// read off Google Maps by a team member on 10 Sept 2026. They replace an earlier
+// straight-line calculation at 80 m/min, which understated every single entry
+// because a real walk bends around blocks and waits at crossings. The screen
+// still says "about", since one reading of one route is not a guarantee.
+//
+// Two facility types are not reached on foot in practice, and their measured
+// times for the real mode are recorded in §8 rather than here: the EV points are
+// driven to (4 min and 1 min) and the bicycle parking is cycled to (6 min and
+// 1 min). The cards still show the walking figure, because the field is called
+// walkMinutes and the screen says "walk". Read §8 before changing that.
 //
 // Three `detail` lines still carry an invented specific and are on §8's
 // outstanding list: Blk 443's collection days, the CC's opening hours, and the
@@ -46,7 +53,7 @@ export const FACILITIES = [
     name: 'Blue recycling bin',
     address: 'Blk 441A Clementi Ave 3',
     detail: 'Shared bin at the void deck. Paper, plastic, metal, glass.',
-    walkMinutes: 1,
+    walkMinutes: 2,
     x: 23,
     y: 30,
   },
@@ -56,7 +63,7 @@ export const FACILITIES = [
     name: 'Bloobox collection point',
     address: 'Blk 443 Clementi Ave 3',
     detail: 'Drop off your Bloobox here. Emptied every Tuesday and Friday.',
-    walkMinutes: 1,
+    walkMinutes: 3,
     x: 38,
     y: 27,
   },
@@ -66,7 +73,7 @@ export const FACILITIES = [
     name: 'EV charging bays',
     address: 'Clementi Mall car park, 3155 Commonwealth Ave West',
     detail: '4 bays, level 5. Paid charging.',
-    walkMinutes: 1,
+    walkMinutes: 2,
     x: 62,
     y: 55,
   },
@@ -86,7 +93,7 @@ export const FACILITIES = [
     name: 'Clementi Ave 2 RC Garden',
     address: 'Clementi Avenue 2',
     detail: 'Registered Community in Bloom garden.',
-    walkMinutes: 7,
+    walkMinutes: 13,
     x: 20,
     y: 52,
   },
@@ -96,7 +103,7 @@ export const FACILITIES = [
     name: 'Rooftop solar panels',
     address: 'Blk 330 Clementi Ave 2',
     detail: "Feeds the block's common services.",
-    walkMinutes: 5,
+    walkMinutes: 9,
     x: 44,
     y: 15,
   },
@@ -106,7 +113,7 @@ export const FACILITIES = [
     name: 'Rooftop solar panels',
     address: 'Blk 301 Clementi Ave 4',
     detail: 'Rooftop panels, like Blk 330.',
-    walkMinutes: 11,
+    walkMinutes: 17,
     x: 33,
     y: 10,
   },
@@ -116,7 +123,7 @@ export const FACILITIES = [
     name: 'Bicycle parking',
     address: 'NUS High School, 20 Clementi Ave 1',
     detail: 'Sheltered racks near the school gate.',
-    walkMinutes: 14,
+    walkMinutes: 19,
     x: 74,
     y: 33,
   },
@@ -126,7 +133,7 @@ export const FACILITIES = [
     name: 'NUS High School community garden',
     address: 'NUS High School, 20 Clementi Ave 1',
     detail: 'Registered Community in Bloom garden.',
-    walkMinutes: 13,
+    walkMinutes: 19,
     x: 78,
     y: 29,
   },
@@ -136,7 +143,7 @@ export const FACILITIES = [
     name: 'Bicycle parking',
     address: 'Clementi MRT bicycle hub',
     detail: 'Sheltered single-tier racks. Busiest at commuting times.',
-    walkMinutes: 2,
+    walkMinutes: 3,
     x: 52,
     y: 66,
   },
@@ -146,7 +153,7 @@ export const FACILITIES = [
     name: 'Ulu Pandan Park Connector',
     address: 'Along Sungei Ulu Pandan',
     detail: 'On the Southern Ridges and Western Adventure Loops.',
-    walkMinutes: 11,
+    walkMinutes: 18,
     x: 15,
     y: 74,
   },
@@ -156,7 +163,7 @@ export const FACILITIES = [
     name: 'Clementi Woods Park',
     address: 'Off West Coast Road',
     detail: 'Mature trees, shade at midday. Benches and a playground.',
-    walkMinutes: 19,
+    walkMinutes: 27,
     x: 80,
     y: 76,
   },
@@ -166,7 +173,7 @@ export const FACILITIES = [
     name: 'Blue recycling bin',
     address: 'Blk 706 Clementi West St 2',
     detail: 'Void deck bin. Frequently reported full on Sunday evenings.',
-    walkMinutes: 11,
+    walkMinutes: 25,
     x: 24,
     y: 88,
   },
@@ -176,7 +183,7 @@ export const FACILITIES = [
     name: 'Water cooler',
     address: 'Clementi Community Centre, 220 Clementi Ave 4',
     detail: 'Inside the lobby. Open 9am to 9.30pm.',
-    walkMinutes: 8,
+    walkMinutes: 13,
     x: 47,
     y: 41,
   },
@@ -186,7 +193,7 @@ export const FACILITIES = [
     name: 'Sunset Way allotment',
     address: 'Sunset Way, near Clementi Arcade',
     detail: 'Rented plots. Waiting list is usually a few months.',
-    walkMinutes: 14,
+    walkMinutes: 23,
     x: 88,
     y: 20,
   },
@@ -196,7 +203,7 @@ export const FACILITIES = [
     name: 'EV charging point',
     address: 'Blk 445 Clementi Ave 3 car park',
     detail: '2 bays, ground level.',
-    walkMinutes: 1,
+    walkMinutes: 7,
     x: 37,
     y: 49,
   },

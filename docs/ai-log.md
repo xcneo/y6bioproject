@@ -1051,3 +1051,32 @@ appends a one-line summary of each task it completes.
   Blk 443's collection days, the CC's opening hours, and the Sunset Way waiting
   list, which is additionally suspect because the CIB dataset shows a community
   garden there and an allotment is a different NParks scheme.
+- 2026-09-10 (walk times measured and replaced) — Henrison measured all sixteen
+  walking times from Blk 442 on Google Maps and they are now in facilities.js,
+  replacing the straight-line figures computed earlier the same day. The headline
+  finding is that the computed step understated every single entry: all sixteen
+  measured times came out equal to or longer than the straight-line estimate, and
+  the average was roughly double. That is a systematic bias rather than scatter,
+  which is the useful thing to say about it — the arithmetic was not merely
+  imprecise, it was wrong in a predictable direction, because a real walk bends
+  around blocks and waits at crossings while a straight line does neither. The
+  worst case was Blk 706 in Clementi West, computed at 11 minutes and measured at
+  25, which fits the fact that getting there means crossing a major road. The
+  number now has three generations on the record — guessed in August, computed
+  from dataset coordinates on 10 Sept, measured on 10 Sept — and the checklist
+  keeps all three in one table, since the sequence shows each step was cheap and
+  each one moved the answer. One entry is flagged for re-checking rather than
+  accepted: Blk 445 is 109 metres away in a straight line but measured 7 minutes
+  on foot, a fivefold detour that sits oddly beside Blk 441A at 65 metres and 2
+  minutes and Blk 443 at 73 metres and 3 minutes, so Maps may have routed to a car
+  park entrance on the far side. Something else surfaced from the measurements
+  that nobody had asked for: the team supplied driving times for the two EV points
+  and cycling times for the two bicycle parks, which is a real observation, since
+  nobody walks to an EV charger. Those are recorded in §8 but not shown, because
+  the field is called walkMinutes and the screen says "walk", and putting a
+  driving time behind a label that says walk would be exactly the copy/data
+  mismatch this project keeps catching. Whether to show a per-type travel mode is
+  written up as an open design question rather than acted on, since the build
+  phase is closed. The facilities.js header was rewritten again for the same
+  reason as this morning: it described walkMinutes as computed at 80 m/min, which
+  had stopped being true the moment the measured values landed.
