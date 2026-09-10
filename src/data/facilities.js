@@ -9,7 +9,8 @@
 //      agency that runs it. All recycling and e-waste points (NEA), all
 //      community gardens (NParks Community in Bloom), both bicycle racks (LTA),
 //      the park connector and Clementi Woods Park (NParks). Coordinates and
-//      dataset ids are in §8 of docs/source-checklist.md.
+//      dataset ids are in §8 of docs/source-checklist.md. Blk 442 and Blk 449
+//      were opened in the raw file and read by Henrison on 10 Sept.
 //   2. EXISTS, DETAIL UNVERIFIED — both EV points. Confirmed to exist via
 //      Revolt.sg (an aggregator), so no tariff is shown. The bay counts are
 //      still ours and are flagged in §8.
@@ -35,14 +36,26 @@
 // so. What changed on 10 Sept is that the list is now drawn from the real
 // nearest rather than from wherever we happened to put a pin.
 //
-// walkMinutes has two provenances and §8 records which is which:
+// ⚠️ THE DATASETS ARE OLDER THAN THEIR DOWNLOAD PAGES SAY. Every one of the
+// 12,578 records in NEA's recycling-bin file carries FMEL_UPD_D = 2 June 2017,
+// while the data.gov.sg page reports a 2024 refresh. The page date is when the
+// file was republished, NOT when anyone last looked at a bin. Check the
+// per-record date, not the portal's, and say 2017 in the report. The same
+// question applies to every other dataset here — LTA's rack file stamps 2019.
+//
+// walkMinutes has three provenances and §8 records which is which:
 //   MEASURED on Google Maps from Blk 442 (1.314123, 103.764519), routing to the
-//   dataset coordinate — blk441a-recycling, blk443-bloobox, clementimall-ewaste,
-//   clementi-mall-ev, blk445-ev, clementi-mrt-water, clementi-mrt-bicycle,
-//   blk330-solar, blk301-solar, nushigh-garden, ulupandan-pcn, clementi-woods,
-//   cc-water and cc-ewaste.
+//   dataset coordinate — clementimall-ewaste, clementi-mall-ev, blk445-ev,
+//   clementi-mrt-water, clementi-mrt-bicycle, blk330-solar, blk301-solar,
+//   nushigh-garden, ulupandan-pcn, clementi-woods, cc-water and cc-ewaste.
+//   CORRECTED BY LOCAL KNOWLEDGE — the five recycling bins. ⚠️ Google Maps will
+//   not route through an HDB void deck, so it walks you the long way round the
+//   block and overstates short hops inside an estate: it gives 4 minutes for a
+//   bin 65 m away. A resident who walks it knows better. Henrison set these on
+//   10 Sept. This is the one place where local knowledge beats the tool, and it
+//   is worth a line in the report.
 //   ESTIMATED for the rest, at straight-line metres ÷ 40 — a rate calibrated
-//   from those measured readings, not a guess at walking speed. Estimated
+//   from the measured readings, not a guess at walking speed. Estimated
 //   entries are on §8's outstanding list to be measured.
 //
 // x and y are percentage positions on the stylised map (0-100, left and top).
@@ -51,23 +64,42 @@
 
 export const FACILITIES = [
   // ---- Recycling bins (NEA Recycling Bins dataset) ----
+  // These five ARE the five nearest bins in the dataset, checked 10 Sept: 442 at
+  // 0 m, 441B at 64, 441A at 65, 449 at 65, 443 at 73. The next is 105 m away.
+  //
+  // A Bloobox is the box NEA gives a household to collect recyclables in at
+  // home; you empty it into a blue bin. So there is no such thing as a separate
+  // "Bloobox point" to walk to — it is these bins. The Bloobox facility type was
+  // removed on 10 Sept for that reason and the fact moved into the card text,
+  // which answers the resident's actual question. The Bloobox sign-up booth in
+  // events.js is a different thing and stays: that is where you collect the box.
   {
     id: 'blk442-recycling',
     type: 'recycling',
     name: 'Blue recycling bin',
     address: 'Blk 442 Clementi Ave 3',
-    detail: 'At your own block. Paper, plastic, metal, glass.',
+    detail: 'At your own block. Paper, plastic, metal, glass. Bloobox contents go here.',
     walkMinutes: 1,
     x: 30,
     y: 34,
+  },
+  {
+    id: 'blk441b-recycling',
+    type: 'recycling',
+    name: 'Blue recycling bin',
+    address: 'Blk 441B Clementi Ave 3',
+    detail: 'Void deck bin. Paper, plastic, metal, glass. Bloobox contents go here.',
+    walkMinutes: 3,
+    x: 19,
+    y: 26,
   },
   {
     id: 'blk441a-recycling',
     type: 'recycling',
     name: 'Blue recycling bin',
     address: 'Blk 441A Clementi Ave 3',
-    detail: 'Void deck bin. Paper, plastic, metal, glass.',
-    walkMinutes: 4,
+    detail: 'Void deck bin. Paper, plastic, metal, glass. Bloobox contents go here.',
+    walkMinutes: 3,
     x: 23,
     y: 30,
   },
@@ -76,19 +108,17 @@ export const FACILITIES = [
     type: 'recycling',
     name: 'Blue recycling bin',
     address: 'Blk 449 Clementi Ave 3',
-    detail: 'Void deck bin. Paper, plastic, metal, glass.',
-    walkMinutes: 2,
+    detail: 'Void deck bin. Paper, plastic, metal, glass. Bloobox contents go here.',
+    walkMinutes: 3,
     x: 34,
     y: 44,
   },
-
-  // ---- Bloobox (the blue bin is where a Bloobox gets emptied) ----
   {
-    id: 'blk443-bloobox',
-    type: 'bloobox',
-    name: 'Bloobox drop-off',
+    id: 'blk443-recycling',
+    type: 'recycling',
+    name: 'Blue recycling bin',
     address: 'Blk 443 Clementi Ave 3',
-    detail: 'Empty your Bloobox into the blue bin here.',
+    detail: 'Void deck bin. Paper, plastic, metal, glass. Bloobox contents go here.',
     walkMinutes: 1,
     x: 38,
     y: 27,

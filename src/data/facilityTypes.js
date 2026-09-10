@@ -1,4 +1,11 @@
-// The ten kinds of green infrastructure shown on the dashboard map.
+// The nine kinds of green infrastructure shown on the dashboard map.
+//
+// There was a tenth, `bloobox`, removed on 10 Sept 2026. A Bloobox is the box a
+// household collects recyclables in at home and then empties into a blue bin, so
+// it has no location of its own — a "Bloobox point" IS a recycling bin. Keeping
+// a separate pin implied a second place to walk to that does not exist. The fact
+// now lives in the recycling cards' text, where it answers the question the
+// resident actually has.
 //
 // Note on the Tailwind class names below: they are written out in full on purpose.
 // Tailwind scans this file for complete class names, so building them by joining
@@ -25,17 +32,6 @@ export const FACILITY_TYPES = {
       'Bin is damaged',
       'Wrong things dumped here',
       'Bin has gone missing',
-    ],
-  },
-  bloobox: {
-    label: 'Bloobox',
-    icon: '📦',
-    pin: 'bg-sky-500',
-    chipOn: 'bg-sky-600 text-white border-sky-600',
-    problems: [
-      'Bin is overflowing',
-      'Bin is damaged',
-      'Wrong things dumped here',
     ],
   },
   ewaste: {

@@ -24,7 +24,7 @@ cannot be wrong in the demo.
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
 | 7. Servings and assumptions | ✅ | ⬜ **not yet** |
-| 8. On-screen numbers outside `factors.js` | ✅ **rebuilt from datasets 10 Sept — 17 of 22 dataset-confirmed**; 4 unevidenced (water, solar), 1 aggregator-only | ⬜ **not yet** |
+| 8. On-screen numbers outside `factors.js` | ✅ **rebuilt 10 Sept — 19 of 23 dataset-confirmed**; 4 illustrative by decision (water, solar) | ⚠️ partly — **recycling + Bloobox verified by Henrison, 10 Sept**; rest ⬜ |
 | 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
 | 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
@@ -39,7 +39,8 @@ cannot be wrong in the demo.
 | 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
 | 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 | 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
-| 5 | **Measure the eight estimated walk times** on the rebuilt list, and confirm the Bloobox framing | §8 |
+| 5 | **Measure the remaining estimated walk times** — the five gardens and the second bicycle rack. Recycling is done | §8 |
+| 6 | **Check the record dates on the other datasets** — NEA's bins turned out to be 2017 data on a 2024 page; LTA's stamps 2019 | §8 |
 
 ---
 
@@ -901,6 +902,76 @@ nearest few of each type, not all of them: 15 recycling bins remain within 200 m
 and we show three. What changed is that the three are genuinely the nearest three,
 so the order is no longer arbitrary. The report should say "nearest few by type",
 not "all facilities nearby".
+
+### ✅ Verified by Henrison, 10 Sept 2026 — and two findings from doing it
+
+**Blk 442 and Blk 449 confirmed in the raw file.** Opened `RecyclingBins.geojson`
+directly: block 442, HDB-CLEMENTI, postcode 120442, Clementi Avenue 3, at
+103.764518 / 1.314122 — matching our entry exactly. Blk 449 likewise. ☑ ☑
+
+⚠️ **Finding 1: the dataset is seven years older than its download page says.**
+The record's `FMEL_UPD_D` reads **2 June 2017** while the data.gov.sg page reports
+a **June 2024** refresh. Checking the whole file afterwards: **all 12,578 records
+carry the same 2017 stamp.** So this is not "some records may be stale" — the
+entire file is 2017 data republished in 2024. **The portal date is when the file
+was posted, not when anyone last looked at a bin.**
+
+**This is the check-the-qualifier rule applied to a dataset instead of a number**,
+and it is the sixth time that habit has caught something. The report should cite
+these bins as **2017 data**, and the same question should be put to every other
+dataset used here — LTA's rack file stamps 2019.
+
+⚠️ **Finding 2: Google Maps will not route through an HDB void deck.** It walks
+you the long way round the block, which overstates every short hop inside an
+estate — it gave **4 minutes for a bin 65 m away**. Henrison corrected the five
+recycling bins from local knowledge: Blk 441A and Blk 449 to **3 min**, Blk 442
+and Blk 443 to **1 min**.
+
+**This is the one place in the project where local knowledge beats the tool**, and
+it partly explains the earlier Claude-vs-Henrison gap: routing to a dataset
+coordinate makes Maps take the long way round more often than searching an
+address does. Worth a line in the report — a measurement instrument has
+assumptions, and this one assumes you cannot walk through a building.
+
+### ✅ The Bloobox question is settled — and the type is gone
+
+**A Bloobox is the box NEA gives a household** to collect recyclables in at home.
+Every week or so the family carries it to the nearest blue bin and empties it.
+**So a "Bloobox point" is not a place — it is a recycling bin.**
+
+The app had a separate `bloobox` facility type with its own pin and filter chip,
+which implied a second, different place to walk to. **It has been removed**, and
+the fact now lives in the recycling cards: *"Bloobox contents go here."* That
+answers the question a resident actually has, which the separate pin did not.
+
+The **Bloobox sign-up booth** in `events.js` stays — that is a real, different
+thing: where you go to collect the box in the first place.
+
+**Worth writing up.** The brief lists "residents don't know where the nearest
+Bloobox point is" as a symptom of the inconvenience root cause. It turns out the
+honest answer is *"it's the blue bin downstairs"* — so the fix was better
+information, not another map layer. **A category error in the data model was
+hiding a question the app could already answer.**
+
+### The five recycling bins ARE the five nearest — checked
+
+Henrison asked whether three bins could really be the closest given how many sit
+on Clementi Ave 3. They could not, and the list was short one:
+
+| Distance | Block | Shown? |
+|---|---|---|
+| 0 m | **442** | ✅ |
+| 64 m | **441B** | ⚠️ **was missing — added 10 Sept** |
+| 65 m | **441A** | ✅ |
+| 65 m | **449** | ✅ |
+| 73 m | **443** | ✅ (was the Bloobox pin) |
+| 105 m | 441 Commonwealth Ave West | no — next nearest |
+
+**Blk 441B at 64 m was closer than two bins we were already showing.** The cause
+was a de-duplication step that collapsed 441A and 441B as if they were one block;
+they are two buildings with two bins. The five shown are now the five nearest, and
+the sixth is 105 m away — a clear gap, so the cut is defensible rather than
+arbitrary.
 
 ### Report-a-problem made type-specific
 

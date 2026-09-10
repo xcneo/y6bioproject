@@ -1213,3 +1213,41 @@ appends a one-line summary of each task it completes.
   worksheet covering the eight estimated walk times, the dataset-confirmed
   facilities worth spot-checking and the Bloobox framing question was produced in
   the chat at the team's request rather than as a file.
+- 2026-09-10 (recycling and Bloobox settled; two findings from the checking) —
+  Henrison opened NEA's RecyclingBins.geojson directly and confirmed Blk 442 and
+  Blk 449 against our entries, matching block, postcode, street and coordinates,
+  and both are ticked. The checking produced two things worth more than the ticks.
+  First, the record's FMEL_UPD_D field reads 2 June 2017 while the data.gov.sg
+  page reports a June 2024 refresh, and checking the whole file afterwards showed
+  all 12,578 records carry the same 2017 stamp, so this is not a few stale rows
+  but an entire 2017 dataset republished in 2024. The portal date is when the file
+  was posted rather than when anyone last looked at a bin, the report should cite
+  these as 2017 data, and the same question now applies to every other dataset we
+  used, with LTA's rack file stamping 2019. That is the check-the-qualifier rule
+  applied to a dataset instead of a number, and the sixth time the habit has
+  caught something. Second, Google Maps will not route through an HDB void deck,
+  so it walks the long way round the block and overstates short hops inside an
+  estate — it gave four minutes for a bin 65 metres away. Henrison corrected the
+  five bins from local knowledge, 441A and 449 to three minutes and 442 and 443 to
+  one, and this is the one place in the project where local knowledge beats the
+  tool. It also partly explains the earlier gap between Claude's readings and
+  Henrison's, since routing to a dataset coordinate makes Maps take the long way
+  round more often than searching an address does. The Bloobox question is settled
+  and the answer removed a facility type: a Bloobox is the box NEA gives a
+  household for collecting recyclables at home, which the family then empties into
+  the nearest blue bin, so a Bloobox point is not a place but a recycling bin. The
+  separate bloobox type with its own pin and filter chip implied a second
+  destination that does not exist, so it was removed and the fact moved into the
+  recycling card text, which answers the question a resident actually has. The
+  Bloobox sign-up booth in events.js stays, since collecting the box is a real and
+  different thing. Worth writing up because the brief lists not knowing where the
+  nearest Bloobox point is as a symptom of the inconvenience root cause, and the
+  honest answer turns out to be that it is the blue bin downstairs — the fix was
+  better information rather than another map layer, and a category error in the
+  data model was hiding a question the app could already answer. Finally Henrison
+  asked whether three bins could really be the nearest given how many sit on
+  Clementi Ave 3, and they were not: Blk 441B at 64 metres was closer than two
+  bins already shown, missed because a de-duplication step collapsed 441A and 441B
+  as one block when they are two buildings with two bins. It has been added, the
+  five shown are now genuinely the five nearest, and the sixth is 105 metres away,
+  so the cut is a clear gap rather than an arbitrary line.
