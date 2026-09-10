@@ -698,6 +698,25 @@ export const SERVING_KG = {
   //    and pricier product, which is a basis mismatch we have not closed.
   tofu: { value: 0.17, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
   eggs: { value: 0.15, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
+  // ⚠️ BREAD, 60 g = 2 slices. Added 10 Sept 2026 — §7 previously said bread had
+  //    no HPB serving, which was wrong: it has one, in the rice-and-alternatives
+  //    group rather than the meat group we had been reading.
+  //
+  //    THE QUALIFIER, stated rather than buried: HPB's line specifies
+  //    WHOLEMEAL bread, and our CO2, water and price figures are for plain
+  //    white. We take the 60 g mass and apply it to white on purpose. That is
+  //    defensible for two of the three columns and a stated assumption for the
+  //    third: Poore & Nemecek give a generic "Bread" and Mekonnen & Hoekstra a
+  //    generic "Wheat bread", so neither distinguishes white from wholemeal at
+  //    all — only the PRICE is white-specific, and wholemeal costs more, so the
+  //    money saving is the one figure this could understate.
+  //
+  //    Re-sourcing everything to wholemeal was the alternative and was rejected
+  //    as disproportionate: it would move one column, not three.
+  //
+  //    ⬜ Nothing on screen uses this yet — no habit card swaps bread. It is
+  //    here so the serving table is correct and a bread swap is possible later.
+  bread: { value: 0.06, unit: 'kg in one HPB serving (2 slices)', source: `${HPB_SERVING_GUIDE} HPB's line is "2 slices of wholemeal bread (60g)". We apply the 60 g mass to white bread, which is what FOOD_CO2, FOOD_WATER and FOOD_PRICE_SGD are based on — see the note above for why that is a stated assumption rather than a hidden one.` },
   // 500 ml of milk, taken as 0.5 kg.
   milk: { value: 0.5, unit: 'kg in one HPB serving', source: HPB_SERVING_GUIDE },
   // NO CHEESE ENTRY. A "2 slices of low-fat cheese (40g)" line was here until

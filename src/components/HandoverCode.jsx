@@ -8,15 +8,17 @@ import { useState } from 'react'
 //
 // In a real app the two halves are on two different phones. Here they are two
 // points of view on one device, reached with the demo switcher at the top of
-// the screen — so when both sides are real residents, the code really does have
-// to travel from one screen to the other.
+// the screen — so the code really does have to travel from one screen to the
+// other.
 //
-// Where the other side is only a name in the mock data there is no screen to
-// read it off, so pass showHint and the expected code is printed underneath in
-// grey, labelled as a demo crutch. Better to show the seam than to hide it and
-// have someone assume the demo proves more than it does.
+// ⚠️ There used to be a `showHint` prop that printed the expected code in grey
+// when the other side was only a name in the mock data. It was removed on
+// 10 Sept 2026 because it was a genuine hole, not just a crutch: whoever was
+// being paid could read the code off their own screen and confirm a handover
+// that never happened, with nobody else involved. Every exchange that pays
+// points now needs two real residents and the demo switcher. Do not add it back.
 
-export function EnterHandoverCode({ expected, prompt, reward, note, showHint, onConfirm }) {
+export function EnterHandoverCode({ expected, prompt, reward, note, onConfirm }) {
   const [entered, setEntered] = useState('')
   const [wrong, setWrong] = useState(false)
 
@@ -76,24 +78,17 @@ export function EnterHandoverCode({ expected, prompt, reward, note, showHint, on
           {note}
         </p>
       )}
-
-      {/* Only needed when the other side is a name in the mock data. Once a
-          real person on the other phone is holding the code, go and look. */}
-      {showHint && (
-        <p className="mt-1 text-center text-[11px] text-stone-400">
-          Demo only: their code is {expected}. In the real app it is on their
-          phone, not yours.
-        </p>
-      )}
     </div>
   )
 }
 
-export function ShowHandoverCode({ code, owner }) {
+// `prompt` lets the repair case say something true — there the poster reads the
+// code out to whoever fixed the thing, rather than to whoever they collect from.
+export function ShowHandoverCode({ code, owner, prompt }) {
   return (
     <div className="mt-3 rounded-xl bg-stone-100 p-3 text-center">
       <p className="text-xs font-semibold text-stone-800">
-        Read this out to {owner} when you collect
+        {prompt ?? `Read this out to ${owner} when you collect`}
       </p>
       <p className="mt-2 text-2xl font-bold tracking-[0.4em] text-stone-900">{code}</p>
       <p className="mt-1 text-xs text-stone-500">

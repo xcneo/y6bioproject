@@ -51,7 +51,6 @@ export default function ShelfCard({
   const claimedByOther = claim?.step === 'requested' && claim.by !== viewerId
 
   const requestCount = (item.requests ?? 0) + (claimedByOther ? 1 : 0)
-  const expectedCode = claimedByOther ? claim.code : item.handoverCode
   // Recipes are for whoever is standing in front of the fridge. A neighbour
   // scrolling past someone else's expired carrots cannot cook them.
   const recipes = expired && !done && isOwner ? recipesFor(item.tags) : []
@@ -95,31 +94,33 @@ export default function ShelfCard({
         </div>
       )}
 
-      {/* ---- Your own food: whoever takes it reads you their code ---- */}
-      {isOwner &&
-        !done &&
-        !expired &&
-        (requestCount > 0 ? (
+      {/* ---- Your own food: whoever takes it reads you their code ----
+           The code box appears ONLY once a real neighbour has claimed it, so the
+           code always comes from someone else's screen. Seeded requests are not
+           enough: they are names in the mock data with no phone to read from,
+           and letting them unlock the box was how you could pay yourself. */}
+      {isOwner && !done && !expired && (
+        claimedByOther ? (
           <>
-            {claimedByOther && (
-              <p className="mt-3 text-sm text-stone-600">
-                {PEOPLE[claim.by].name} is collecting it
-              </p>
-            )}
+            <p className="mt-3 text-sm text-stone-600">
+              {PEOPLE[claim.by].name} is collecting it
+            </p>
             <EnterHandoverCode
-              expected={expectedCode}
+              expected={claim.code}
               prompt="When they take it, ask them to read out their code."
               reward={effectivePoints}
               note={taperNote}
-              showHint={!claimedByOther}
               onConfirm={() => onCollected(item, viewerId)}
             />
           </>
         ) : (
           <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
-            Nobody has claimed this yet.
+            {requestCount > 0
+              ? `${requestCount} neighbour${requestCount === 1 ? '' : 's'} asked. Switch phones and claim it to do the handover.`
+              : 'Nobody has claimed this yet.'}
           </p>
-        ))}
+        )
+      )}
 
       {!isOwner && expired && (
         <p className="mt-3 rounded-xl bg-stone-100 px-3 py-2 text-center text-xs text-stone-500">

@@ -17,32 +17,31 @@ cannot be wrong in the demo.
 |---|---|---|
 | 1. Food CO₂ — `FOOD_CO2` | ✅ | ✅ **team, 7 Sept** |
 | 2. Food water — `FOOD_WATER` | ✅ | ✅ **team, 7 Sept** |
-| 3. Food prices — `FOOD_PRICE_SGD` | ✅ | ✅ **team, 7 Sept** — except `tofu`, re-sourced 9 Sept |
+| 3. Food prices — `FOOD_PRICE_SGD` | ✅ | ✅ **team, 7 Sept**; `tofu` re-sourced 9 Sept and **verified by Henrison, 10 Sept** |
 | 4. Manufacturing CO₂ | ✅ | ✅ **Henrison, 9 Sept** |
 | 4b. Drill price and mass | ✅ | ✅ **Henrison, 9 Sept** |
 | 4d. Drill water | ✅ | ✅ **Henrison, 9 Sept** |
 | 5. Singapore national figures | ✅ | ✅ **Henrison, 9 Sept** |
 | 6. Green Plan targets | ✅ | ✅ **Henrison, 9 Sept** |
-| 7. Servings and assumptions | ✅ | ⬜ **not yet** |
+| 7. Servings and assumptions | ✅ | ✅ **Henrison, 10 Sept** — bread serving added |
 | 8. On-screen numbers outside `factors.js` | ✅ **rebuilt 10 Sept — 21 of 25 dataset-confirmed**; 4 illustrative by decision | ✅ **Henrison, 10 Sept** — every non-illustrative entry and travel time |
 | 9. Design parameters | n/a — our choices | ✅ **Henrison, 9 Sept** |
 | 10. Mock scenario data | n/a — invented | ✅ **Henrison, 9 Sept** |
 | 11. Value–action gap in the brief | ✅ | ✅ **Henrison, 9 Sept** |
 | 11b. Our own survey | ✅ our own data | ⬜ **not yet** |
-| 12. Anti-misuse limits | n/a — our decisions | ✅ **Henrison, 9 Sept** — arithmetic by hand, code claims by test |
+| 12. Anti-misuse limits | n/a — our decisions | ✅ **Henrison, 9–10 Sept** — verified, and both decisions taken |
 
 ### Outstanding
 
 | # | Item | Section |
 |---|---|---|
-| 1 | **Confirm the serving figures, the bread loaf and the tofu price** — 5 lookups, ~15 min. The last unsourced figures on screen | §7, §3 |
-| 2 | Confirm the survey figures against the responses spreadsheet | §11b |
-| 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
-| 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
-| 5 | *Optional:* record dates on the three NParks datasets. Bins (2017), e-waste (2021–22) and LTA racks (2019) are done | §8 |
+| 1 | Confirm the survey figures against the responses spreadsheet | §11b |
+| 2 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
+| 3 | *Optional:* record dates on the three NParks datasets. Bins (2017), e-waste (2021–22) and LTA racks (2019) are done | §8 |
 
-**§8 is closed.** Every facility, every travel time, and every open question in it
-was settled on 10 Sept.
+**§8 and §12 are closed.** Every facility, travel time and anti-misuse question
+was settled on 10 Sept. **§7 and §3 are closed too** — the last unsourced figures
+on screen are now verified. What remains is the survey check and the write-up.
 
 ---
 
@@ -159,7 +158,7 @@ comparable basis. Both meats are plain raw boneless meat sold for cooking.
 |---|---|---|---|
 | ☑ | `beef` | 17.80 | Tasty Food Affair Beef Shin Shank Cube, 500g @ $8.90 |
 | ☑ | `chicken` | 9.15 | Hego Frozen Boneless Chicken Breast (Skinless), 1kg @ $9.15 |
-| ⬜ | `tofu` | 3.17 | Fortune Silken Tofu (Japanese), 300g @ $0.95 |
+| ☑ | `tofu` | 3.17 | Fortune Silken Tofu (Japanese), 300g @ $0.95 |
 | ☑ | `bread` | 5.50 | White bread, representative mid-range figure |
 
 **Why the tofu figure changed (9 Sept).** It was a **tau kwa** price while the
@@ -167,7 +166,7 @@ serving in §7 is HPB's **soft tofu** — different products. Re-sourced to soft
 tofu, corroborated by three further 300 g / $0.95 lines (Japanese Silken Omega 3
 DHA, Silken Extra Smooth Box, Chinese Tofu Traditional). Firm tau kwa is within
 1% at $3.13–3.16/kg, so the correction moved almost nothing — but that was only
-knowable by checking. ⬜ **This one figure is Claude-sourced and unverified.**
+knowable by checking. ☑ **Verified by Henrison, 10 Sept 2026.**
 
 **Limitations to state:**
 
@@ -352,7 +351,7 @@ https://www.greenplan.gov.sg/targets/ (read 9 Sept 2026)
 
 ## 7. Servings and assumptions — `SERVING_KG`, `ASSUMPTIONS`
 
-⬜ **Not yet verified by a person.**
+✅ **Verified — Henrison, 10 Sept 2026.** Every serving figure and the tofu price checked; bread was the one correction, see below.
 
 ### `SERVING_KG` — one HPB serving of each food
 
@@ -371,15 +370,38 @@ same mass of another — fine for beef → chicken, wrong for beef → tofu, whe
 real portion is about twice the mass, and wrong in the direction that flatters
 us.
 
-| ⬜ | Key | Value (kg) | From |
+| ☑ | Key | Value (kg) | From |
 |---|---|---|---|
-| ⬜ | `beef`, `lamb`, `pork`, `chicken` | 0.12 | 90 g cooked ÷ 0.75 — see below |
-| ⬜ | `tofu` | 0.17 | "2 blocks of soft tofu (170g)" |
-| ⬜ | `eggs` | 0.15 | "3 eggs (150g)" |
-| ⬜ | `milk` | 0.5 | "2 glasses of milk (500ml)" |
+| ☑ | `beef`, `lamb`, `pork`, `chicken` | 0.12 | 90 g cooked ÷ 0.75 — see below |
+| ☑ | `tofu` | 0.17 | "2 blocks of soft tofu (170g)" |
+| ☑ | `eggs` | 0.15 | "3 eggs (150g)" |
+| ☑ | `milk` | 0.5 | "2 glasses of milk (500ml)" |
 
-Foods outside HPB's "meat and others" group (rice, bread, vegetables) have no
-serving, and a swap involving them returns `unsourced` rather than a guess.
+⚠️ **Bread was wrong here and is now fixed.** This section used to say bread had
+no HPB serving. It has one — **2 slices, 60 g** — in the *rice and alternatives*
+group, not the meat group we had been reading. Added to `SERVING_KG` on 10 Sept.
+
+| ☑ | Key | Value (kg) | From |
+|---|---|---|---|
+| ☑ | `bread` | 0.06 | "2 slices of wholemeal bread (60g)" |
+
+**The qualifier, stated rather than buried.** HPB's line specifies **wholemeal**;
+our CO₂, water and price figures are for plain **white**. We take the 60 g mass and
+apply it to white deliberately. That is safe for two of the three columns and a
+stated assumption for the third: Poore & Nemecek give a generic *"Bread"* and
+Mekonnen & Hoekstra a generic *"Wheat bread"*, so **neither distinguishes white
+from wholemeal at all**. Only the price is white-specific, and wholemeal costs
+more — so the **money saving is the one figure this could understate**, which is
+the conservative direction.
+
+Re-sourcing everything to wholemeal was the alternative and was rejected as
+disproportionate: it would move one column, not three.
+
+⬜ **Nothing on screen uses it yet** — no habit card swaps bread. It is there so
+the serving table is correct and a bread swap is possible later.
+
+Rice and vegetables still have no serving, and a swap involving them returns
+`unsourced` rather than a guess.
 
 ### ⚠️ The meat conversion, and its sensitivity
 
@@ -423,9 +445,9 @@ correction.
 
 ### `ASSUMPTIONS`
 
-| ⬜ | Key | Value | Source |
+| ☑ | Key | Value | Source |
 |---|---|---|---|
-| ⬜ | `breadLoafKg` | 0.4 | **Gardenia Enriched White Bread, 400 g** — https://www.gardenia.com.sg/gardenia-enriched-white-bread-400g/ The pack's own nutrition panel corroborates it: 7 servings × 57 g = 399 g. Sunshine sells a second 400 g loaf, so it is a standard Singapore size. |
+| ☑ | `breadLoafKg` | 0.4 | **Gardenia Enriched White Bread, 400 g** — https://www.gardenia.com.sg/gardenia-enriched-white-bread-400g/ The pack's own nutrition panel corroborates it: 7 servings × 57 g = 399 g. Sunshine sells a second 400 g loaf, so it is a standard Singapore size. |
 | ✅ | `weeksPerYear` | 52 | arithmetic |
 | ✅ | `monthsPerYear` | 12 | arithmetic |
 
@@ -1496,12 +1518,19 @@ the second is the one that survives disagreement:
 **The mitigation we would add and did not build: a per-week points cap.** It is
 the only measure that touches the ring, because it bounds the payoff globally
 rather than per relationship, and it profiles nobody — the same ethical footing as
-the taper. It was not built because the build phase closed before the exploit was
-found, and a cap firing during the demo would read as a bug. ⚠️ **There is
-currently no cap of any kind** — `earnPoints` in `SessionProvider.jsx` adds and
-returns. Any sentence in the report arguing "the payoff is too small to be worth
-sustained fraud" is **false as the code stands**, and must not be written until
-either the cap exists or the sentence is rewritten to say the payoff is unbounded.
+the taper.
+
+✅ **Decided 10 Sept: do not build it.** The build phase closed before the exploit
+was found, a cap firing mid-demo would read as a bug, and the deadline is the
+binding constraint. **The design is the deliverable here, not the code** — being
+able to say what we would add, and why that measure and not another, is what the
+evaluation is marked on.
+
+⚠️ **There is therefore no cap of any kind** — `earnPoints` in
+`SessionProvider.jsx` adds and returns. Any sentence in the report arguing "the
+payoff is too small to be worth sustained fraud" is **false as the code stands**
+and must not be written. The honest sentence is: *the payoff is unbounded, and a
+weekly cap is the mitigation we designed and did not have time to build.*
 
 **Why this matters more given the voucher decision.** Redemption is grocery
 vouchers (§9), which is cash-equivalent. That choice targets the barrier our
@@ -1529,20 +1558,40 @@ decision rather than a technical one. The objections we would still raise:
 At prototype scale it is the only option available; at national scale it is the
 one that should still be chosen.
 
-### Also open, no decision taken yet
+### ✅ The self-credit hole is closed — 10 Sept 2026
 
-⚠️ **An unclaimed shelf item can be self-credited, with no taper.** Found 9 Sept
-while checking the ring, and **confirmed by test the same day** — 3948 entered on
-Henrison's `bananas` card paid 30 points with nobody else involved (see point 2
-above for what the test does and does not establish). In `Share.jsx` the partner is `claims[item.id]?.by ?? null`,
-so with no live claim there is no partner and **the taper is skipped entirely**;
-`ShelfCard.jsx` falls back to the item's own code and `showHint` prints it on
-screen. One person on one phone can therefore collect the full points on a seeded
-item — `bananas`, `requests: 2`, is the live example. It is a labelled demo crutch
-("Demo only: their code is …") and a **newly posted** item is not exposed, because
-`requests: 0` shows "Nobody has claimed this yet" and no code box. The team has not
-yet decided whether to leave it, and it is listed here so a limitations section
-that claims to be complete actually is.
+**The hole.** An unclaimed item had no partner, so the taper was skipped entirely,
+and `showHint` printed the expected code on the owner's own screen. One person on
+one phone could collect full points. Henrison confirmed it by test on 9 Sept —
+3948 on the `bananas` card paid 30 points with nobody else involved.
+
+**Fixed by removing the demo crutch, not by patching around it.** `showHint` is
+gone from `HandoverCode.jsx` and from all three call sites. A payable completion
+now needs a **live claim from the other switchable resident**, so the code always
+has to travel from one screen to the other. Seeded `requests` no longer unlock the
+code box — they are names with no phone to read from, and letting them unlock it
+was the hole.
+
+**What it cost, and what was done about it.** Removing the hint made repairs
+uncompletable: the helper needs the poster's code, and all three repair listings
+belonged to mock neighbours. Two changes fixed that properly rather than by
+exception.
+
+1. A repair poster now **sees their own code**. Safe, because in a repair the
+   *helper* is credited — showing the poster their own code gives nothing away.
+2. One repair listing moved to **Mr Lim**, so the flow is demonstrable across the
+   two phones like every other exchange.
+
+**Verified on screen, 10 Sept.** The `bananas` card reads "2 neighbours asked.
+Switch phones and claim it to do the handover" with no code box; Henrison's own
+board posts show "Nothing to confirm yet" despite seeded requests; and the repair
+runs end to end — Henrison offers help, Mr Lim's card shows **6142** with "Once
+Henrison has fixed it, read this out to them".
+
+**Worth writing up:** the fix removed a *feature* rather than adding a check. The
+hint existed so a one-person demo could show the flow; once the two-phone switcher
+existed it was pure liability. **A demo affordance that outlives the thing it stood
+in for becomes a hole.**
 
 ---
 

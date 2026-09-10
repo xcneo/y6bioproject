@@ -1388,3 +1388,46 @@ appends a one-line summary of each task it completes.
   time and every open question in it settled — and the outstanding list is down to
   five items, of which two are report writing and two are design decisions in §12,
   leaving §7's five lookups as the only remaining sourcing work.
+- 2026-09-10 (§7 closed with a bread correction; the self-credit hole removed) —
+  Henrison verified the serving figures and the tofu price, and found one thing
+  wrong: §7 said bread had no HPB serving, and it has one — 2 slices, 60 g — in
+  the rice-and-alternatives group rather than the meat group we had been reading.
+  Added to SERVING_KG with the qualifier stated rather than buried, because HPB's
+  line specifies wholemeal while our CO2, water and price figures are for white.
+  Applying the 60 g mass to white is safe for two of the three columns, since
+  Poore & Nemecek give a generic "Bread" and Mekonnen & Hoekstra a generic "Wheat
+  bread" and neither distinguishes the two at all, and it is a stated assumption
+  for the third, since only the price is white-specific and wholemeal costs more,
+  so the money saving is the one figure this could understate — the conservative
+  direction. Re-sourcing everything to wholemeal was the alternative and was
+  rejected as disproportionate on Henrison's reasoning that it would mean redoing
+  the water and carbon footprints; checking established it would actually move
+  only one column, which is worth saying because the instinct was right even
+  though the scale was smaller than feared. Nothing on screen uses the bread
+  serving yet. On §12 the team decided not to build the per-week points cap, so
+  the report must say the payoff is unbounded and a weekly cap is the mitigation
+  we designed and did not have time to build, rather than the tempting sentence
+  that the payoff is too small to be worth fraud. The self-credit hole was
+  removed rather than left, since the two-phone switcher makes the demo crutch
+  unnecessary. showHint is gone from HandoverCode.jsx and all three call sites,
+  and a payable completion now requires a live claim from the other switchable
+  resident so the code always travels between screens. That had a cost worth
+  recording: removing the hint made repairs uncompletable, because the helper
+  needs the poster's code and all three repair listings belonged to mock
+  neighbours with no phone. Rather than granting repair an exception, the poster
+  now sees their own code — safe, because in a repair the helper is the one
+  credited — and one repair listing moved to Mr Lim so the flow is demonstrable
+  across the two phones like every other exchange. Verified by stepping through
+  the running app: the bananas card now says to switch phones and claim it with
+  no code box, Henrison's own board posts say nothing to confirm yet despite
+  seeded requests, and the repair runs end to end with Mr Lim's card showing 6142.
+  The general point for the report is that the fix removed a feature rather than
+  adding a check — the hint existed so a one-person demo could show the flow, and
+  once the two-phone switcher existed it was pure liability. A demo affordance
+  that outlives the thing it stood in for becomes a hole. One process note: an
+  edit script computed a slice between two headings that turned out to be in the
+  opposite order, producing an empty search string, and str.replace inserted the
+  replacement between every character of the file, growing it to 5.8 MB. It was
+  restored from the last commit and the edits redone with assertions that the
+  anchor is non-empty and occurs exactly once. Only uncommitted work was lost and
+  it was reapplied, but the lesson is to assert before replacing, not after.

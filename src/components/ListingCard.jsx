@@ -49,11 +49,11 @@ export default function ListingCard({
   // Requests seeded in the mock data, plus a live one made during the demo.
   const requestCount = listing.requests + (claimedByOther ? 1 : 0)
 
-  // When a real person on the other phone is collecting, the code to expect is
-  // theirs. Otherwise the counterparty is a name in the mock data, and the
-  // seeded code stands in for them.
-  const expectedCode = claimedByOther ? claim.code : listing.handoverCode
-  const showsCodeBox = isOwner && !done && requestCount > 0 && reward > 0
+  // The code box appears ONLY once a real neighbour on the other phone has
+  // claimed it, because the code has to come from someone else's screen. Seeded
+  // requests are names in the mock data with no phone to read from, and letting
+  // them unlock the box was how you could confirm a handover to yourself.
+  const showsCodeBox = isOwner && !done && claimedByOther && reward > 0
 
   return (
     <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
@@ -95,20 +95,24 @@ export default function ListingCard({
             {claimedByOther && ` — ${PEOPLE[claim.by].name} is collecting it`}
           </p>
 
-          {requestCount === 0 ? (
+          {!claimedByOther ? (
             <p className="mt-2 rounded-xl bg-stone-100 px-3 py-2.5 text-center text-xs text-stone-500">
               Nothing to confirm yet — the code comes from whoever collects it.
             </p>
+          ) : isRepair ? (
+            // A repair pays the HELPER, so the code is yours to read out and
+            // theirs to type in. You are not being credited, so showing you your
+            // own code gives nothing away.
+            <ShowHandoverCode
+              code={listing.handoverCode}
+              prompt={`Once ${PEOPLE[claim.by].name} has fixed it, read this out to them`}
+            />
           ) : reward > 0 ? (
             <EnterHandoverCode
-              expected={expectedCode}
+              expected={claim.code}
               prompt="When they collect it, ask them to read out their code."
               reward={reward}
               note={taperNote}
-              // Once a real person on the other phone is holding the code,
-              // printing it here would give the game away — and it is no longer
-              // needed, because you can go and look at their screen.
-              showHint={!claimedByOther}
               onConfirm={() => onComplete(listing, viewerId)}
             />
           ) : (
@@ -156,7 +160,6 @@ export default function ListingCard({
               prompt={`Once it is fixed, ask ${owner.name} to read out their code.`}
               reward={reward}
               note={taperNote}
-              showHint
               onConfirm={() => onComplete(listing, viewerId)}
             />
           ) : (
