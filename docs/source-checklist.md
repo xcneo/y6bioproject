@@ -35,12 +35,14 @@ cannot be wrong in the demo.
 
 | # | Item | Section |
 |---|---|---|
-| 1 | **Confirm one e-waste box still physically exists** — the data is 2022 and they are mostly shops | §8 |
-| 2 | Confirm the serving figures, the bread loaf and the tofu price | §7, §3 |
+| 1 | **Confirm the serving figures, the bread loaf and the tofu price** — 5 lookups, ~15 min. The last unsourced figures on screen | §7, §3 |
+| 2 | Confirm the survey figures against the responses spreadsheet | §11b |
 | 3 | Write §7's assumptions and §9's parameters into the methodology | §7, §9 |
 | 4 | **Two open decisions, not verifications** — whether to build the per-week cap, and what to do about the self-credit hole | §12 |
-| 5 | **Decide: should the map list the three school gardens the public cannot enter?** | §8 |
-| 6 | **Check the record dates on the NParks datasets** — bins are 2017, e-waste 2021–22, LTA racks 2019, all confirmed. CIB, PCN and Parks are not | §8 |
+| 5 | *Optional:* record dates on the three NParks datasets. Bins (2017), e-waste (2021–22) and LTA racks (2019) are done | §8 |
+
+**§8 is closed.** Every facility, every travel time, and every open question in it
+was settled on 10 Sept.
 
 ---
 
@@ -927,11 +929,18 @@ estate — it gave **4 minutes for a bin 65 m away**. Henrison corrected the fiv
 recycling bins from local knowledge: Blk 441A and Blk 449 to **3 min**, Blk 442
 and Blk 443 to **1 min**.
 
-**This is the one place in the project where local knowledge beats the tool**, and
-it partly explains the earlier Claude-vs-Henrison gap: routing to a dataset
+**This is the one place in the project where a person beats the tool**, and it
+partly explains the earlier Claude-vs-Henrison gap: routing to a dataset
 coordinate makes Maps take the long way round more often than searching an
 address does. Worth a line in the report — a measurement instrument has
 assumptions, and this one assumes you cannot walk through a building.
+
+⚠️ **Call it knowledge of how HDB estates work, NOT local knowledge of Clementi.**
+Nobody on the team lives in Clementi. The correction is about void decks in
+general and would hold in any estate; writing "local knowledge" would imply a
+resident's familiarity with these particular blocks, which we do not have. Same
+habit as everywhere else in this document — check what the claim actually rests
+on, including when the claim is ours.
 
 ### ✅ The Bloobox question is settled — and the type is gone
 
@@ -1007,9 +1016,15 @@ the dataset date we caught this morning.
 
 ⚠️ **The e-waste list is 3½ years old and is mostly shops.** Retail collection
 points close, move, and change operator far faster than a void-deck bin does. The
-bins being 2017 matters less than the e-waste being 2022. ⬜ **Worth confirming one
-box still physically exists** before the demo — the Clementi CC one is the safest
-bet, and Clementi Mall the easiest to walk past.
+bins being 2017 matters less than the e-waste being 2022.
+
+✅ **Decided 10 Sept: accepted on the dataset, not physically verified.** Nobody on
+the team lives in Clementi, so a site visit is not a small ask, and for a six-student
+prototype demonstrating feasibility the published NEA record is proportionate
+evidence. **State it in the report exactly that way** — "recorded by NEA in 2022;
+not confirmed on site" — rather than letting the pin imply someone checked. An
+unverified claim that says it is unverified is not a weakness; an unverified claim
+that looks verified is.
 
 ### ✅ Everything else verified — Henrison, 10 Sept 2026
 
@@ -1057,13 +1072,20 @@ That is **Clementi Primary, Clementi Town Secondary and NUS High** — three of 
 They are now labelled on the card: *"Inside the school — not open to the public."*
 The swimming complex and the RC garden are unconfirmed.
 
-**They were labelled rather than deleted**, because they are real registered
-gardens and the neighbourhood score counts green infrastructure that exists, not
-only what a stranger can walk into. ⬜ **But this is a live design question, not a
-settled one:** should a "facilities near you" map list a place you cannot enter?
-An argument each way — showing them overstates what is available to a resident;
-hiding them makes the map claim less green infrastructure exists than really does.
-**The team should decide and say which, because a marker will ask.**
+✅ **Decided 10 Sept: keep them, and state the restriction on the card.** They are
+real registered gardens, and the neighbourhood score counts green infrastructure
+that *exists* rather than only what a stranger can walk into — hiding them would
+make the estate look less green than it is. The card says "Inside the school — not
+open to the public", so nobody walks over expecting to get in.
+
+The alternative was to drop them, on the grounds that a "facilities near you" map
+should only list places you can go. It was rejected because the dashboard does two
+jobs — find somewhere to go, *and* show how much green infrastructure the estate
+has — and only the first is damaged by listing a school garden, while both are
+damaged by hiding it. **Say which reading you took, because a marker will ask.**
+
+The swimming complex and the RC garden are unconfirmed either way, so they carry
+**no access claim at all** rather than a guessed one.
 
 #### ✅ EV bay counts and levels removed
 

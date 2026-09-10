@@ -53,9 +53,10 @@
 //
 // ⚠️ Google Maps will not route through an HDB void deck, so it walks you the
 // long way round the block and overstates short hops inside an estate: it gave
-// 4 minutes for a bin 65 m away. The five recycling bins are set from local
-// knowledge for that reason. This is the one place in the project where a
-// resident beats the tool, and it is worth a line in the report.
+// 4 minutes for a bin 65 m away. The five recycling bins are set by hand for
+// that reason. Call this KNOWLEDGE OF HOW HDB ESTATES WORK, not local knowledge
+// of Clementi — nobody on the team lives there. The correction is about void
+// decks in general and would hold in any estate.
 //
 // x and y are percentage positions on the stylised map (0-100, left and top).
 // They are decorative and NOT a projection — the map does not place pins where
@@ -237,13 +238,14 @@ export const FACILITIES = [
   },
 
   // ---- Community gardens (NParks Community in Bloom register) ----
-  // ⚠️ Three of these five are inside schools and Henrison confirmed on 10 Sept
-  // that those are NOT open to the public. They are labelled on the card rather
-  // than deleted, because they are real registered gardens and the
-  // neighbourhood score counts green infrastructure that exists, not only what
-  // a stranger can walk into. But see §8: whether a "facilities near you" map
-  // should list a place you cannot enter is a live design question, not settled.
-  // The other two — the swimming complex and the RC — are "maybe", unconfirmed.
+  // ⚠️ Three of these five are inside schools and are NOT open to the public.
+  // DECIDED 10 Sept: keep them, and say so on the card. They are real registered
+  // gardens, and the neighbourhood score counts green infrastructure that
+  // exists rather than only what a stranger can walk into — hiding them would
+  // make the estate look less green than it is. The card states the restriction
+  // so nobody walks over expecting to get in.
+  // The other two — the swimming complex and the RC — are unconfirmed either
+  // way, so they carry no access claim at all rather than a guessed one.
   {
     id: 'swimcomplex-garden',
     type: 'garden',

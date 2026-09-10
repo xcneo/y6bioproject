@@ -1362,3 +1362,29 @@ appends a one-line summary of each task it completes.
   the Clementi Woods distance, where Henrison confirmed the centroid figure was
   about right and added that a car cannot enter the park, so the driving time is
   to the entrance and the walk is the real number for a visitor.
+- 2026-09-10 (§8 closed: two decisions taken, one of our own claims corrected) —
+  The school gardens stay and say so. Three of the five community gardens are
+  inside schools and are not open to the public, and the team chose to keep them
+  with the restriction stated on the card rather than drop them, on the grounds
+  that the dashboard does two jobs — help you find somewhere to go, and show how
+  much green infrastructure the estate has — and only the first is damaged by
+  listing a school garden while both are damaged by hiding it. The swimming
+  complex and the RC garden are unconfirmed either way and now carry no access
+  claim at all rather than a guessed one. The e-waste box is accepted on the
+  dataset rather than confirmed on site, because nobody on the team lives in
+  Clementi and for a six-student prototype demonstrating feasibility the published
+  NEA record is proportionate evidence. What matters is that the report says so in
+  those words — recorded by NEA in 2022, not confirmed on site — since an
+  unverified claim that admits it is unverified is not a weakness while an
+  unverified claim that looks verified is. That exchange also caught a claim of our
+  own that had drifted. Both facilities.js and §8 described the corrected walk
+  times as coming from local knowledge, and called it the one place a resident
+  beats the tool, but nobody on the team lives in Clementi. The correction is
+  about how void decks work in any HDB estate, not about familiarity with these
+  particular blocks, so both files now say knowledge of how HDB estates work. It
+  is the same check-what-the-claim-rests-on habit applied to our own wording,
+  which is the third time this week that habit has caught something we wrote
+  rather than something we read. §8 is now closed — every facility, every travel
+  time and every open question in it settled — and the outstanding list is down to
+  five items, of which two are report writing and two are design decisions in §12,
+  leaving §7's five lookups as the only remaining sourcing work.
