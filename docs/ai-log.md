@@ -1431,3 +1431,25 @@ appends a one-line summary of each task it completes.
   restored from the last commit and the edits redone with assertions that the
   anchor is non-empty and occurs exactly once. Only uncommitted work was lost and
   it was reapplied, but the lesson is to assert before replacing, not after.
+- 2026-09-10 (final commit; coding closed) — The team called an end to coding.
+  Committed the annotated Word verification checklist as the signed record of what
+  was checked, added a gitignore rule for Word's ~$ lock files after hitting that
+  problem twice during the day, and rewrote CLAUDE.md's next-task section, which
+  still described §8 as half closed and pointed at work finished a day earlier. It
+  now says plainly that coding is done, that no new features should be started,
+  and that three of the four remaining items are report writing. It also carries a
+  short list of things the report must and must not say, gathered from the day's
+  findings so they are not lost between the checklist and the write-up: that the
+  points payoff is unbounded and a weekly cap is a designed-but-unbuilt
+  mitigation rather than an argument that fraud is not worth attempting; that the
+  NEA bin data is 2017 rather than the 2024 the portal reports while the e-waste
+  data is 2021-22, and that FMEL_UPD_D means different things in the two files;
+  that the e-waste points are recorded by NEA in 2022 and not confirmed on site,
+  since nobody on the team lives in Clementi; that three of the five gardens are
+  inside schools and closed to the public; that two claims of our own are
+  withdrawn and must not resurface, the EV-to-HDB car park number correspondence
+  and the eggs argument in §7; and that the survey must never be written up as
+  finding something about Singaporeans. The repo ends the day with every figure
+  that reaches a screen sourced and verified by a team member, §7, §8 and §12 all
+  closed, and one section outstanding — §11b's survey figures, which live in a
+  spreadsheet that is not in the repo.

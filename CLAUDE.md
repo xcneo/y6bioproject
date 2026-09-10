@@ -248,17 +248,35 @@ not the code.
 
 ## Next task
 
-**§8 is half closed.** The twelve `detail` strings and the walk times in
-`facilities.js` are invented facts attached to real, named Clementi addresses (EV
-tariffs, a community centre's opening hours, collection schedules). On 9 Sept the
-file header was extended to disclaim them — route 1 of the three in §8 — so
-anyone opening the file is told. **The screen still shows them undisclaimed**, so
-the two remaining routes are open and stack on top of the header: soften the
-specifics ("roughly $0.55 per kWh" → "paid charging"), or check two or three
-against real data. §8 lists all twelve, ranked by how quickly a marker could
-check one.
+**Coding is done.** As of 10 Sept 2026 every figure that reaches a screen is
+sourced and verified by a team member. Do not start new features. What remains is
+writing, and three of the four items below are report work.
 
-§9, §10 and §12 are verified as of 9 Sept. What remains besides §8 is report
-work rather than code: §7's four HPB/Gardenia lookups and §11b's survey figures
-are still unticked (nobody has re-opened those sources), and writing §7's
-assumptions and §9's parameters into the methodology.
+`docs/source-checklist.md` is the live record. Its outstanding list:
+
+1. **Confirm the survey figures** against `bio proj form (Responses).xlsx` — §11b.
+   The only section still unticked. The file is not in the repo.
+2. **Write §7's assumptions and §9's parameters into the methodology** — the
+   cooked-vs-raw meat judgement with its 33% sensitivity, and the taper, the
+   nudge thresholds and the rounding rules.
+3. *Optional:* record dates on the three NParks datasets.
+
+**Everything else is closed.** §8 was rebuilt from official data on 10 Sept — 25
+facilities, 21 dataset-confirmed, four illustrative by decision. §12's two
+anti-misuse decisions are taken: no per-week points cap, and the self-credit hole
+removed.
+
+### Things the report must say, and must not say
+
+- **The payoff is unbounded.** There is no points cap. Never write that the
+  payoff is too small to be worth fraud — say a weekly cap is the mitigation we
+  designed and did not build.
+- **The NEA bin data is 2017**, not the 2024 the portal page reports; the e-waste
+  data is 2021–22. `FMEL_UPD_D` means different things in the two files.
+- **The e-waste points are "recorded by NEA in 2022, not confirmed on site."**
+  Nobody on the team lives in Clementi.
+- **Three of the five gardens are inside schools** and are not open to the public.
+  The cards say so.
+- **Withdrawn claims that must not resurface:** the EV-to-HDB car park number
+  correspondence (C17 and so on), and the eggs argument in §7.
+- **Never write "our survey found that Singaporeans…"** — n=52, mostly students.

@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Word lock files. Word writes these while a .docx is open and they should never
+# be committed — we hit this twice on 10 Sept editing the verification checklist.
+~$*
