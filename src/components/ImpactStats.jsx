@@ -34,37 +34,22 @@ const MEASURES = [
 // two numbers are comparable. They are not. See factors.js, ITEM_WATER_L.
 export default function ImpactStats({ result, period = 'a year', labels = {} }) {
   return (
-    <dl className="mt-3 grid grid-cols-2 gap-2">
+    <dl className="mt-3 flex flex-wrap gap-2">
       {MEASURES.map((measure) => {
         const raw = result[measure.key]
         const missing = isUnsourced(raw)
         const value = missing ? null : measure.format(raw)
 
         return (
-          <div key={measure.key} className="rounded-xl bg-stone-50 p-3">
-            <dt className="text-[11px] font-medium uppercase tracking-wide text-stone-500">
-              <span aria-hidden="true">{measure.icon}</span>{' '}
-              {labels[measure.key] ?? measure.label}
-            </dt>
-
-            {missing ? (
-              <dd className="mt-1">
-                <span className="inline-block rounded-md bg-amber-100 px-1.5 py-0.5 text-[11px] font-semibold text-amber-900">
-                  Source needed
-                </span>
-              </dd>
-            ) : (
-              <dd>
-                {/* Value in ink, not in an accent colour — the icon beside the
-                    label already carries which measure this is. */}
-                <span className="block text-xl font-bold text-stone-900">
-                  {raw === 0 ? 'No change' : value}
-                </span>
-                {raw !== 0 && (
-                  <span className="block text-[11px] text-stone-400">{period}</span>
-                )}
-              </dd>
-            )}
+          <div
+            key={measure.key}
+            className="flex items-center gap-1.5 rounded-full bg-[#F2F7F0] px-2.5 py-1.5 text-[11px] font-semibold text-[#5C6E62]"
+          >
+            <span aria-hidden="true">{measure.icon}</span>
+            <span>{labels[measure.key] ?? measure.label}</span>
+            <span className="text-[#16281D]">
+              {missing ? 'Source needed' : raw === 0 ? 'No change' : value}
+            </span>
           </div>
         )
       })}

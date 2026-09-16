@@ -6,51 +6,77 @@ import { NEIGHBOURHOODS } from '../data/neighbourhoods'
 // to draw a map of the whole island.
 
 export default function ScoreCard({ estate }) {
-  // Highest score first.
   const ranked = [...NEIGHBOURHOODS].sort((a, b) => b.score - a.score)
   const position = ranked.findIndex((n) => n.name === estate) + 1
   const mine = ranked.find((n) => n.name === estate)
 
   if (!mine) return null
 
+  const radius = 38
+  const circumference = 2 * Math.PI * radius
+  const dash = (mine.score / 100) * circumference
+
   return (
-    <section className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
-      <div className="flex items-baseline justify-between">
-        <h2 className="text-sm font-semibold text-stone-900">
-          {estate} sustainability score
-        </h2>
-        <span className="text-xs text-stone-500">
-          #{position} of {ranked.length}
-        </span>
+    <section className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 rounded-full bg-[#EAF4EE] px-2.5 py-1.5 text-[12px] font-semibold text-[#14733F]">
+          <span aria-hidden="true">#</span>
+          {position} of {ranked.length} estates
+        </div>
       </div>
 
-      <p className="mt-1 text-3xl font-bold text-emerald-700">
-        {mine.score}
-        <span className="text-base font-medium text-stone-400"> / 100</span>
-      </p>
+      <div className="mt-4 flex items-center gap-4">
+        <div className="relative flex h-28 w-28 items-center justify-center">
+          <svg viewBox="0 0 100 100" className="h-28 w-28 -rotate-90">
+            <circle cx="50" cy="50" r={radius} fill="none" stroke="rgba(20,40,25,0.09)" strokeWidth="10" />
+            <circle
+              cx="50"
+              cy="50"
+              r={radius}
+              fill="none"
+              stroke="#2F9C5E"
+              strokeWidth="10"
+              strokeLinecap="round"
+              strokeDasharray={`${dash} ${circumference - dash}`}
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <span className="font-[Nunito] text-[26px] font-extrabold tracking-[-0.04em] text-[#16281D]">
+              {mine.score}
+            </span>
+            <span className="text-[12px] font-medium text-[#5C6E62]">/ 100</span>
+          </div>
+        </div>
 
-      <ol className="mt-3 space-y-1.5">
+        <div className="flex-1">
+          <h2 className="font-[Nunito] text-[16px] font-extrabold text-[#16281D]">
+            {estate}&rsquo;s sustainability score
+          </h2>
+          <p className="mt-1 text-[14px] leading-relaxed text-[#5C6E62]">
+            Ahead of Toa Payoh, Bukit Batok and Jurong East this month.
+          </p>
+        </div>
+      </div>
+
+      <ol className="mt-4 space-y-2.5">
         {ranked.map((neighbourhood) => {
           const isMine = neighbourhood.name === estate
 
           return (
-            <li key={neighbourhood.name} className="flex items-center gap-2">
-              <span
-                className={`w-20 shrink-0 text-xs ${
-                  isMine ? 'font-semibold text-stone-900' : 'text-stone-500'
-                }`}
-              >
+            <li key={neighbourhood.name} className="flex items-center gap-2.5">
+              <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] text-[12px] font-bold ${isMine ? 'bg-[#2F9C5E] text-white' : 'bg-[#EAF4EE] text-[#5C6E62]'}`}>
+                {neighbourhood.name.charAt(0)}
+              </span>
+              <span className={`w-16 shrink-0 text-[14px] font-semibold ${isMine ? 'text-[#16281D]' : 'text-[#5C6E62]'}`}>
                 {neighbourhood.name}
               </span>
-              <span className="h-2 flex-1 overflow-hidden rounded-full bg-stone-100">
+              <span className="relative h-2.5 flex-1 overflow-hidden rounded-full bg-[#E6EEE7]">
                 <span
-                  className={`block h-full rounded-full ${
-                    isMine ? 'bg-emerald-600' : 'bg-stone-300'
-                  }`}
+                  className={`absolute inset-y-0 left-0 rounded-full ${isMine ? 'bg-gradient-to-r from-[#2F9C5E] to-[#14733F]' : 'bg-[#B7C9BC]'}`}
                   style={{ width: `${neighbourhood.score}%` }}
                 />
               </span>
-              <span className="w-6 shrink-0 text-right text-xs text-stone-500">
+              <span className="w-7 shrink-0 text-right text-[14px] font-semibold text-[#5C6E62]">
                 {neighbourhood.score}
               </span>
             </li>
@@ -58,7 +84,7 @@ export default function ScoreCard({ estate }) {
         })}
       </ol>
 
-      <p className="mt-3 text-xs text-stone-400">
+      <p className="mt-4 text-[12px] text-[#93A399]">
         Illustrative figures for the prototype, not measured data.
       </p>
     </section>

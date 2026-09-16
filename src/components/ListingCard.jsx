@@ -55,33 +55,65 @@ export default function ListingCard({
   // them unlock the box was how you could confirm a handover to yourself.
   const showsCodeBox = isOwner && !done && claimedByOther && reward > 0
 
+  const categoryColor = type.color
+  const actionSolid = listing.category !== 'rent'
+
+  const primaryAction = (
+    <button
+      type="button"
+      onClick={() => (isOwner ? onComplete(listing, viewerId) : onRequest(listing))}
+      className={`mt-3 w-full rounded-full px-4 py-2.5 text-[13px] font-extrabold transition ${
+        actionSolid
+          ? 'text-white shadow-[0_6px_18px_rgba(20,40,25,0.08)]'
+          : 'border bg-white text-[#16281D]'
+      }`}
+      style={
+        actionSolid
+          ? { background: `linear-gradient(135deg, ${categoryColor}, ${categoryColor})` }
+          : { borderColor: categoryColor, color: categoryColor }
+      }
+    >
+      {listing.category === 'rent'
+        ? 'Request to rent'
+        : isOwner
+          ? 'Mark as collected'
+          : type.action}
+    </button>
+  )
+
   return (
-    <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+    <li className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
+        <div className="flex min-w-0 items-start gap-3">
           <span
-            className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-medium ${type.badge}`}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] text-[16px]"
+            style={{ backgroundColor: categoryColor, color: '#fff' }}
+            aria-hidden="true"
           >
-            <span aria-hidden="true">{type.icon}</span> {type.label}
+            {type.icon}
           </span>
-          <h3 className="mt-1.5 font-semibold text-stone-900">{listing.title}</h3>
-          <p className="text-sm text-stone-500">
-            {isOwner ? 'Posted by you' : owner.name} &middot; {listing.address}
-          </p>
+          <div className="min-w-0">
+            <h3 className="font-[Nunito] text-[20px] font-extrabold text-[#16281D]">
+              {listing.title}
+            </h3>
+            <p className="mt-1 text-[12px] text-[#5C6E62]">
+              {isOwner ? 'Posted by you' : owner.name} &middot; {listing.address}
+            </p>
+          </div>
         </div>
 
         {listing.category === 'rent' && (
-          <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-semibold text-amber-900">
+          <span className="shrink-0 rounded-full border border-[#E8A93A] bg-[#FDF5E8] px-2.5 py-1 text-[11px] font-bold text-[#B9821F]">
             ${listing.price}/day
           </span>
         )}
       </div>
 
-      <p className="mt-2 text-sm text-stone-700">{listing.detail}</p>
+      <p className="mt-3 text-[13px] leading-relaxed text-[#5C6E62]">{listing.detail}</p>
 
       {!isOwner && (
-        <p className="mt-1 text-xs text-stone-400">
-          🚶 About {walkMinutesFor(listing, viewerId)} min walk
+        <p className="mt-2 text-[11px] text-[#93A399]">
+          About {walkMinutesFor(listing, viewerId)} min walk
         </p>
       )}
 
@@ -129,15 +161,7 @@ export default function ListingCard({
       )}
 
       {/* ---- Someone else's post ---- */}
-      {!isOwner && !claim && (
-        <button
-          type="button"
-          onClick={() => onRequest(listing)}
-          className="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
-        >
-          {type.action}
-        </button>
-      )}
+      {!isOwner && !claim && primaryAction}
 
       {!isOwner && claimedByMe && (
         <>
@@ -189,11 +213,11 @@ export default function ListingCard({
       {/* Footnote only where nothing above has already stated the reward. */}
       {!claim && !showsCodeBox && (
         <>
-          <p className="mt-2 text-center text-xs text-stone-500">
+          <p className="mt-2 text-center text-[11px] text-[#5C6E62]">
             {rewardNote(listing, isOwner, owner.name, effectivePoints)}
           </p>
           {taperNote && (
-            <p className="mt-1 rounded-lg bg-amber-50 px-2 py-1.5 text-center text-[11px] text-amber-900">
+            <p className="mt-1 rounded-full bg-[#FDF5E8] px-2 py-1.5 text-center text-[11px] font-medium text-[#B9821F]">
               {taperNote}
             </p>
           )}

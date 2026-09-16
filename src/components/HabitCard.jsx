@@ -17,25 +17,34 @@ export default function HabitCard({ habit }) {
     setAmount((current) => Math.min(habit.max, Math.max(1, current + by)))
   }
 
-  return (
-    <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
-      <h3 className="font-semibold text-stone-900">{habit.title}</h3>
-      <p className="mt-0.5 text-sm text-stone-600">{habit.detail}</p>
+  const metricBadges = [
+    { key: 'water', label: 'Water', icon: '💧', value: result.water },
+    { key: 'money', label: 'Money', icon: '💵', value: result.money },
+    { key: 'waste', label: 'Waste', icon: '🗑️', value: result.waste },
+  ]
 
-      <div className="mt-3 flex items-center gap-3">
+  return (
+    <li className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <h3 className="font-[Nunito] text-[18px] font-extrabold text-[#16281D]">{habit.title}</h3>
+          <p className="mt-1 text-[13px] leading-relaxed text-[#5C6E62]">{habit.detail}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-2 rounded-full bg-[#F2F7F0] p-1.5">
         <button
           type="button"
           onClick={() => change(-1)}
           disabled={amount <= 1}
           aria-label={`Fewer ${habit.unit}`}
-          className="h-9 w-9 shrink-0 rounded-full border border-stone-300 text-lg font-semibold text-stone-700 disabled:border-stone-200 disabled:text-stone-300"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[22px] font-semibold text-[#16281D] disabled:text-[#93A399]"
         >
           −
         </button>
 
-        <p className="flex-1 text-center text-sm text-stone-700">
-          <span className="text-lg font-bold text-stone-900">{amount}</span>{' '}
-          {habit.unit}
+        <p className="min-w-20 text-center text-[13px] font-semibold text-[#16281D]">
+          <span className="text-[18px] font-extrabold">{amount}</span> {habit.unit}
         </p>
 
         <button
@@ -43,13 +52,28 @@ export default function HabitCard({ habit }) {
           onClick={() => change(1)}
           disabled={amount >= habit.max}
           aria-label={`More ${habit.unit}`}
-          className="h-9 w-9 shrink-0 rounded-full border border-stone-300 text-lg font-semibold text-stone-700 disabled:border-stone-200 disabled:text-stone-300"
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[22px] font-semibold text-[#16281D] disabled:text-[#93A399]"
         >
           +
         </button>
       </div>
 
-      <ImpactStats result={result} labels={habit.statLabels} />
+      <div className="mt-4">
+        <p className="text-[12px] font-semibold text-[#5C6E62]">This change could save</p>
+        <p className="mt-1 font-[Nunito] text-[30px] font-extrabold tracking-[-0.04em] text-[#14733F]">
+          {result.co2 > 0 ? result.co2.toFixed(0) : '0'} kg CO₂e
+        </p>
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        {metricBadges.map((metric) => (
+          <div key={metric.key} className="flex items-center gap-1.5 rounded-full bg-[#F2F7F0] px-2.5 py-1.5 text-[11px] font-semibold text-[#5C6E62]">
+            <span aria-hidden="true">{metric.icon}</span>
+            <span>{metric.label}</span>
+            <span className="text-[#16281D]">{metric.value}</span>
+          </div>
+        ))}
+      </div>
     </li>
   )
 }

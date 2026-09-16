@@ -15,31 +15,31 @@ function UpcomingCard({ event, status, onJoin, onCancel }) {
   const going = status === 'going'
 
   return (
-    <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+    <li className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-semibold text-stone-900">{event.title}</h3>
-          <p className="text-sm text-emerald-700">{event.date}</p>
+          <h3 className="font-[Nunito] text-[18px] font-extrabold text-[#16281D]">{event.title}</h3>
+          <p className="mt-1 text-[13px] font-semibold text-[#14733F]">{event.date}</p>
         </div>
         {event.needsVolunteers && (
-          <span className="shrink-0 rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-800">
+          <span className="shrink-0 rounded-full bg-[#F5E9D0] px-2.5 py-1 text-[11px] font-bold text-[#B9821F]">
             Volunteers needed
           </span>
         )}
       </div>
 
-      <p className="mt-1 text-sm text-stone-600">{event.location}</p>
-      <p className="mt-1 text-sm text-stone-700">{event.blurb}</p>
+      <p className="mt-1 text-[13px] text-[#5C6E62]">{event.location}</p>
+      <p className="mt-2 text-[13px] leading-relaxed text-[#5C6E62]">{event.blurb}</p>
 
       {going ? (
         <div className="mt-3 flex items-center gap-2">
-          <span className="flex-1 rounded-xl bg-emerald-50 py-2.5 text-center text-sm font-semibold text-emerald-800">
-            ✓ You&rsquo;re going
+          <span className="flex-1 rounded-full bg-[#EAF4EE] py-2.5 text-center text-[13px] font-semibold text-[#14733F]">
+            You&rsquo;re going
           </span>
           <button
             type="button"
             onClick={() => onCancel(event)}
-            className="rounded-xl border border-stone-300 px-4 py-2.5 text-sm font-medium text-stone-600"
+            className="rounded-full border border-[rgba(20,40,25,0.08)] bg-white px-4 py-2.5 text-[13px] font-semibold text-[#5C6E62]"
           >
             Cancel
           </button>
@@ -48,13 +48,13 @@ function UpcomingCard({ event, status, onJoin, onCancel }) {
         <button
           type="button"
           onClick={() => onJoin(event)}
-          className="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
+          className="mt-3 w-full rounded-full bg-gradient-to-r from-[#2F9C5E] to-[#14733F] py-3 text-[13px] font-extrabold text-white shadow-[0_6px_18px_rgba(20,40,25,0.08)]"
         >
           {event.needsVolunteers ? 'Volunteer' : 'Join'}
         </button>
       )}
 
-      <p className="mt-2 text-center text-xs text-stone-500">
+      <p className="mt-2 text-center text-[11px] text-[#5C6E62]">
         {going
           ? `+${event.pointsForAttending} points once you attend`
           : `Earn ${event.pointsForAttending} points by attending`}
@@ -65,15 +65,15 @@ function UpcomingCard({ event, status, onJoin, onCancel }) {
 
 function PastCard({ event, status, onConfirm }) {
   return (
-    <li className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-stone-200">
+    <li className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
       <div className="min-w-0">
-        <h3 className="font-semibold text-stone-900">{event.title}</h3>
-        <p className="text-sm text-stone-500">{event.date}</p>
+        <h3 className="font-[Nunito] text-[18px] font-extrabold text-[#16281D]">{event.title}</h3>
+        <p className="mt-1 text-[13px] font-semibold text-[#5C6E62]">{event.date}</p>
       </div>
 
       {status === 'attended' && (
-        <p className="mt-3 rounded-xl bg-emerald-50 py-2.5 text-center text-sm font-semibold text-emerald-800">
-          ✓ Attended · {event.pointsForAttending} points earned
+        <p className="mt-3 rounded-full bg-[#EAF4EE] px-3 py-2 text-center text-[13px] font-semibold text-[#14733F]">
+          Attended · {event.pointsForAttending} points earned
         </p>
       )}
 
@@ -82,18 +82,18 @@ function PastCard({ event, status, onConfirm }) {
           <button
             type="button"
             onClick={() => onConfirm(event)}
-            className="mt-3 w-full rounded-xl bg-emerald-600 py-2.5 text-sm font-semibold text-white active:bg-emerald-700"
+            className="mt-3 w-full rounded-full bg-gradient-to-r from-[#2F9C5E] to-[#14733F] py-3 text-[13px] font-extrabold text-white shadow-[0_6px_18px_rgba(20,40,25,0.08)]"
           >
             Confirm you attended · +{event.pointsForAttending} points
           </button>
-          <p className="mt-2 text-center text-xs text-stone-500">
+          <p className="mt-2 text-center text-[11px] text-[#5C6E62]">
             The organiser checks this against their sign-in sheet.
           </p>
         </>
       )}
 
       {!status && (
-        <p className="mt-3 text-center text-sm text-stone-400">
+        <p className="mt-3 text-center text-[13px] text-[#93A399]">
           You didn&rsquo;t sign up for this one
         </p>
       )}

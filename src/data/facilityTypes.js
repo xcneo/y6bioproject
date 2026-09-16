@@ -25,6 +25,7 @@ export const FACILITY_TYPES = {
   recycling: {
     label: 'Recycling',
     icon: '♻️',
+    color: '#3B82C4',
     pin: 'bg-blue-500',
     chipOn: 'bg-blue-600 text-white border-blue-600',
     problems: [
@@ -37,6 +38,7 @@ export const FACILITY_TYPES = {
   ewaste: {
     label: 'E-waste',
     icon: '🔋',
+    color: '#2FA89A',
     pin: 'bg-red-500',
     chipOn: 'bg-red-600 text-white border-red-600',
     problems: [
@@ -49,6 +51,7 @@ export const FACILITY_TYPES = {
   evCharger: {
     label: 'EV charging',
     icon: '🔌',
+    color: '#7C5CD9',
     pin: 'bg-violet-500',
     chipOn: 'bg-violet-600 text-white border-violet-600',
     problems: [
@@ -61,6 +64,7 @@ export const FACILITY_TYPES = {
   waterRefill: {
     label: 'Water refill',
     icon: '💧',
+    color: '#29A4D8',
     pin: 'bg-cyan-500',
     chipOn: 'bg-cyan-600 text-white border-cyan-600',
     problems: [
@@ -73,6 +77,7 @@ export const FACILITY_TYPES = {
   garden: {
     label: 'Community garden',
     icon: '🌱',
+    color: '#4CAF6B',
     pin: 'bg-emerald-500',
     chipOn: 'bg-emerald-600 text-white border-emerald-600',
     problems: [

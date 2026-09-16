@@ -1,3 +1,71 @@
-/* Tailwind v4: this single line replaces the old config + PostCSS setup.
-   Everything else is done with class names in the JSX. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@600;700;800&display=swap');
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Nunito', sans-serif;
+
+  --color-brand-700: #2f9c5e;
+  --color-brand-800: #14733f;
+  --color-gold: #e8a93a;
+  --color-gold-deep: #b9821f;
+  --color-ink: #16281d;
+  --color-ink-soft: #5c6e62;
+  --color-ink-faint: #93a399;
+  --color-surface: #ffffff;
+  --color-surface-tint: #f2f7f0;
+  --color-page: #f0f2ed;
+  --color-line: rgba(20, 40, 25, 0.09);
+}
+
+@layer base {
+  :root {
+    color: #16281d;
+    background: #f0f2ed;
+  }
+
+  html {
+    background: #f0f2ed;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f0f2ed;
+    color: #16281d;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  ::selection {
+    background: rgba(47, 156, 94, 0.18);
+  }
+
+  :focus-visible {
+    outline: 3px solid rgba(47, 156, 94, 0.35);
+    outline-offset: 2px;
+  }
+}

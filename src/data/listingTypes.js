@@ -20,6 +20,7 @@ export const LISTING_TYPES = {
   lend: {
     label: 'Borrow',
     icon: '🔧',
+    color: '#3B82C4',
     chipOn: 'bg-sky-600 text-white border-sky-600',
     badge: 'bg-sky-100 text-sky-800',
     action: 'Ask to borrow',
@@ -28,6 +29,7 @@ export const LISTING_TYPES = {
   giveaway: {
     label: 'Free',
     icon: '🎁',
+    color: '#2F9C5E',
     chipOn: 'bg-emerald-600 text-white border-emerald-600',
     badge: 'bg-emerald-100 text-emerald-800',
     action: 'Claim it',
@@ -36,6 +38,7 @@ export const LISTING_TYPES = {
   swap: {
     label: 'Swap',
     icon: '🔄',
+    color: '#7C5CD9',
     chipOn: 'bg-violet-600 text-white border-violet-600',
     badge: 'bg-violet-100 text-violet-800',
     action: 'Offer a swap',
@@ -44,6 +47,7 @@ export const LISTING_TYPES = {
   rent: {
     label: 'Rent',
     icon: '💵',
+    color: '#B9821F',
     chipOn: 'bg-amber-600 text-white border-amber-600',
     badge: 'bg-amber-100 text-amber-900',
     action: 'Request to rent',
@@ -52,6 +56,7 @@ export const LISTING_TYPES = {
   repair: {
     label: 'Repair',
     icon: '🛠️',
+    color: '#D9683B',
     chipOn: 'bg-rose-600 text-white border-rose-600',
     badge: 'bg-rose-100 text-rose-800',
     action: 'Offer to help',
@@ -60,6 +65,7 @@ export const LISTING_TYPES = {
   food: {
     label: 'Food',
     icon: '🥕',
+    color: '#2F9C5E',
     chipOn: 'bg-orange-600 text-white border-orange-600',
     badge: 'bg-orange-100 text-orange-900',
     action: 'Claim it',
