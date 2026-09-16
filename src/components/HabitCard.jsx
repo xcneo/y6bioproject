@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { estimate } from '../lib/impact'
+import { estimate, formatCo2, isUnsourced } from '../lib/impact'
 import ImpactStats from './ImpactStats'
 
 // One "what if I…" habit, with a stepper for how often and the four numbers it
@@ -17,11 +17,10 @@ export default function HabitCard({ habit }) {
     setAmount((current) => Math.min(habit.max, Math.max(1, current + by)))
   }
 
-  const metricBadges = [
-    { key: 'water', label: 'Water', icon: '💧', value: result.water },
-    { key: 'money', label: 'Money', icon: '💵', value: result.money },
-    { key: 'waste', label: 'Waste', icon: '🗑️', value: result.waste },
-  ]
+  // CO₂ is the headline; the other three sit underneath as badges. All four go
+  // through the formatters in lib/impact.js, which round on purpose — printing
+  // the raw arithmetic showed things like "15436.800000000003" with no unit.
+  const co2Missing = isUnsourced(result.co2)
 
   return (
     <li className="rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
@@ -60,20 +59,22 @@ export default function HabitCard({ habit }) {
 
       <div className="mt-4">
         <p className="text-[12px] font-semibold text-[#5C6E62]">This change could save</p>
-        <p className="mt-1 font-[Nunito] text-[30px] font-extrabold tracking-[-0.04em] text-[#14733F]">
-          {result.co2 > 0 ? result.co2.toFixed(0) : '0'} kg CO₂e
-        </p>
+        {co2Missing ? (
+          // Never show a missing factor as zero — see the header of data/factors.js.
+          <p className="mt-2 inline-block rounded-md bg-amber-100 px-2 py-1 text-[13px] font-semibold text-amber-900">
+            CO₂e: source needed
+          </p>
+        ) : (
+          <p className="mt-1 font-[Nunito] text-[30px] font-extrabold tracking-[-0.04em] text-[#14733F]">
+            {result.co2 === 0 ? 'No change' : `${formatCo2(result.co2)} CO₂e`}
+            <span className="ml-1.5 font-sans text-[13px] font-semibold tracking-normal text-[#5C6E62]">
+              a year
+            </span>
+          </p>
+        )}
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        {metricBadges.map((metric) => (
-          <div key={metric.key} className="flex items-center gap-1.5 rounded-full bg-[#F2F7F0] px-2.5 py-1.5 text-[11px] font-semibold text-[#5C6E62]">
-            <span aria-hidden="true">{metric.icon}</span>
-            <span>{metric.label}</span>
-            <span className="text-[#16281D]">{metric.value}</span>
-          </div>
-        ))}
-      </div>
+      <ImpactStats result={result} labels={habit.statLabels} skip={['co2']} />
     </li>
   )
 }

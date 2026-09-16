@@ -39,7 +39,8 @@ You need [Node.js](https://nodejs.org) version 20 or newer. Check with `node -v`
 ```bash
 git clone https://github.com/xcneo/y6bioproject.git
 cd y6bioproject
-npm install     # downloads the libraries the project needs — do this once
+npm install     # downloads the libraries the project needs — do this once,
+                # and again whenever package.json changes (e.g. after a pull)
 npm run dev     # starts the app
 ```
 

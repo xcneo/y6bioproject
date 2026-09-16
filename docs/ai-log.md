@@ -1453,3 +1453,77 @@ appends a one-line summary of each task it completes.
   that reaches a screen sourced and verified by a team member, §7, §8 and §12 all
   closed, and one section outstanding — §11b's survey figures, which live in a
   spreadsheet that is not in the repo.
+- 2026-09-16 (review of a teammate's push) — Henrison asked for the latest update
+  from the shared repo. A fetch found one new commit, Mandy's 797b39a of 16 Sept,
+  "Add Home dashboard activity tracking, redesigned dashboard": 15 files, almost
+  all a visual redesign (green header, Inter and Nunito fonts from Google Fonts,
+  SVG tab icons, a ring chart on the score card, colours added to the type files).
+  Despite the message, no activity-tracking logic was found. Checked against the
+  rules that must not weaken: no figure in factors.js changed, and the handover
+  code still gates every completion that pays points. One real regression: the
+  Impact habit cards stopped using the calculator's formatters, and running
+  estimate() on each card in a scratch copy showed what would be displayed, for
+  example "Water 15436.800000000003" and "Money 52.80000000000001" with no units,
+  where the old cards showed "15 m³" and "$53", with no "a year" label. The same
+  change would show an unsourced CO₂ figure as "0 kg" rather than "Source needed".
+  Also noted: the score card's "Ahead of Toa Payoh, Bukit Batok and Jurong East"
+  is typed text rather than computed, true only while the estate is Clementi; and
+  the "Where these numbers come from" list is now folded shut. Nothing was merged
+  or edited; findings were reported for the team to decide.
+- 2026-09-16 (fixing the redesign's two regressions) — After pulling Mandy's
+  redesign, Henrison asked for three fixes: bring back "per year", round the
+  numbers, and fix the map filter chips, some of whose labels vanished when
+  tapped. The chip bug was reproduced in the running app before changing
+  anything. Cause: the redesign colours a selected chip from a new `color` field,
+  which was added to five of the nine facility types but not to solar panels,
+  bicycle parking, park connector or cooling green space. For those four the
+  chip got white text and no background, so the label disappeared on a white
+  button. The missing colours were added using the shades the team's original
+  chip styles already used for those types, so each chip matches its map pins;
+  e-waste was changed from teal to red for the same reason, since its pins are
+  red. Both chip rows now fall back to the app's green if a type has no colour,
+  and the small dot inside a selected chip turns white instead of vanishing. For
+  the Impact cards, the alternative was to add rounding inside the new card, but
+  the rounding already existed in lib/impact.js and the old badge component
+  already used it, so the card was pointed back at that component, with a new
+  `skip` option so CO₂ is not printed twice. That one change also brought back
+  "Source needed" for an unsourced figure (the redesign would have shown 0) and
+  the drill card's "Water withdrawn" label. The CO₂ headline now reads, for
+  example, "1.1 t CO₂e a year". A footnote repeating "per year" under each card
+  was tried and removed as redundant. Checked on screen: every chip readable
+  when selected, with the right pins shown, and all four cards rounded, with
+  units and the per-year label. Lint passes. Henrison also asked whether to
+  replace the emoji with proper icons; that was left as a question, not done.
+- 2026-09-16 (emoji replaced with Lucide icons) — Henrison chose to replace the
+  emoji used as icons with a proper icon set. The case for it: emoji are drawn
+  differently on iPhone and Android, so the demo phone would not match the
+  screenshots, and they clashed with the line icons in the redesigned tab bar.
+  The case against, stated before starting, was that the build phase is over
+  and the report is the binding constraint; it is visual only and touches no
+  figure or points rule. Lucide (the lucide-react package) was picked over
+  hand-drawing SVGs like the tab bar's, which would have been about twenty
+  icons of drawing code for the team to maintain. Each type in facilityTypes.js
+  and listingTypes.js now stores its icon component (Recycle, BatteryCharging,
+  PlugZap, GlassWater, Sprout, SolarPanel, Bike, Route and Trees for the map;
+  HandHelping, Gift, ArrowLeftRight, Banknote, Wrench and Carrot for listings),
+  and the seven places that drew `type.icon` draw it as a component. Water refill
+  got a glass rather than a droplet so it does not repeat the water badge on the
+  Impact tab, and the savings badge got a piggy bank rather than a banknote so
+  it does not repeat the Rent listing. The camera, the walking-distance figure
+  and the points stars were swapped too. The ✓ and ✕ marks were kept: they are
+  ordinary text characters that look the same on every phone. Mandy's
+  hand-drawn tab bar icons were left alone. CLAUDE.md now lists the library, and
+  the README says to run npm install again after a pull that changes
+  package.json; every teammate must do that once, or the app will not start.
+  Checked on screen: map pins, facility list and sheet, both chip rows, listing
+  cards, the food listing form's photo button, shelf cards, and Impact badges.
+  Lint and a production build both pass.
+- 2026-09-16 (Share tab icon) — Henrison noticed the Share tab's icon was drawn
+  slightly off. Reading its path confirmed it: the three dots were not evenly
+  spaced and the connecting lines stopped short of them. It was replaced with
+  Lucide's Share2, the same shape drawn properly, at the same size, colour and
+  line width as the two hand-drawn icons beside it, which were left alone.
+  Checked on screen in both states, selected and not. Henrison also asked why
+  teammates must run npm install after pulling: node_modules, where the
+  downloaded library lives, is never uploaded to GitHub, so a pull brings the
+  code that uses lucide-react but not the library itself.

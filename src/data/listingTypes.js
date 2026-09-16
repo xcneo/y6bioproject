@@ -1,3 +1,5 @@
+import { ArrowLeftRight, Banknote, Carrot, Gift, HandHelping, Wrench } from 'lucide-react'
+
 // The six things a resident can post on the sharing board.
 //
 // Same note as facilityTypes.js: the Tailwind class names are written out in
@@ -16,10 +18,11 @@
 //                                  would reward listing things at a price over
 //                                  simply lending them for free.
 
+// `icon` is a Lucide icon, drawn with <type.icon />. See facilityTypes.js.
 export const LISTING_TYPES = {
   lend: {
     label: 'Borrow',
-    icon: '🔧',
+    icon: HandHelping,
     color: '#3B82C4',
     chipOn: 'bg-sky-600 text-white border-sky-600',
     badge: 'bg-sky-100 text-sky-800',
@@ -28,7 +31,7 @@ export const LISTING_TYPES = {
   },
   giveaway: {
     label: 'Free',
-    icon: '🎁',
+    icon: Gift,
     color: '#2F9C5E',
     chipOn: 'bg-emerald-600 text-white border-emerald-600',
     badge: 'bg-emerald-100 text-emerald-800',
@@ -37,7 +40,7 @@ export const LISTING_TYPES = {
   },
   swap: {
     label: 'Swap',
-    icon: '🔄',
+    icon: ArrowLeftRight,
     color: '#7C5CD9',
     chipOn: 'bg-violet-600 text-white border-violet-600',
     badge: 'bg-violet-100 text-violet-800',
@@ -46,7 +49,7 @@ export const LISTING_TYPES = {
   },
   rent: {
     label: 'Rent',
-    icon: '💵',
+    icon: Banknote,
     color: '#B9821F',
     chipOn: 'bg-amber-600 text-white border-amber-600',
     badge: 'bg-amber-100 text-amber-900',
@@ -55,7 +58,7 @@ export const LISTING_TYPES = {
   },
   repair: {
     label: 'Repair',
-    icon: '🛠️',
+    icon: Wrench,
     color: '#D9683B',
     chipOn: 'bg-rose-600 text-white border-rose-600',
     badge: 'bg-rose-100 text-rose-800',
@@ -64,7 +67,7 @@ export const LISTING_TYPES = {
   },
   food: {
     label: 'Food',
-    icon: '🥕',
+    icon: Carrot,
     color: '#2F9C5E',
     chipOn: 'bg-orange-600 text-white border-orange-600',
     badge: 'bg-orange-100 text-orange-900',

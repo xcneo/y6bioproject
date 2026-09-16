@@ -22,6 +22,9 @@ export default function FilterChips({ activeTypes, onToggle, onClear }) {
 
         {TYPE_KEYS.map((key) => {
           const type = FACILITY_TYPES[key]
+          // Fall back to the app's green: with no colour, a selected chip is white
+          // text on a white button and its label disappears.
+          const colour = type.color ?? '#2F9C5E'
           const isOn = activeTypes.includes(key)
 
           return (
@@ -34,16 +37,16 @@ export default function FilterChips({ activeTypes, onToggle, onClear }) {
               style={
                 isOn
                   ? {
-                      backgroundColor: type.color,
-                      borderColor: type.color,
+                      backgroundColor: colour,
+                      borderColor: colour,
                       color: '#fff',
                       boxShadow: '0 6px 18px rgba(20,40,25,0.05)',
                     }
                   : undefined
               }
             >
-              <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ backgroundColor: type.color }} />
-              <span aria-hidden="true" className="mr-1">{type.icon}</span>
+              <span className="mr-2 inline-block h-2.5 w-2.5 rounded-full align-middle" style={{ backgroundColor: isOn ? '#fff' : colour }} />
+              <type.icon className="mr-1 inline-block h-4 w-4 align-[-3px]" aria-hidden="true" />
               {type.label}
             </button>
           )

@@ -1,6 +1,7 @@
 import { recipesFor } from '../data/recipes'
 import { PEOPLE } from '../data/residents'
 import { EnterHandoverCode, ShowHandoverCode } from './HandoverCode'
+import { Camera } from 'lucide-react'
 
 // One item on the Expiring Soon Shelf.
 //
@@ -27,8 +28,8 @@ function freshness(daysLeft) {
 }
 
 const PHOTO_NOTE = {
-  expiry: '📷 Photo of the printed best-before date',
-  item: '📷 Photo of the item — judge freshness yourself',
+  expiry: 'Photo of the printed best-before date',
+  item: 'Photo of the item — judge freshness yourself',
 }
 
 export default function ShelfCard({
@@ -74,7 +75,10 @@ export default function ShelfCard({
       <p className="mt-2 text-[13px] leading-relaxed text-[#5C6E62]">{item.detail}</p>
 
       <p className="mt-2 text-[11px] text-[#5C6E62]">Best before {item.bestBefore}</p>
-      <p className="mt-1 text-[11px] text-[#93A399]">{PHOTO_NOTE[item.photo]}</p>
+      <p className="mt-1 flex items-center gap-1 text-[11px] text-[#93A399]">
+        <Camera className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        {PHOTO_NOTE[item.photo]}
+      </p>
 
       {/* ---- Nobody claimed it in time: use it up instead ---- */}
       {recipes.length > 0 && (

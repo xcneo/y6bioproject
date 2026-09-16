@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { LISTING_TYPES, POSTABLE_CATEGORIES } from '../data/listingTypes'
 import { useSession } from '../context/SessionContext'
 import { makeHandoverCode } from '../lib/handover'
+import { Camera } from 'lucide-react'
 
 // The "post something" form, sliding up from the bottom like FacilitySheet.
 //
@@ -117,7 +118,8 @@ export default function NewListingSheet({ onCreate, onClose }) {
                       isOn ? type.chipOn : 'border-stone-300 bg-white text-stone-600'
                     }`}
                   >
-                    <span aria-hidden="true">{type.icon}</span> {type.label}
+                    <type.icon className="mr-1 inline-block h-4 w-4 align-[-3px]" aria-hidden="true" />
+                    {type.label}
                   </button>
                 )
               })}
@@ -247,7 +249,14 @@ export default function NewListingSheet({ onCreate, onClose }) {
                       : 'border border-orange-300 bg-white text-orange-900'
                   }`}
                 >
-                  {photoAdded ? '✓ Photo added' : '📷 Take photo'}
+                  {photoAdded ? (
+                    '✓ Photo added'
+                  ) : (
+                    <>
+                      <Camera className="mr-1.5 inline-block h-4 w-4 align-[-3px]" aria-hidden="true" />
+                      Take photo
+                    </>
+                  )}
                 </button>
                 <p className="mt-1 text-center text-[11px] text-stone-500">
                   Demo only — no camera opens and no photo is stored.

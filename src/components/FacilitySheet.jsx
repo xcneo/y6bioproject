@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FACILITY_TYPES, OTHER_PROBLEM } from '../data/facilityTypes'
+import { Footprints } from 'lucide-react'
 
 // The card that slides up from the bottom when you tap a map marker.
 // It also holds the "report a problem" form, because a report is almost always
@@ -65,7 +66,7 @@ export default function FacilitySheet({ facility, onClose, onReportSent }) {
             className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg ${type.pin}`}
             aria-hidden="true"
           >
-            {type.icon}
+            <type.icon className="h-5 w-5 text-white" strokeWidth={2.2} />
           </span>
           <div className="min-w-0">
             <p className="text-xs font-medium uppercase tracking-wide text-stone-500">
@@ -80,8 +81,9 @@ export default function FacilitySheet({ facility, onClose, onReportSent }) {
 
         <p className="mt-3 text-sm text-stone-700">{facility.detail}</p>
 
-        <p className="mt-3 inline-block rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-800">
-          🚶 About {facility.walkMinutes} min walk
+        <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-800">
+          <Footprints className="h-4 w-4" aria-hidden="true" />
+          About {facility.walkMinutes} min walk
         </p>
 
         {!reportOpen && !sent && (

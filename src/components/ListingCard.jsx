@@ -90,7 +90,7 @@ export default function ListingCard({
             style={{ backgroundColor: categoryColor, color: '#fff' }}
             aria-hidden="true"
           >
-            {type.icon}
+            <type.icon className="h-5 w-5" />
           </span>
           <div className="min-w-0">
             <h3 className="font-[Nunito] text-[20px] font-extrabold text-[#16281D]">

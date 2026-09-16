@@ -1,5 +1,6 @@
 import { PEOPLE, PHONES } from '../data/residents'
 import { useSession } from '../context/SessionContext'
+import { Star } from 'lucide-react'
 
 // The demo control that swaps which resident you are.
 //
@@ -40,7 +41,8 @@ export default function PhoneSwitcher() {
                   isCurrent ? 'text-slate-500' : 'text-slate-400'
                 }`}
               >
-                ⭐ {balances[id].toLocaleString()}
+                <Star className="mr-1 inline-block h-3 w-3 fill-amber-400 align-[-1px] text-amber-400" aria-hidden="true" />
+                {balances[id].toLocaleString()}
               </span>
             </button>
           )

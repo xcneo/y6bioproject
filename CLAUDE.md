@@ -91,6 +91,10 @@ the screen, or by importing `src/lib/impact.js` in a scratch script.
 - Vite + **React 19** (JavaScript, not TypeScript)
 - **Tailwind CSS v4** — styling is class names in the JSX
 - **react-router-dom v7** — three routes in `src/App.jsx`
+- **lucide-react** — icons (added 16 Sept 2026, replacing emoji). Each type in
+  `facilityTypes.js` / `listingTypes.js` stores the icon component itself as
+  `icon`, drawn with `<type.icon className="…" />`. Browse names at lucide.dev/icons.
+  After pulling this change, run `npm install` once or the app will not start.
 - No state management library. `useState` / `useContext` only.
 
 Tailwind v4 is wired differently from the v3 setup most tutorials show. There is

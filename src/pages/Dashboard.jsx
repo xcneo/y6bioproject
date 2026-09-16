@@ -7,6 +7,7 @@ import FilterChips from '../components/FilterChips'
 import FacilitySheet from '../components/FacilitySheet'
 import ScoreCard from '../components/ScoreCard'
 import EventList from '../components/EventList'
+import { Star } from 'lucide-react'
 
 export default function Dashboard() {
   // Who you are and what you have both come from the session, so this screen
@@ -111,7 +112,7 @@ export default function Dashboard() {
 
           <div className="flex items-center gap-2 rounded-full bg-white/18 px-3 py-2 text-[12px] font-semibold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-sm">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#E8A93A] text-[11px] text-[#224F2D] shadow-sm">
-              ★
+              <Star className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
             </span>
             <span className="text-[15px] font-extrabold">{points.toLocaleString()}</span>
             <span className="text-[11px] text-emerald-50/90">points</span>
@@ -162,7 +163,7 @@ export default function Dashboard() {
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${type.pin}`}
                     aria-hidden="true"
                   >
-                    {type.icon}
+                    <type.icon className="h-[18px] w-[18px] text-white" strokeWidth={2.2} />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-medium text-stone-900">

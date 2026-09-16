@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom'
+import { Share2 } from 'lucide-react'
 import SessionProvider from './context/SessionProvider'
 import SharingProvider from './context/SharingProvider'
 import PhoneSwitcher from './components/PhoneSwitcher'
@@ -35,11 +36,10 @@ function TabIcon({ icon, active }) {
   }
 
   if (icon === 'share') {
-    return (
-      <svg {...common}>
-        <path d="M8 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm8-5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM9.8 10.9l4.4-2.5M9.8 13.2l4.4 2.5" />
-      </svg>
-    )
+    // Lucide's Share2, not hand-drawn: the hand-drawn version had uneven dots and
+    // lines that stopped short of them. Same size, colour and line width as the
+    // two icons beside it.
+    return <Share2 size={common.width} color={common.stroke} strokeWidth={common.strokeWidth} aria-hidden="true" />
   }
 
   return (

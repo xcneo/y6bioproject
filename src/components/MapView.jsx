@@ -88,7 +88,7 @@ export default function MapView({ facilities, homeLabel, selectedId, onSelect })
             }`}
             aria-label={`${type.label}: ${facility.name} at ${facility.address}`}
           >
-            <span aria-hidden="true">{type.icon}</span>
+            <type.icon className="h-[18px] w-[18px] text-white" strokeWidth={2.2} aria-hidden="true" />
           </button>
         )
       })}

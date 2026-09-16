@@ -8,6 +8,7 @@ import CategoryChips from '../components/CategoryChips'
 import ListingCard from '../components/ListingCard'
 import ShelfCard from '../components/ShelfCard'
 import NewListingSheet from '../components/NewListingSheet'
+import { Star } from 'lucide-react'
 
 export default function Share() {
   const { resident, points, earnPoints } = useSession()
@@ -128,7 +129,7 @@ export default function Share() {
 
           <div className="flex items-center gap-2 rounded-full bg-white/18 px-3 py-2 text-[12px] font-semibold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.12)] backdrop-blur-sm">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#E8A93A] text-[11px] text-[#224F2D] shadow-sm">
-              ★
+              <Star className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
             </span>
             <span className="text-[15px] font-extrabold">{points.toLocaleString()}</span>
             <span className="text-[11px] text-emerald-50/90">points</span>
