@@ -1548,3 +1548,15 @@ appends a one-line summary of each task it completes.
   the EV chargers to government datasets when they were confirmed on Revolt.sg;
   both were caught on rereading and corrected. vercel.json was added so that a
   Vercel deployment serves the app for any address, not only the home page.
+- 2026-09-17 (published to Vercel) — Henrison wanted a link to share the app.
+  Vercel's command-line tool was used rather than connecting Vercel to the GitHub
+  repo. Connecting would redeploy on every push, so the live link could break the
+  night before the demo, and it would need access to a repo owned by Xuan Che.
+  The command-line deploy is a fixed snapshot that changes only when someone runs
+  it again. Henrison logged in himself; Claude does not handle account logins. The
+  app was published as project eco-sg in the bluefloof Vercel account, at
+  https://eco-sg.vercel.app. Checked from outside Vercel: the home page, /share and
+  /impact all load directly, which is what vercel.json is for; without it a
+  refresh on /share returns 404. The Vercel tool also added `.vercel` to
+  .gitignore. That folder only links this laptop to the Vercel project and should
+  not be shared.
