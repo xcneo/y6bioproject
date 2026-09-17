@@ -1527,3 +1527,24 @@ appends a one-line summary of each task it completes.
   teammates must run npm install after pulling: node_modules, where the
   downloaded library lives, is never uploaded to GitHub, so a pull brings the
   code that uses lucide-react but not the library itself.
+- 2026-09-17 (branch history cleaned; README corrected) — At Henrison's request,
+  and after he had spoken to the teammate involved, two commits of 16 Sept that
+  renamed CLAUDE.md were removed from main's history rather than undone on top.
+  Keeping the name matters for two reasons worth knowing: Claude Code loads its
+  project brief only from a file named exactly CLAUDE.md, and a repo holding both
+  README.md and ReadMe.md breaks on macOS, which treats them as one file name.
+  Rewriting a shared branch is the risky option, so the push used a lease: it would
+  refuse if anyone had pushed since the fetch, rather than deleting their work.
+  Teammates who had already pulled those commits need to reset to GitHub's main.
+  The alternative, keeping both commits and adding a fix on top, had been done
+  first and was Claude's suggestion; Henrison chose the cleaner history. The same
+  task corrected three stale statements in README.md: it listed Bloobox collection,
+  a map type removed on 10 Sept; it called the Sharing Platform and Impact
+  Calculator placeholder screens, though all three features are built; and it said
+  every figure in src/data/ was made up. That last one was the serious one, since
+  the conversion factors are real and cited and 21 of the 25 facilities are
+  recorded ones. It now separates real, cited data from invented demo data. A
+  first draft of that sentence called all 25 facilities real, and also credited
+  the EV chargers to government datasets when they were confirmed on Revolt.sg;
+  both were caught on rereading and corrected. vercel.json was added so that a
+  Vercel deployment serves the app for any address, not only the home page.

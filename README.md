@@ -19,7 +19,7 @@ in [`docs/source-checklist.md`](docs/source-checklist.md) §11b.
 ## The three features
 
 1. **Neighbourhood Dashboard** : A map of green infrastructure near your block
-   (recycling points, Bloobox collection, EV chargers, community gardens, water refill
+   (recycling bins, e-waste bins, EV chargers, community gardens, water refill
    stations and more), plus upcoming recycling drives you can volunteer for and a way to
    report an overflowing bin or broken facility.
 2. **Sharing Platform** : Borrow, give away, swap, rent or request repairs from
@@ -62,12 +62,21 @@ npm run lint      # checks the code for mistakes
 
 ## Status
 
-This is a class prototype, not a real app. It runs entirely in the browser with no
-server, no accounts and no database, and every location, event and figure in
-`src/data/` is made up for demonstration. Changes you make in the app disappear when you
-reload the page.
+All three features are built. This is a class prototype, not a real app: it runs
+entirely in the browser with no server, no accounts and no database, and changes you
+make in the app disappear when you reload the page. To show both sides of a handover on
+one phone, the dark bar at the top switches between two residents, Henrison and Mr Lim.
 
-Right now the Neighbourhood Dashboard is built (set in Clementi); the Sharing Platform
-and Impact Calculator are placeholder screens.
+`src/data/` holds two very different kinds of data, and the difference matters:
+
+- **Real and cited.** Every conversion figure the Impact Calculator uses (CO₂, water,
+  prices, serving sizes) is in `src/data/factors.js`, with its source. Of the map's
+  25 facilities in Clementi, 21 are recorded real ones: the bins, gardens, bicycle racks
+  and parks come from official NEA, LTA and NParks datasets, and the EV chargers were
+  confirmed on Revolt.sg, a charger listing. The other four, two water coolers and two
+  rooftop-solar entries, are illustrative, because no public dataset records them. What
+  has been checked, and by whom, is recorded in [`docs/source-checklist.md`](docs/source-checklist.md).
+- **Invented for the demo.** The residents, listings, food shelf, events, recipes, activity
+  history and neighbourhood scores are made up, and each file says so at the top.
 
 See `CLAUDE.md` for the fuller project brief and the working rules we follow.
