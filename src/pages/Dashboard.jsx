@@ -5,13 +5,14 @@ import { useSession } from '../context/SessionContext'
 import MapView from '../components/MapView'
 import FilterChips from '../components/FilterChips'
 import FacilitySheet from '../components/FacilitySheet'
+import ScoreCard from '../components/ScoreCard'
 import EventList from '../components/EventList'
 import { Star } from 'lucide-react'
 
 export default function Dashboard() {
   // Who you are and what you have both come from the session, so this screen
   // and the Share screen always agree. See src/context/SessionContext.js.
-  const { resident, earnPoints, eventStatuses, updateEventStatus } = useSession()
+  const { resident, points, earnPoints, eventStatuses, updateEventStatus } = useSession()
 
   // Which facility types the chips are filtering by. Empty list means "show all".
   const [activeTypes, setActiveTypes] = useState([])
@@ -92,6 +93,11 @@ export default function Dashboard() {
           </div>
         </div>
       </header>
+
+      {/* The neighbourhood sustainability score. It briefly disappeared from the
+          app when this screen was rebuilt on 18 Sept; it is one of the two
+          customisations the brief asks to keep visible, so it lives here. */}
+      <ScoreCard estate={resident.estate} />
 
       <section>
         <h2 className="mb-2 text-sm font-semibold text-[#16281D]">Green facilities near {resident.block}</h2>

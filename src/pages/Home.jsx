@@ -13,10 +13,14 @@ const STREAK_DAYS = [
   { day: 'S', icon: 'flame', active: false },
 ]
 
+// Shown only until the resident has anything real on the board. Nothing here
+// is earned yet, so each says what it WOULD pay on completion — writing
+// "+50 Points" beside "Signed up" would promise points for signing up, which
+// the app never awards.
 const ONGOING_ACTIVITIES = [
-  { title: 'Bring My Own Reusables', status: 'Signed up', points: '+50 Points', icon: 'reusable', tone: 'bg-[#EAF6EE] text-[#1E7A4A]' },
-  { title: 'Clean Energy', status: 'In progress', points: '+75 Points', icon: 'energy', tone: 'bg-[#FFF5D8] text-[#C28716]' },
-  { title: 'Compost', status: 'Ready to log', points: '+30 Points', icon: 'compost', tone: 'bg-[#EAF9F3] text-[#2F9C5E]' },
+  { title: 'Bring My Own Reusables', status: 'Signed up', points: '+50 on completion', icon: 'reusable', tone: 'bg-[#EAF6EE] text-[#1E7A4A]' },
+  { title: 'Clean Energy', status: 'In progress', points: '+75 on completion', icon: 'energy', tone: 'bg-[#FFF5D8] text-[#C28716]' },
+  { title: 'Compost', status: 'Ready to log', points: '+30 on completion', icon: 'compost', tone: 'bg-[#EAF9F3] text-[#2F9C5E]' },
 ]
 
 const PAST_ACTIVITIES = [
@@ -76,7 +80,10 @@ export default function Home() {
     .map((event) => ({
       title: event.title,
       status: eventStatuses[event.id] === 'attended' ? 'Completed in Neighbourhood' : 'Signed up in Neighbourhood',
-      points: `+${event.pointsForAttending} Points`,
+      points:
+        eventStatuses[event.id] === 'attended'
+          ? `+${event.pointsForAttending} Points`
+          : `+${event.pointsForAttending} on completion`,
       icon: event.title.toLowerCase().includes('garden') ? 'compost' : 'recycle',
       tone: 'bg-[#EAF6EE] text-[#1E7A4A]',
     }))
@@ -90,7 +97,9 @@ export default function Home() {
       return {
         title: item.title ?? item.what,
         status: done ? 'Completed in Share' : 'Ongoing in Share',
-        points: `+${claim.creditedPoints ?? item.points ?? 0} Points`,
+        points: done
+          ? `+${claim.creditedPoints ?? item.points ?? 0} Points`
+          : `+${item.points ?? 0} on completion`,
         icon: item.category === 'repair' ? 'mindful' : item.category === 'borrow' ? 'reusable' : 'recycle',
         tone: 'bg-[#EAF5FF] text-[#2F8FA5]',
       }
@@ -135,7 +144,7 @@ export default function Home() {
             <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#5C6E62]">Daily streak</p>
             <h2 className="mt-1 font-[Nunito] text-[20px] font-extrabold text-[#16281D]">7-Day Streak</h2>
           </div>
-          <span className="rounded-full bg-[#E8A93A] px-2.5 py-1 text-[11px] font-extrabold text-[#224F2D]">+50 bonus</span>
+          <span className="rounded-full bg-[#EAF4EE] px-2.5 py-1 text-[11px] font-extrabold text-[#14733F]">7-day habit</span>
         </div>
         <div className="mt-4 grid grid-cols-7 gap-1.5">
           {STREAK_DAYS.map(({ day, icon, active }, index) => (
@@ -145,7 +154,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <p className="mt-4 text-[12px] leading-relaxed text-[#5C6E62]">+20 to +50 Bonus Points for maintaining consecutive 7-day streaks.</p>
+        <p className="mt-4 text-[12px] leading-relaxed text-[#5C6E62]">Your streak tracks days active. Points come from completed actions only.</p>
       </section>
 
       <section className="space-y-3">

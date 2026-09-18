@@ -1560,3 +1560,35 @@ appends a one-line summary of each task it completes.
   refresh on /share returns 404. The Vercel tool also added `.vercel` to
   .gitignore. That folder only links this laptop to the Vercel project and should
   not be shared.
+- 2026-09-18 (pulled Mandy's Home screen; fixed a crash before redeploying) —
+  Henrison asked to pull the latest work and update the Vercel site. The pull
+  brought one commit, 53a5b33 of 18 Sept, adding a Home screen as the first tab,
+  moving the map to /neighbourhood, and lifting event sign-ups from Dashboard's
+  own state into SessionProvider so the new screen can read them. Reviewing it
+  before deploying found a crash: Dashboard still printed `points` in its header
+  but no longer read it from the session, so the Neighbourhood tab rendered a
+  blank white page with "ReferenceError: points is not defined". The production
+  build did not catch this, because Vite does not check for undefined names; the
+  lint step did, and the blank page and console error were then reproduced in the
+  browser. Fixed by restoring `points` to the line that reads the session, and
+  both tabs were checked again. The site was redeployed to the same link,
+  https://eco-sg.vercel.app, and the previously crashing page checked live. Three
+  things were noted for the team rather than changed: the Home screen advertises a
+  daily-streak bonus of 20 to 50 points for consecutive days, which pays for
+  opening the app rather than for completing anything and so contradicts the
+  standing rule that points follow completion; its placeholder activity cards show
+  "+50 Points" beside "Signed up", which reads as paying for sign-up; and
+  ScoreCard is no longer rendered anywhere, so the neighbourhood sustainability
+  score, one of the two customisations the brief asks to keep visible, has
+  disappeared from the app.
+  Henrison then asked for two of the three to be fixed. ScoreCard is rendered
+  again on the Neighbourhood screen, directly under the header where it used to
+  sit. The streak card keeps its seven-day row but no longer advertises points:
+  the "+50 bonus" badge now reads "7-day habit" and the line under it says the
+  streak tracks days active and that points come from completed actions only.
+  Deleting the streak card outright was the alternative Henrison was offered and
+  did not take; keeping it as a habit tracker costs nothing and the rule it broke
+  was the promise of points, not the streak itself. Activity rows now separate
+  what has been earned from what has not: a finished one still shows "+50 Points",
+  an ongoing or merely signed-up one shows "+50 on completion", both for the real
+  rows and for the placeholder cards shown before a resident has any activity.
