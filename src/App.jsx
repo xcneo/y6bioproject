@@ -3,14 +3,16 @@ import { Share2 } from 'lucide-react'
 import SessionProvider from './context/SessionProvider'
 import SharingProvider from './context/SharingProvider'
 import PhoneSwitcher from './components/PhoneSwitcher'
+import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import Share from './pages/Share'
 import Impact from './pages/Impact'
 
 const TABS = [
-  { path: '/', label: 'Neighbourhood', icon: 'map' },
+  { path: '/', label: 'Home', icon: 'home' },
+  { path: '/neighbourhood', label: 'Neighbourhood', icon: 'map' },
   { path: '/share', label: 'Share', icon: 'share' },
-  { path: '/impact', label: 'Impact', icon: 'chart' },
+  { path: '/impact', label: 'Impact', icon: 'impact' },
 ]
 
 function TabIcon({ icon, active }) {
@@ -42,9 +44,27 @@ function TabIcon({ icon, active }) {
     return <Share2 size={common.width} color={common.stroke} strokeWidth={common.strokeWidth} aria-hidden="true" />
   }
 
+  if (icon === 'impact') {
+    return (
+      <svg {...common}>
+        <path d="M5 18V9M12 18V5M19 18v-7" />
+      </svg>
+    )
+  }
+
+  if (icon === 'home') {
+    return (
+      <svg {...common}>
+        <path d="M3 10.5 12 3l9 7.5" />
+        <path d="M5 9.5V20h14V9.5" />
+      </svg>
+    )
+  }
+
   return (
     <svg {...common}>
-      <path d="M4 18.5V9.5M4 9.5l8-5 8 5v9M8 13h8M8 17h5" />
+      <path d="M3 10.5 12 3l9 7.5" />
+      <path d="M5 9.5V20h14V9.5" />
     </svg>
   )
 }
@@ -57,13 +77,7 @@ function TabBar() {
           key={tab.path}
           to={tab.path}
           end={tab.path === '/'}
-          className={({ isActive }) =>
-            `flex flex-1 flex-col items-center justify-center rounded-[18px] px-2 py-2 text-[11px] font-semibold transition ${
-              isActive
-                ? 'bg-[#EAF4EE] text-[#14733F] shadow-[inset_0_0_0_1px_rgba(20,115,63,0.09)]'
-                : 'text-[#5C6E62]'
-            }`
-          }
+          className={({ isActive }) => `flex flex-1 flex-col items-center justify-center rounded-[14px] px-1 py-2 text-[10px] font-semibold transition ${isActive ? 'bg-[#EAF4EE] text-[#14733F] shadow-[inset_0_0_0_1px_rgba(20,115,63,0.09)]' : 'text-[#5C6E62]'}`}
         >
           {({ isActive }) => (
             <>
@@ -85,7 +99,8 @@ export default function App() {
           <div className="mx-auto min-h-screen max-w-md bg-[#F0F2ED] pb-24">
             <PhoneSwitcher />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/neighbourhood" element={<Dashboard />} />
               <Route path="/share" element={<Share />} />
               <Route path="/impact" element={<Impact />} />
             </Routes>

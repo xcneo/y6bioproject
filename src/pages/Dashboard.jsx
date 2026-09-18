@@ -5,41 +5,18 @@ import { useSession } from '../context/SessionContext'
 import MapView from '../components/MapView'
 import FilterChips from '../components/FilterChips'
 import FacilitySheet from '../components/FacilitySheet'
-import ScoreCard from '../components/ScoreCard'
 import EventList from '../components/EventList'
 import { Star } from 'lucide-react'
 
 export default function Dashboard() {
   // Who you are and what you have both come from the session, so this screen
   // and the Share screen always agree. See src/context/SessionContext.js.
-  const { resident, points, earnPoints } = useSession()
+  const { resident, earnPoints, eventStatuses, updateEventStatus } = useSession()
 
   // Which facility types the chips are filtering by. Empty list means "show all".
   const [activeTypes, setActiveTypes] = useState([])
   // The facility whose detail card is open, or null when nothing is open.
   const [selected, setSelected] = useState(null)
-
-  // Where each resident stands on each event, keyed by event id:
-  // 'going' = signed up, 'attended' = turned up and the points were credited.
-  // An event missing from the map is one they have not signed up for.
-  //
-  // Kept per resident so switching phones does not show you someone else's
-  // sign-ups. Henrison's is seeded so the demo shows all three states at once:
-  // one past event already credited, and one still waiting to be confirmed.
-  const [eventsByResident, setEventsByResident] = useState({
-    henrison: { 'canal-cleanup': 'attended', 'ewaste-jul': 'going' },
-    mrlim: {},
-  })
-
-  const myEvents = eventsByResident[resident.id] ?? {}
-
-  // Applies a change to just the current resident's sign-ups.
-  function updateEvents(change) {
-    setEventsByResident((current) => ({
-      ...current,
-      [resident.id]: change(current[resident.id] ?? {}),
-    }))
-  }
 
   const visible =
     activeTypes.length === 0
@@ -59,23 +36,19 @@ export default function Dashboard() {
 
   // Signing up costs and earns nothing — the points come later, on attendance.
   function joinEvent(event) {
-    updateEvents((mine) => ({ ...mine, [event.id]: 'going' }))
+    updateEventStatus(event.id, 'going')
   }
 
   // Cancelling just drops the sign-up. No points to take back, because none
   // were given out at sign-up time.
   function cancelEvent(event) {
-    updateEvents((mine) => {
-      const next = { ...mine }
-      delete next[event.id]
-      return next
-    })
+    updateEventStatus(event.id, 'cancelled')
   }
 
   // This is the only place event points are awarded.
   function confirmAttendance(event) {
-    if (myEvents[event.id] === 'attended') return
-    updateEvents((mine) => ({ ...mine, [event.id]: 'attended' }))
+    if (eventStatuses[event.id] === 'attended') return
+    updateEventStatus(event.id, 'attended')
     earnPoints(event.pointsForAttending)
   }
 
@@ -120,38 +93,18 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <ScoreCard estate={resident.estate} />
-
       <section>
-        <h2 className="mb-2 text-sm font-semibold text-stone-900">
-          Green facilities near {resident.block}
-        </h2>
-        <FilterChips
-          activeTypes={activeTypes}
-          onToggle={toggleType}
-          onClear={() => setActiveTypes([])}
-        />
-        <div className="mt-3">
-          <MapView
-            facilities={visible}
-            homeLabel="You"
-            selectedId={selected?.id}
-            onSelect={setSelected}
-          />
-        </div>
-        <p className="mt-2 text-xs text-stone-400">
-          Illustrated map for the prototype — tap a marker for details.
-        </p>
+        <h2 className="mb-2 text-sm font-semibold text-[#16281D]">Green facilities near {resident.block}</h2>
+        <FilterChips activeTypes={activeTypes} onToggle={toggleType} onClear={() => setActiveTypes([])} />
+        <div className="mt-3"><MapView facilities={visible} homeLabel="You" selectedId={selected?.id} onSelect={setSelected} /></div>
+        <p className="mt-2 text-xs text-[#93A399]">Illustrated map for the prototype - tap a marker for details.</p>
       </section>
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold text-stone-900">
-          Closest to you ({byDistance.length})
-        </h2>
+        <h2 className="mb-2 text-sm font-semibold text-[#16281D]">Closest to you ({byDistance.length})</h2>
         <ul className="space-y-2">
           {byDistance.slice(0, 5).map((facility) => {
             const type = FACILITY_TYPES[facility.type]
-
             return (
               <li key={facility.id}>
                 <button
@@ -181,30 +134,12 @@ export default function Dashboard() {
             )
           })}
         </ul>
-        {byDistance.length === 0 && (
-          <p className="rounded-2xl bg-white p-4 text-sm text-stone-500 ring-1 ring-stone-200">
-            Nothing matches those filters. Tap “All” to see everything again.
-          </p>
-        )}
+        {byDistance.length === 0 && <p className="rounded-[16px] bg-white p-4 text-sm text-[#5C6E62] ring-1 ring-[rgba(20,40,25,0.06)]">Nothing matches those filters. Tap “All” to see everything again.</p>}
       </section>
 
-      <EventList
-        statuses={myEvents}
-        onJoin={joinEvent}
-        onCancel={cancelEvent}
-        onConfirm={confirmAttendance}
-      />
+      <EventList statuses={eventStatuses} onJoin={joinEvent} onCancel={cancelEvent} onConfirm={confirmAttendance} />
 
-      {/* key resets the sheet's own state for each facility. Without it the
-          sheet stays mounted, so a report sent about one bin still reads
-          "report logged" when you tap the next marker, and the problem list
-          could keep a selection from a different facility type. */}
-      <FacilitySheet
-        key={selected?.id}
-        facility={selected}
-        onClose={() => setSelected(null)}
-        onReportSent={() => earnPoints(10)}
-      />
+      <FacilitySheet key={selected?.id} facility={selected} onClose={() => setSelected(null)} onReportSent={() => earnPoints(10)} />
     </div>
   )
 }

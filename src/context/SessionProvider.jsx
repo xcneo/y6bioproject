@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { PEOPLE, PHONES } from '../data/residents'
+import { EVENTS } from '../data/events'
 import { SessionContext } from './SessionContext'
 
 // Holds which phone you are looking at, and one points balance per resident.
@@ -16,6 +17,11 @@ export default function SessionProvider({ children }) {
     Object.fromEntries(PHONES.map((id) => [id, PEOPLE[id].points])),
   )
 
+  const [eventStatuses, setEventStatuses] = useState({
+    henrison: { 'canal-cleanup': 'attended', 'ewaste-jul': 'going' },
+    mrlim: {},
+  })
+
   // Credits whoever is named. Usually that is the current resident, but a
   // handover can credit the other side, so the caller says who.
   function earnPoints(amount, personId = residentId) {
@@ -27,11 +33,21 @@ export default function SessionProvider({ children }) {
     }))
   }
 
+  function updateEventStatus(eventId, status, personId = residentId) {
+    setEventStatuses((current) => ({
+      ...current,
+      [personId]: { ...(current[personId] ?? {}), [eventId]: status },
+    }))
+  }
+
   const value = {
     residentId,
     resident: { id: residentId, ...PEOPLE[residentId] },
     points: balances[residentId],
     balances,
+    events: EVENTS,
+    eventStatuses: eventStatuses[residentId] ?? {},
+    updateEventStatus,
     earnPoints,
     switchTo: setResidentId,
   }

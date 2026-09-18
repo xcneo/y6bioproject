@@ -86,8 +86,8 @@ export default function ListingCard({
       <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-start gap-3">
           <span
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] text-[16px]"
-            style={{ backgroundColor: categoryColor, color: '#fff' }}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[22px]"
+            style={{ backgroundColor: `${categoryColor}28`, color: categoryColor }}
             aria-hidden="true"
           >
             <type.icon className="h-5 w-5" />

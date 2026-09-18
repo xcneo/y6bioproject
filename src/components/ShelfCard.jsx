@@ -59,7 +59,10 @@ export default function ShelfCard({
   return (
     <li className="w-64 shrink-0 rounded-[20px] border border-[rgba(20,40,25,0.08)] bg-white p-4 shadow-[0_6px_18px_rgba(20,40,25,0.05)]">
       <div className="flex items-start justify-between gap-2">
-        <h3 className="font-[Nunito] text-[18px] font-extrabold leading-tight text-[#16281D]">{item.title}</h3>
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EAF9F3] text-[22px]" aria-hidden="true">🥬</span>
+          <h3 className="font-[Nunito] text-[18px] font-extrabold leading-tight text-[#16281D]">{item.title}</h3>
+        </div>
         <span
           className={`shrink-0 rounded-full px-2 py-1 text-[10px] font-bold ${
             expired ? 'bg-[#FDE8E4] text-[#D9683B]' : 'bg-[#F5E9D0] text-[#B9821F]'
