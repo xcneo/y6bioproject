@@ -1592,3 +1592,20 @@ appends a one-line summary of each task it completes.
   what has been earned from what has not: a finished one still shows "+50 Points",
   an ongoing or merely signed-up one shows "+50 on completion", both for the real
   rows and for the placeholder cards shown before a resident has any activity.
+- 2026-09-21 (CLAUDE.md brought up to date before clearing the session) — Henrison
+  asked to confirm nothing was outstanding and that everything learned since
+  10 Sept was written down, so that the conversation could be cleared without
+  losing it. Git was clean and in sync with GitHub. CLAUDE.md, however, still
+  described the app as it stood on 10 Sept, so it was updated: the four-tab layout
+  with Home at / and the map moved to /neighbourhood; event sign-ups now living in
+  SessionProvider while Dashboard's confirmAttendance remains the only place event
+  points are awarded; ScoreCard's location and the note that it vanished from the
+  app for a day when a screen was rebuilt; a new rule that the copy must not
+  promise points the rules do not pay, with the streak card as the worked example;
+  a warning that npm run build succeeds on a screen that crashes, and that lint
+  catches it; a section on the Vercel link, how to redeploy and why pushing to
+  GitHub does not change it; the deadline line, which still said the deadline was
+  a fortnight away; and the next-task section, which now records that no figure
+  has changed since 10 Sept and lists three lessons from 16-18 Sept worth a line
+  in the report. The outstanding list itself was left as it was: §11b's survey
+  figures are still unticked, and nobody but a team member may tick that box.

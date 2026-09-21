@@ -86,11 +86,16 @@ No test runner is configured and there are no tests. Don't write tests against a
 framework that isn't installed — verify by running `npm run dev` and looking at
 the screen, or by importing `src/lib/impact.js` in a scratch script.
 
+⚠️ **`npm run build` succeeding does not mean the app works.** On 18 Sept a screen
+that crashed the moment it opened — a blank white page, "ReferenceError: points is
+not defined" — still built successfully, because Vite does not check for undefined
+names. `npm run lint` caught it. Run lint, then open the screen you changed.
+
 ## Stack
 
 - Vite + **React 19** (JavaScript, not TypeScript)
 - **Tailwind CSS v4** — styling is class names in the JSX
-- **react-router-dom v7** — three routes in `src/App.jsx`
+- **react-router-dom v7** — four routes in `src/App.jsx`
 - **lucide-react** — icons (added 16 Sept 2026, replacing emoji). Each type in
   `facilityTypes.js` / `listingTypes.js` stores the icon component itself as
   `icon`, drawn with `<type.icon className="…" />`. Browse names at lucide.dev/icons.
@@ -107,13 +112,28 @@ Theme values go in a `@theme { }` block in `src/index.css`, not a config file.
 
 **All three features are built.** The prototype is feature-complete for the demo.
 
-- **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`
+- **Feature 1, Neighbourhood Dashboard** — `src/pages/Dashboard.jsx`, route
+  `/neighbourhood`
 - **Feature 2, Sharing Platform** — `src/pages/Share.jsx`
 - **Feature 3, Impact Calculator** — `src/pages/Impact.jsx`
 
-`src/App.jsx` holds the router and the three-tab bottom nav, wrapped in
+**There is a fourth tab, added 18 Sept: Home** — `src/pages/Home.jsx`, route `/`,
+the screen the app opens on. It is a summary, not a fourth feature: a greeting,
+the points balance, a daily-streak habit tracker, and "My Activities" assembled
+from the events, listings and food claims the other three tabs produce. The map
+moved off `/` to `/neighbourhood` when it arrived.
+
+`src/App.jsx` holds the router and the four-tab bottom nav, wrapped in
 `SessionProvider` and `SharingProvider` (both outside the router, so state
-survives moving between tabs mid-demo).
+survives moving between tabs mid-demo). Event sign-ups live in `SessionProvider`
+(`eventStatuses`, `updateEventStatus`) rather than in Dashboard's own state, so
+Home can read them; `confirmAttendance` in Dashboard is still the only place
+event points are awarded.
+
+`ScoreCard.jsx` (the neighbourhood sustainability score) renders on the
+Neighbourhood screen, under the header. It was left rendered nowhere on 18 Sept
+and the score vanished from the app for a day — if you rebuild a screen, check it
+is still on one.
 
 `src/lib/` holds the logic: `impact.js` (the calculator's arithmetic),
 `nudges.js` (rule-based nudges), `pairing.js` (the repeat-exchange taper),
@@ -129,6 +149,13 @@ resident; never reintroduce a literal `'You'`.
 
 - Points are awarded **only when something is actually completed** — attendance
   confirmed, item handed over — never for signing up or posting.
+- **The copy must not promise points the rules do not pay.** Home's streak card
+  briefly advertised "+20 to +50 Bonus Points" for consecutive days and its
+  activity rows read "+50 Points" beside "Signed up"; both were corrected on
+  18 Sept. The streak is now labelled a habit tracker, and an unfinished row reads
+  "+50 on completion" while a finished one reads "+50 Points". Keeping the streak
+  as a visual tracker was chosen over deleting it, but a streak that pays points
+  would reward opening the app, which is not the same as doing anything.
 - On the sharing screen, a completion that pays points also needs the other
   person's four-digit handover code.
 - Repeat exchanges between the same pair taper: full, full, half, quarter,
@@ -235,6 +262,23 @@ source and read the number.
 - The team is new to the terminal and to React. Explain what a command does
   before running it, in plain language. Avoid jargon or define it.
 
+## The live demo link
+
+The prototype is published at **https://eco-sg.vercel.app** (Vercel project
+`eco-sg`, in Henrison's account). Anyone with the link can open it on a phone; no
+login. It is a **snapshot, not linked to GitHub**, so pushing to `main` does NOT
+change it — a teammate cannot break the demo link by pushing, and the link does
+not update itself either. To publish the current code, from the project folder:
+
+```
+npx vercel --prod    # asks nothing; prints the link when it finishes
+```
+
+That needs a one-off `npx vercel login` on the machine doing it. `vercel.json`
+rewrites every address to the app, so /share and /impact survive a refresh;
+without it they 404. `.vercel/` is local and gitignored. Deploy only what you have
+opened and checked — the link is public.
+
 ## The repo is shared
 
 `origin` is **https://github.com/xcneo/y6bioproject** — Xuan Che's repo, which the
@@ -244,17 +288,18 @@ when asked, and check `git fetch` first: teammates push too.
 ## Deadlines
 
 - **21 Sept 2026** — final report (3500–4000 words), team presentation, prototype
-  demo. **Under two weeks away as of 9 Sept.**
+  demo. **That is today.**
 
-The prototype is screenshot-able and tappable. The binding constraint is the
-written report and the outstanding verification in `docs/source-checklist.md`,
-not the code.
+The prototype is screenshot-able, tappable and deployed. The binding constraint is
+the written report, not the code.
 
 ## Next task
 
-**Coding is done.** As of 10 Sept 2026 every figure that reaches a screen is
-sourced and verified by a team member. Do not start new features. What remains is
-writing, and three of the four items below are report work.
+**Coding is done, and the prototype is deployed.** Every figure that reaches a
+screen was sourced and verified by a team member on 10 Sept, and nothing since has
+changed a figure — the work after that date was the visual redesign, the Lucide
+icons, the Home tab, and fixes to those. Do not start new features on deadline
+day. What remains is writing.
 
 `docs/source-checklist.md` is the live record. Its outstanding list:
 
@@ -269,6 +314,18 @@ writing, and three of the four items below are report work.
 facilities, 21 dataset-confirmed, four illustrative by decision. §12's two
 anti-misuse decisions are taken: no per-week points cap, and the self-credit hole
 removed.
+
+Three things from 16–18 Sept are worth a line in the report, all of them about
+checking AI and team output rather than trusting it:
+
+- **A redesign silently broke sourced output.** The rebuilt Impact cards stopped
+  using the rounding helpers and printed raw arithmetic ("15436.800000000003", no
+  units, no "a year"), and would have shown an unsourced figure as "0" instead of
+  "Source needed". The arithmetic was never wrong; the display was.
+- **A build that succeeds can still be a blank screen.** See the warning under
+  Commands. Lint caught what the build did not.
+- **New copy can contradict a standing rule.** The Home tab advertised streak
+  bonus points, which the points rules never pay.
 
 ### Things the report must say, and must not say
 
